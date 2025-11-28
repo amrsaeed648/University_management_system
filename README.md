@@ -1,2 +1,1 @@
-# University_management_system
-## just playing 
+# University_management_system 
