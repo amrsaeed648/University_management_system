@@ -7,49 +7,9 @@
 #include <vector>
 #include <utility>
 #include "student.h"
+#include "course.h"
 
 using namespace std;
-
-
-
-
-
-
-
-/*============================================================Start of Course Class=================================================*/
-
-class Course {
-private:
-    string code, name, professor, department;
-    int year;
-    vector<string> enrolledStudents; // student IDs
-
-public:
-    Course(const string& c="", const string& n="", const string& p="", const string& d="", int y=0)
-        : code(c), name(n), professor(p), department(d), year(y) {}
-
-
-
-    // Getters
-    string getCode() const { return code; }
-    string getName() const { return name; }
-    string getProfessor() const { return professor; }
-    string getDepartment() const { return department; }
-    int getYear() const { return year; }
-    vector<string> getEnrolledStudents() const { return enrolledStudents; }
-
-    // Setters
-    void setCode(const string& c) { code = c; }
-    void setName(const string& n) { name = n; }
-    void setProfessor(const string& p) { professor = p; }
-    void setDepartment(const string& d) { department = d; }
-    void setYear(int y) { year = y; }
-
-};
-
-/*=============================================================End of Course Class==================================================*/
-
-
 
 
 /*==========================================================Start of Program Variables==============================================*/
