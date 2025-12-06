@@ -7,7 +7,7 @@
 #include <vector>
 #include <utility>
 #include "student.h"
-
+using namespace std;
         // constructors
         Student::Student () {
             GlobalStudentCount++;

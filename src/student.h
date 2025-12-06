@@ -1,5 +1,6 @@
 #ifndef GIT_STUDENT_H
 #define GIT_STUDENT_H
+using namespace std;
 class Student {
 private:
     static int GlobalStudentCount;
@@ -20,13 +21,13 @@ public:
     void setDepartment (string s);
     void setYearOfStudy (int s);
     void setGrade(string s, double x);
-    string getFirstName();
-    string getLastName();
-    string getID();
-    string getEmail();
-    string getDepartment();
-    int getYearOfStudy();
-    void getGrades();
+    string getFirstName() const;
+    string getLastName() const;
+    string getID() const;
+    string getEmail() const;
+    string getDepartment() const;
+    int getYearOfStudy() const;
+    void getGrades() ;
     void getEnrolledCourses();
     void info();
     void enrollCourse ();
