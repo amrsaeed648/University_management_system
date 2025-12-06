@@ -36,8 +36,11 @@ class Student {
         }
 
         Student (string fn, string ln, string d, int yos) {
+            GlobalStudentCount++;
+            studentCount = GlobalStudentCount;
             firstName = fn;
             lastName = ln;
+            transform(d.begin(), d.end(), d.begin(), ::toupper);
             department = d;
             yearOfStudy = yos;
             idGeneration();
@@ -71,6 +74,7 @@ class Student {
         void setEmail(const string& newEmail){ email = newEmail; }
 
         void setDepartment (string s) {
+            transform(s.begin(), s.end(), s.begin(), ::toupper);
             department = s;
             idGeneration();
         }
