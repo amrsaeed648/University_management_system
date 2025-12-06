@@ -63,7 +63,9 @@ class Student {
         }
 
         void emailGeneration () {
-            email = firstName + lastName + "@uni.edu.eg";
+            string fullName = firstName + lastName;
+            transform(fullName.begin(), fullName.end(), fullName.begin(), ::tolower);
+            email = fullName + "@uni.edu.eg";
         }
 
         // setters
@@ -192,7 +194,13 @@ int Student::GlobalStudentCount = 0;
 
 /*==========================================================Start of Student Functions==============================================*/
 
-int getStudentIndex(string id) { return stoi(id.substr(2))-1; }
+int getStudentIndex(string id) { 
+    for (int i = 0; i < students.size(); i++) {
+        if (students[i].getID() == id)
+            return i;
+    }
+    return -1; // Not found
+}
 
 void addStudent () {
     string fn, ln, d;
@@ -208,42 +216,46 @@ void addStudent () {
 
 void updateStudent(string id) {
     int index = getStudentIndex(id);
-    string input; 
-    Student& st = students[index]; 
-    while (true) { 
-        int c; 
-        cout<<"\n====================================================================================================================\n"; 
-        cout<<"================= You are Updating "<<st.getFirstName()<<" "<<st.getLastName()<<"'S Data Now. =================\n"; 
-        cout<<"====================================================================================================================\n"; 
-        cout<<"1. First Name\n2. Last Name\n3. Department\n4. Year of Study\n5. Exit\nPlease Select from Above: "; 
-        cin>>c; if (c == 1) {
-            cout<<"Enter the New Data: "; cin>>input; 
-            st.setFirstName(input); 
-            cout<<" Data Updated Successfully."; 
-        }
-        else if (c == 2) {
-            cout<<"Enter the New Data: "; cin>>input; 
-            st.setLastName(input); 
-            cout<<" Data Updated Successfully."; 
-        }
-        else if (c == 3) {
-            cout<<"Enter the New Data: "; cin>>input; 
-            st.setDepartment(input); 
-            cout<<" Data Updated Successfully."; 
-        }
-        else if (c == 4) {
-            cout<<"Enter the New Data: "; cin>>input; 
-            st.setYearOfStudy(stoi(input)); 
-            cout<<" Data Updated Successfully."; 
-        }
-        else if (c == 5) break; 
-        else cout<<"Invalid Input."; 
-    } 
+    if (index == -1) cout<<"Student Not Found!\n";
+    else {
+        string input; 
+        Student& st = students[index]; 
+        while (true) { 
+            int c; 
+            cout<<"\n====================================================================================================================\n"; 
+            cout<<"================= You are Updating "<<st.getFirstName()<<" "<<st.getLastName()<<"'S Data Now. =================\n"; 
+            cout<<"====================================================================================================================\n"; 
+            cout<<"1. First Name\n2. Last Name\n3. Department\n4. Year of Study\n5. Exit\nPlease Select from Above: "; 
+            cin>>c; if (c == 1) {
+                cout<<"Enter the New Data: "; cin>>input; 
+                st.setFirstName(input); 
+                cout<<" Data Updated Successfully."; 
+            }
+            else if (c == 2) {
+                cout<<"Enter the New Data: "; cin>>input; 
+                st.setLastName(input); 
+                cout<<" Data Updated Successfully."; 
+            }
+            else if (c == 3) {
+                cout<<"Enter the New Data: "; cin>>input; 
+                st.setDepartment(input); 
+                cout<<" Data Updated Successfully."; 
+            }
+            else if (c == 4) {
+                cout<<"Enter the New Data: "; cin>>input; 
+                st.setYearOfStudy(stoi(input)); 
+                cout<<" Data Updated Successfully."; 
+            }
+            else if (c == 5) break; 
+            else cout<<"Invalid Input."; 
+        } 
+    }
 }
 
 void deleteStudent(string id) /* it deletes the student with id */ {
     int index = getStudentIndex(id);
-    students.erase(students.begin() + index);
+    if (index == -1) cout<<"Student Not Found!\n";
+    else students.erase(students.begin() + index);
 }
 
 void studentsList() {
