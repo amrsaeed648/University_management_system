@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cmath>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <string>
@@ -20,7 +21,7 @@ class Student {
         vector<pair<string, double>> grades; // (courseCode, grade)
 
     public:
-        //Setters
+        // constructors
         Student () {
             GlobalStudentCount++;
             studentCount = GlobalStudentCount;
@@ -62,10 +63,12 @@ class Student {
             email = firstName + lastName + "@uni.edu.eg";
         }
 
+        // setters
         void setFirstName (string s) {firstName = s;}
         void setLastName (string s) {lastName = s;}
 
-        // let ID & Email be server sided that cannot be modified.
+        void setID(const string& newID)      { id = newID; }
+        void setEmail(const string& newEmail){ email = newEmail; }
 
         void setDepartment (string s) {
             department = s;
@@ -113,7 +116,7 @@ class Student {
 
         //Functions
         void info() {
-            cout<<"{ "<<id<<" , "<<firstName<<" "<<lastName<<" , "<<email<<" , "<<department<<" , "<<yearOfStudy<<" }";
+            cout<<"{ "<<id<<" , "<<firstName<<" "<<lastName<<" , "<<email<<" , "<<department<<" , "<<yearOfStudy<<" }\n";
         }
 
         void enrollCourse () /*number of cources wants to enroll*/ {
@@ -131,6 +134,8 @@ class Student {
 };
 
 /*============================================================End of Student Class=================================================*/
+
+
 
 
 /*============================================================Start of Course Class=================================================*/
@@ -241,6 +246,46 @@ void studentsList() {
     for (int i = 0; i < students.size(); i++) students[i].info();
 }
 
+void saveStudents() {
+    ofstream fout("students.txt");
+
+    fout << students.size() << "\n";
+    for (auto &s : students) {
+        fout << s.getFirstName() << " "
+             << s.getLastName() << " "
+             << s.getDepartment() << " "
+             << s.getYearOfStudy() << " "
+             << s.getID() << " "
+             << s.getEmail() << "\n";
+    }
+
+    fout.close();
+}
+
+// Load students from file
+void loadStudents() {
+    ifstream fin("students.txt");
+    if (!fin) return;
+
+    int count;
+    fin >> count;
+
+    for (int i = 0; i < count; i++) {
+        string fn, ln, dep, email, id;
+        int yos;
+
+        fin >> fn >> ln >> dep >> yos >> id >> email;
+        Student temp(fn, ln, dep, yos);
+
+        temp.setID(id);
+        temp.setEmail(email);
+
+        students.push_back(temp);
+    }
+
+    fin.close();
+}
+
 /*===========================================================End of Student Functions===============================================*/
 
 
@@ -254,6 +299,9 @@ void studentsList() {
 
 
 int main(){
+
+    loadStudents();
+
     int choice;
     while (true) {
         cout << "\n============== University Management System ==============\n";
@@ -271,6 +319,7 @@ int main(){
 
         if (choice == 0) {
             cout << "Exiting...\n";
+            saveStudents();
             break;
         }
 
