@@ -31,24 +31,26 @@ int Student::GlobalStudentCount = 0;
             lastName = ln;
             transform(d.begin(), d.end(), d.begin(), ::toupper);
             department = d;
-            yearOfStudy = yos;
+            if (department == "GEN") yearOfStudy = 0;
+            else yearOfStudy = yos;
             idGeneration();
             emailGeneration();
         }
 
-        void Student::idGeneration () // ID = XYNNN , X = Department No, Y = YearOfStudy, XXX = Student Number
+        void Student::idGeneration () // ID = XYNNNN , X = Department No, Y = YearOfStudy, NNNN = Student Number
         {
             int dn;
-            if (department == "GEN") dn = 0;
-            else if (department == "CSE") dn = 1;
-            else if (department == "ECE") dn = 2;
-            else if (department == "EPE") dn = 3;
+            if (department == "GEN") dn = 1;
+            else if (department == "CSE") dn = 2;
+            else if (department == "ECE") dn = 3;
+            else if (department == "EPE") dn = 4;
             else dn = 0;
 
             id = to_string(dn) + to_string(yearOfStudy);
 
-            if (studentCount < 9) id += "00" + to_string(studentCount);
-            else if (studentCount < 99) id += "0" + to_string(studentCount);
+            if (studentCount < 9) id += "000" + to_string(studentCount);
+            else if (studentCount < 99) id += "00" + to_string(studentCount);
+            else if (studentCount < 999) id += "0" + to_string(studentCount);
             else id += to_string(studentCount);
         }
 
@@ -65,12 +67,13 @@ int Student::GlobalStudentCount = 0;
         void Student::setEmail(string s) { email = s; }
         void Student::setDepartment (string s) {
             transform(s.begin(), s.end(), s.begin(), ::toupper);
-            department = s;
+            if (department == "GEN") yearOfStudy = 0;
             idGeneration();
         }
 
         void Student::setYearOfStudy (int s) {
-            yearOfStudy = s;
+            if (department == "GEN") yearOfStudy = 0;
+            else yearOfStudy = s;
             idGeneration();
         }
 
