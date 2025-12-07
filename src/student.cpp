@@ -39,7 +39,8 @@ int Student::GlobalStudentCount = 0;
         void Student::idGeneration () // ID = XYNNN , X = Department No, Y = YearOfStudy, XXX = Student Number
         {
             int dn;
-            if (department == "CSE") dn = 1;
+            if (department == "GEN") dn = 0;
+            else if (department == "CSE") dn = 1;
             else if (department == "ECE") dn = 2;
             else if (department == "EPE") dn = 3;
             else dn = 0;
@@ -60,10 +61,8 @@ int Student::GlobalStudentCount = 0;
         // setters
         void Student::setFirstName (string s) {firstName = s;}
         void Student::setLastName (string s) {lastName = s;}
-
-        void Student::setID(const string& newID)      { id = newID; }
-        void Student::setEmail(const string& newEmail){ email = newEmail; }
-
+        void Student::setID(string s) { id = s; }
+        void Student::setEmail(string s) { email = s; }
         void Student::setDepartment (string s) {
             transform(s.begin(), s.end(), s.begin(), ::toupper);
             department = s;
