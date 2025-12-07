@@ -8,6 +8,8 @@
 #include <utility>
 #include "student.h"
 using namespace std;
+vector<Student> students;
+int Student::GlobalStudentCount = 0;
         // constructors
         Student::Student () {
             GlobalStudentCount++;

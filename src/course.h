@@ -1,6 +1,9 @@
 #ifndef GIT_COURSE_H
 #define GIT_COURSE_H
 using namespace std;
+#include <string>
+#include <vector>
+
 class Course
 {
 private:
@@ -26,4 +29,5 @@ public:
     void setDepartment(const string& d);
     void setYear(int y);
 };
+extern vector<Course> courses;
 #endif //GIT_COURSE_H

@@ -7,4 +7,6 @@ add_executable(University_Program
         main.cpp
         student.cpp
 	course.cpp
+		gradeResultsManagment.cpp
+		studentManagment.cpp
 )

@@ -8,6 +8,7 @@
 #include <utility>
 #include "course.h"
 using namespace std;
+vector<Course> courses;
 Course::Course(const std::string& c,
                const std::string& n,
                const std::string& p,

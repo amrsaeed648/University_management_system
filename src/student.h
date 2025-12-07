@@ -1,6 +1,8 @@
 #ifndef GIT_STUDENT_H
 #define GIT_STUDENT_H
 using namespace std;
+#include <string>
+#include <vector>
 class Student {
 private:
     static int GlobalStudentCount;
@@ -32,4 +34,5 @@ public:
     void info();
     void enrollCourse ();
 };
+extern vector<Student> students;
 #endif //GIT_STUDENT_H
