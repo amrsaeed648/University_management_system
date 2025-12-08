@@ -12,22 +12,26 @@ private:
     vector<string> enrolledStudents; // student IDs
 
 public:
-    Course(const std::string& c = "",
-               const std::string& n = "",
-               const std::string& p = "",
-               const std::string& d = "",
+    Course(    const string& n = "",
+               const string& p = "",
+               const string& d = "",
                int y = 0);
+
     string getCode() const;
     string getName() const;
     string getProfessor() const;
     string getDepartment() const;
     int getYear() const;
+
     vector<string> getEnrolledStudents() const;
+
     void setCode(const string& c);
     void setName(const string& n);
     void setProfessor(const string& p);
     void setDepartment(const string& d);
     void setYear(int y);
+
+   string generateCode (const string& d, int y);
 };
 extern vector<Course> courses;
 #endif //GIT_COURSE_H
