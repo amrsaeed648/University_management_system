@@ -18,8 +18,8 @@ public:
     void emailGeneration ();
     void setFirstName (string s);
     void setLastName (string s);
-    void setID(const string& newID);
-    void setEmail(const string& newEmail);
+    void setID(const string& s);
+    void setEmail(const string& s);
     void setDepartment (string s);
     void setYearOfStudy (int s);
     void setGrade(string s, double x);
@@ -29,9 +29,9 @@ public:
     string getEmail() const;
     string getDepartment() const;
     int getYearOfStudy() const;
-    void getGrades() ;
-    void getEnrolledCourses();
-    void info();
+    void getGrades() const;
+    void getEnrolledCourses() const;
+    void info() const;
     void enrollCourse ();
 };
 extern vector<Student> students;

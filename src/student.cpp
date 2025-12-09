@@ -65,8 +65,8 @@ void Student::emailGeneration () {
 // Setters
 void Student::setFirstName (string s) {firstName = s;}
 void Student::setLastName (string s) {lastName = s;}
-void Student::setID (string s) { id = s; }
-void Student::setEmail (string s) { email = s; }
+void Student::setID(const string& s) { id = s; }
+void Student::setEmail(const string& s) { email = s; }
 
 void Student::setDepartment (string s) {
         transform(s.begin(), s.end(), s.begin(), ::toupper);
@@ -93,7 +93,7 @@ string Student::getEmail() const { return email; }
 string Student::getDepartment() const { return department; }
 int Student::getYearOfStudy() const { return yearOfStudy; }
 
-void Student::getGrades() {
+void Student::getGrades() const{
     if (grades.empty()) cout<<"No Grades Yet.\n";
     else {
         for (int i = 0; i < grades.size(); i++) {
@@ -102,7 +102,7 @@ void Student::getGrades() {
     }
 }
 
-void Student::getEnrolledCourses() {
+void Student::getEnrolledCourses() const{
     if (enrolledCourses.empty()) cout<<"Student has not been enrolled to any courses";
     else {
         cout<<"Enrolled Courses: "<<enrolledCourses[0];
@@ -116,7 +116,7 @@ void Student::getEnrolledCourses() {
 
 
 //Functions
-void Student::info() {
+void Student::info() const{
     cout<<"{ "<<id<<" , "<<firstName<<" "<<lastName<<" , "<<email<<" , "<<department<<" , "<<yearOfStudy<<" }\n";
 }
 

@@ -21,11 +21,21 @@ int getStudentIndex(string id) {
 }
 
 void addStudent () {
-    string fn, ln, d;
+    string fn, ln, dep;
     int yos;
-    cout<<"Please Enter Student Data: (First Name, Last Name, Department, Year of Study)\n";
-    cin>>fn>>ln>>d>>yos;
-    Student st(fn, ln, d, yos);
+
+    cout << "Enter First Name: ";
+    cin >> fn;
+
+    cout << "Enter Last Name: ";
+    cin >> ln;
+
+    cout << "Enter Department (CSE/ECE/EPE): ";
+    cin >> dep;
+
+    cout << "Enter Year of Study: ";
+    cin >> yos;
+    Student st(fn, ln, dep, yos);
     students.push_back(st);
     cout<<"Student Added Successfully.\n";
     cout<<"His ID is: "<<st.getID()<<" .\n";
