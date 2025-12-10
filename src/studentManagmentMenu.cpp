@@ -6,7 +6,7 @@ using namespace std;
 void studentManagementMenu() {
     while (true)
     {
-        cout << "\n=============== ADMIN MENU ===============\n";
+        cout << "\n=============== Student Management ===============\n";
         cout << "1. Add Student\n";
         cout << "2. Update Student\n";
         cout << "3. Delete Student\n";
