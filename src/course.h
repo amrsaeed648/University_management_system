@@ -33,5 +33,9 @@ public:
 
    string generateCode (const string& d, int y);
 };
+void addCourse();
+void deleteCourse(const string& c);
+void editCourse(const string& c);
+void displayCourses();
 extern vector<Course> courses;
 #endif //GIT_COURSE_H
