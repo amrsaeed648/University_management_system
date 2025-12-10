@@ -30,6 +30,7 @@ public:
     string getDepartment() const;
     int getYearOfStudy() const;
     void getGrades() const;
+    void getGradesOnly(const string& code) const;
     void getEnrolledCourses() const;
     void info() const;
     void enrollCourse ();

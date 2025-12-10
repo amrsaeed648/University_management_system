@@ -102,7 +102,15 @@ void Student::getGrades() const{
         }
     }
 }
-
+void Student::getGradesOnly(const string& code) const{
+    if (grades.empty()) cout<<"No Grades Yet.\n";
+    else {
+        for (int i = 0; i < grades.size(); i++) {
+            if (grades[i].first == code)
+            cout<<grades[i].second<<"\t\n";
+        }
+    }
+}
 void Student::getEnrolledCourses() const{
     if (enrolledCourses.empty()) cout<<"Student has not been enrolled to any courses";
     else {
