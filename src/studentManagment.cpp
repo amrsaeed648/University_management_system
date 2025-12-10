@@ -21,15 +21,25 @@ int getStudentIndex(string id) {
 }
 
 void addStudent () {
-    string fn, ln, d;
+    string fn, ln, dep;
     int yos;
-    cout<<"Please Enter Student Data: (First Name, Last Name, Department, Year of Study)\n";
-    cin>>fn>>ln>>d>>yos;
-    Student st(fn, ln, d, yos);
+
+    cout << "Enter First Name: ";
+    cin >> fn;
+
+    cout << "Enter Last Name: ";
+    cin >> ln;
+
+    cout << "Enter Department (CSE/ECE/EPE): ";
+    cin >> dep;
+
+    cout << "Enter Year of Study: ";
+    cin >> yos;
+    Student st(fn, ln, dep, yos);
     students.push_back(st);
     cout<<"Student Added Successfully.\n";
-    cout<<"His ID is: "<<st.getID()<<" .\n";
-    cout<<"His Email is: "<<st.getEmail()<<" .\n";
+    cout<<"Student ID is: "<<st.getID()<<" .\n";
+    cout<<"Student Email is: "<<st.getEmail()<<" .\n";
 }
 
 void updateStudent(string id) {
@@ -43,7 +53,7 @@ void updateStudent(string id) {
             cout<<"\n====================================================================================================================\n";
             cout<<"================= You are Updating "<<st.getFirstName()<<" "<<st.getLastName()<<"'S Data Now. =================\n";
             cout<<"====================================================================================================================\n";
-            cout<<"1. First Name\n2. Last Name\n3. Department\n4. Year of Study\n5. Exit\nPlease Select from Above: ";
+            cout<<"1. First Name\n2. Last Name\n3. Department\n4. Year of Study\n0. Exit\nPlease Select from Above: ";
             cin>>c; if (c == 1) {
                 cout<<"Enter the New Data: "; cin>>input;
                 st.setFirstName(input);
@@ -64,7 +74,7 @@ void updateStudent(string id) {
                 st.setYearOfStudy(stoi(input));
                 cout<<" Data Updated Successfully.";
             }
-            else if (c == 5) break;
+            else if (c == 0) break;
             else cout<<"Invalid Input.";
         }
     }
@@ -120,3 +130,45 @@ void loadStudents()
 
     fin.close();
 };
+
+void showStudentInfo(string id)
+{
+    int index = getStudentIndex(id);
+    if (index == -1)
+    {
+        cout << "Student Not Found!\n";
+        return;
+    }
+
+    Student &s = students[index];
+
+    cout << "\n============== STUDENT INFORMATION ==============\n";
+    cout << "First Name   : " << s.getFirstName() << "\n";
+    cout << "Last Name    : " << s.getLastName() << "\n";
+    cout << "ID           : " << s.getID() << "\n";
+    cout << "Email        : " << s.getEmail() << "\n";
+    cout << "Department   : " << s.getDepartment() << "\n";
+    cout << "Year of Study: " << s.getYearOfStudy() << "\n";
+    cout << "=================================================\n";
+}
+
+void enrollStudentInCourse()
+{
+    string id, course;
+    cout << "Enter Student ID: ";
+    cin >> id;
+
+    int index = getStudentIndex(id);
+    if (index == -1)
+    {
+        cout << "Student Not Found!\n";
+        return;
+    }
+
+    cout << "Enter Course Code: ";
+    cin >> course;
+
+    students[index].addCourse(course);
+
+    cout << "Student Enrolled Successfully.\n";
+}

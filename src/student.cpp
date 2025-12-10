@@ -7,6 +7,7 @@
 #include <vector>
 #include <utility>
 #include "student.h"
+#include "course.h"
 using namespace std;
 
 vector<Student> students;
@@ -65,8 +66,8 @@ void Student::emailGeneration () {
 // Setters
 void Student::setFirstName (string s) {firstName = s;}
 void Student::setLastName (string s) {lastName = s;}
-void Student::setID (string s) { id = s; }
-void Student::setEmail (string s) { email = s; }
+void Student::setID(const string& s) { id = s; }
+void Student::setEmail(const string& s) { email = s; }
 
 void Student::setDepartment (string s) {
         transform(s.begin(), s.end(), s.begin(), ::toupper);
@@ -93,7 +94,7 @@ string Student::getEmail() const { return email; }
 string Student::getDepartment() const { return department; }
 int Student::getYearOfStudy() const { return yearOfStudy; }
 
-void Student::getGrades() {
+void Student::getGrades() const{
     if (grades.empty()) cout<<"No Grades Yet.\n";
     else {
         for (int i = 0; i < grades.size(); i++) {
@@ -102,7 +103,7 @@ void Student::getGrades() {
     }
 }
 
-void Student::getEnrolledCourses() {
+void Student::getEnrolledCourses() const{
     if (enrolledCourses.empty()) cout<<"Student has not been enrolled to any courses";
     else {
         cout<<"Enrolled Courses: "<<enrolledCourses[0];
@@ -115,17 +116,23 @@ void Student::getEnrolledCourses() {
 
 
 
-//Functions
-void Student::info() {
-    cout<<"{ "<<id<<" , "<<firstName<<" "<<lastName<<" , "<<email<<" , "<<department<<" , "<<yearOfStudy<<" }\n";
-}
 
-void Student::enrollCourse () /*number of cources wants to enroll*/ {
-    cout<<"Enter How many cources u want to enroll in: ";
-    int n; cin>>n;
-    cout<<"\nEnter Course Code:\n";
-    for (int i = 0; i < n; i++) {
-        string x; cin>>x;
-        enrolledCourses.push_back(x);
-    }
+
+void Student::addCourse(const string& courseCode){
+    enrolledCourses.push_back(courseCode);
 }
+ void Student::info() const{
+     cout<<"{ "<<id<<" , "<<firstName<<" "<<lastName<<" , "<<email<<" , "<<department<<" , "<<yearOfStudy<<" }\n";
+ }
+
+ void Student::enrollCourse () /*number of courses wants to enroll*/ {
+     cout<<"Enter How many courses u want to enroll in: ";
+     int n; cin>>n;
+     cout<<"\nEnter Course Code:\n";
+     for (int i = 0; i < n; i++) {
+         string x; cin>>x;
+         enrolledCourses.push_back(x);
+     }
+ }
+
+

@@ -7,160 +7,167 @@
 #include <vector>
 #include <utility>
 #include "student.h"
-#include "course.h"
-#include "gradeResultsManagment.h"
 #include "studentManagment.h"
+#include "studentManagmentMenu.h"
+#include "course.h"
+#include "courseManagementMenu.h"
+#include "gradeResultsManagment.h"
+#include "gradeManagementMenu.h"
+
 
 using namespace std;
 
+const string Admin_UserName = "ADMIN";
+const string Admin_Password = "0000";
+
+void adminMenu();
+void studentMenu(const Student& s);
+string convertToUpper(string str);
 
 int main(){
 
     loadStudents();
 
-    int choice;
+        int choice;
+
     while (true) {
-        cout << "\n============== University Management System ==============\n";
-        cout << "1. Add Student\n";
-        cout << "2. Delete Student\n";
-        cout << "3. Student Information\n";
-        cout << "4. List All Students\n";
-        cout << "5. Enroll Student in Courses\n";
-        cout << "6. Add Course\n";
-        cout << "7. List All Courses\n";
-        cout << "0. Exit\n";
+        cout << "\n======================= University Management System =======================\n";
+        cout << "1. Admin\n";
+        cout << "2. Student\n";
+        cout << "3. Exit\n";
         cout << "Choose: ";
-
         cin >> choice;
+        cin.ignore();
 
-        if (choice == 0) {
-            cout << "Exiting...\n";
-            saveStudents();
-            break;
-        }
-
+        // LOGIN SYSTEM
         if (choice == 1) {
-            string fn, ln, dep;
-            int yos;
 
-            cout << "Enter First Name: ";
-            cin >> fn;
+            string username, password;
 
-            cout << "Enter Last Name: ";
-            cin >> ln;
+            cout << "\n======================= Admin Login =======================\n";
+            cout << "Enter UserName(Admin):  ";
+            getline(cin, username);
+            username = convertToUpper(username);
 
-            cout << "Enter Department (CSE/ECE/EPE): ";
-            cin >> dep;
+            cout << "Enter Password(Admin):  ";
+            getline(cin, password);
 
-            cout << "Enter Year of Study: ";
-            cin >> yos;
-
-            students.push_back(Student(fn, ln, dep, yos));
-
-            cout << "Student Added Successfully!\n";
-            cout << "Your ID: " << students.back().getID() << "\n";
+            if (username == Admin_UserName && password == Admin_Password) {
+                cout << "\nLogin Successful.\n";
+                adminMenu();
+            } else {
+                cout << "\nInvalid Username or Password!\n";
+            }
         }
 
         else if (choice == 2) {
-            string id;
-            cout << "Enter Student ID to Delete: ";
-            cin >> id;
-            deleteStudent(id);
-            cout << "Deleted Successfully!\n";
+        string id, pass;
+
+        cout << "\n======================= Student Login =======================\n";
+        cout << "Enter UserName(ID): ";
+        getline(cin, id);
+
+        cout << "Enter Password(ID): ";
+        getline(cin, pass);
+
+        bool found = false;
+
+        for (auto& s : students) {
+            if (s.getID() == id && s.getID() == pass) { // password = ID
+                cout << "\nLogin Successful.\n";
+                studentMenu(s);
+                found = true;
+                break;
+            }
         }
+
+        if (!found) {
+            cout << "\nInvalid ID or Password!\n";
+        }
+    }
 
         else if (choice == 3) {
-            string id;
-            cout << "Enter Student ID: ";
-            cin >> id;
-
-            bool found = false;
-
-            for (auto &s : students) {
-                if (s.getID() == id) {
-                    found = true;
-
-                    cout << "\n=== Student Information ===\n";
-                    s.info();
-                    cout << "\n";
-
-                    // cout << "Enrolled Courses:\n";
-                    // s.getEnrolledCourses();
-                    // cout << "\nGrades:\n";
-                    // s.getGrades();
-                    // cout << "\n";
-
-                    break;
-                }
-            }
-
-            if (!found)
-                cout << "Student not found!\n";
-
-
+            cout << "Exiting program...\n";
+            break;
         }
-
-        else if (choice == 4) {
-            cout << "\n=== Students List ===\n";
-            studentsList();
-            cout << "\n";
-        }
-
-        else if (choice == 5) {
-            string id;
-            cout << "Enter Student ID to Enroll in Courses: ";
-            cin >> id;
-
-            bool found = false;
-            for (auto &s : students) {
-                if (s.getID() == id) {
-                    found = true;
-                    s.enrollCourse();
-                    cout << "Enrollment Completed!\n";
-                }
-            }
-
-            if (!found)
-                cout << "Student not found!\n";
-        }
-
-        else if (choice == 6) {
-            string code, name, prof, dep;
-            int y;
-
-            cout << "Enter Course Code: ";
-            cin >> code;
-
-            cout << "Enter Course Name: ";
-            cin >> name;
-
-            cout << "Enter Professor Name: ";
-            cin >> prof;
-
-            cout << "Enter Department: ";
-            cin >> dep;
-
-            cout << "Enter Year: ";
-            cin >> y;
-
-            courses.push_back(Course(code, name, prof, dep, y));
-            cout << "Course Added!\n";
-        }
-
-        else if (choice == 7) {
-            cout << "\n=== Courses List ===\n";
-            for (auto &c : courses) {
-                cout << "{ " << c.getCode() << " , "
-                     << c.getName() << " , "
-                     << c.getProfessor() << " , "
-                     << c.getDepartment() << " , "
-                     << c.getYear() << " }\n";
-            }
-        }
-
         else {
             cout << "Invalid choice! Try again.\n";
         }
     }
+
+
     return 0;
+}
+
+
+void adminMenu(){
+    int choice;
+
+    while (true) {
+        cout << "\n======================= University Management System =======================\n";
+        cout << "1. Student Management\n";
+        cout << "2. Course Management\n";
+        cout << "3. Grade & Results Management\n";
+        cout << "4. Back to Main Menu\n";
+        cout << "Choose: ";
+        cin >> choice;
+        cin.ignore();
+
+        switch (choice) {
+            case 1:
+                studentManagementMenu();
+                break;
+            case 2:
+                courseManagementMenu();
+                break;
+            case 3:
+                gradeManagementMenu();
+                break;
+            case 4:
+                return;
+            default:
+                cout << "Invalid option!\n";
+        }
+    }
+}
+
+void studentMenu(const Student& s) {
+    int choice;
+
+    while (true) {
+        cout << "\n======================= Student Dashboard =======================\n";
+        cout << "Welcome, " << s.getFirstName() << " " << s.getLastName() << "\n";
+        cout << "1. View Personal Information\n";
+        cout << "2. View Enrolled Courses\n";
+        cout << "3. View Grades\n";
+        cout << "4. Logout\n";
+        cout << "Choose: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                s.info();
+                break;
+            case 2:
+                s.getEnrolledCourses();
+                break;
+            case 3:
+                s.getGrades();
+                break;
+            case 4:
+                return;
+            default:
+                cout << "Invalid choice!\n";
+        }
+    }
+}
+
+
+string convertToUpper(string str) {
+    for (int i = 0; i < str.length(); i++) {
+        if (str[i] >= 'a' && str[i] <= 'z') {
+            str[i] = str[i] - ('a' - 'A');
+        }
+    }
+    return str;
 }
