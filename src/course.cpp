@@ -157,3 +157,11 @@ Course::Course( const string& n,
                      cout << (courses.at(i)).getName() << " : " << ( courses.at(i) ).getCode() << "\n";}
                      cout<<"\n"<<"\n";
     }
+int getCourseIndex(string code) //gives the Index of the Course
+{
+        for (int i = 0; i < courses.size(); i++) {
+            if (courses[i].getCode() == code)
+                return i;
+        }
+        return -1; // Not found
+    }

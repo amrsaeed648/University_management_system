@@ -37,5 +37,6 @@ void addCourse();
 void deleteCourse(const string& c);
 void editCourse(const string& c);
 void displayCourses();
+int getCourseIndex(string code);
 extern vector<Course> courses;
 #endif //GIT_COURSE_H
