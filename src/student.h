@@ -18,8 +18,8 @@ public:
     void emailGeneration ();
     void setFirstName (string s);
     void setLastName (string s);
-    void setID(const string& s);
-    void setEmail(const string& s);
+    void setID(const string& ID);
+    void setEmail(const string& Email);
     void setDepartment (string s);
     void setYearOfStudy (int s);
     void setGrade(string s, double x);
@@ -33,6 +33,7 @@ public:
     void getEnrolledCourses() const;
     void info() const;
     void enrollCourse ();
+    void addCourse(const string& courseCode);
 };
 extern vector<Student> students;
 #endif //GIT_STUDENT_H

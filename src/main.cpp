@@ -45,11 +45,11 @@ int main(){
             string username, password;
 
             cout << "\n======================= Admin Login =======================\n";
-            cout << "Enter UserName(Admin): ";
+            cout << "Enter UserName(Admin):  ";
             getline(cin, username);
             username = convertToUpper(username);
 
-            cout << "Enter Password(Admin): ";
+            cout << "Enter Password(Admin):  ";
             getline(cin, password);
 
             if (username == Admin_UserName && password == Admin_Password) {

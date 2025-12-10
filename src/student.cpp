@@ -7,6 +7,7 @@
 #include <vector>
 #include <utility>
 #include "student.h"
+#include "course.h"
 using namespace std;
 
 vector<Student> students;
@@ -115,17 +116,23 @@ void Student::getEnrolledCourses() const{
 
 
 
-//Functions
-void Student::info() const{
-    cout<<"{ "<<id<<" , "<<firstName<<" "<<lastName<<" , "<<email<<" , "<<department<<" , "<<yearOfStudy<<" }\n";
-}
 
-void Student::enrollCourse () /*number of cources wants to enroll*/ {
-    cout<<"Enter How many cources u want to enroll in: ";
-    int n; cin>>n;
-    cout<<"\nEnter Course Code:\n";
-    for (int i = 0; i < n; i++) {
-        string x; cin>>x;
-        enrolledCourses.push_back(x);
-    }
+
+void Student::addCourse(const string& courseCode){
+    enrolledCourses.push_back(courseCode);
 }
+ void Student::info() const{
+     cout<<"{ "<<id<<" , "<<firstName<<" "<<lastName<<" , "<<email<<" , "<<department<<" , "<<yearOfStudy<<" }\n";
+ }
+
+ void Student::enrollCourse () /*number of courses wants to enroll*/ {
+     cout<<"Enter How many courses u want to enroll in: ";
+     int n; cin>>n;
+     cout<<"\nEnter Course Code:\n";
+     for (int i = 0; i < n; i++) {
+         string x; cin>>x;
+         enrolledCourses.push_back(x);
+     }
+ }
+
+
