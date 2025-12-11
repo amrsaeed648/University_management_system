@@ -29,6 +29,8 @@ public:
     string getEmail() const;
     string getDepartment() const;
     int getYearOfStudy() const;
+    bool foundGrades1() const;
+    bool foundGrades2(const string& code) const;
     void getGrades() const;
     void getGradesOnly(const string& code) const;
     void getEnrolledCourses() const;

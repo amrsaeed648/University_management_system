@@ -94,19 +94,32 @@ string Student::getEmail() const { return email; }
 string Student::getDepartment() const { return department; }
 int Student::getYearOfStudy() const { return yearOfStudy; }
 
-void Student::getGrades() const{
-    if (grades.empty()) cout<<"No Grades Yet.\n";
-    else {
-        for (int i = 0; i < grades.size(); i++) {
-            cout<<grades[i].first<<" : "<<grades[i].second<<"\t\n";
-        }
+bool Student::foundGrades1() const
+{
+    if (grades.empty()) {return false;}
+    return true;
+}
+void Student::getGrades() const
+{
+    for (const auto & grade : grades)
+    {
+        cout<<grade.first<<" : "<<grade.second<<"\t\n";
     }
 }
-void Student::getGradesOnly(const string& code) const{
-    if (grades.empty()) cout<<"No Grades Yet.\n";
-    else {
+bool Student::foundGrades2(const string& code) const
+{
+    for (auto & grade : grades)
+    {
+        if (grade.first == code) {
+            return true;
+        }
+    }
+        return false;
+}
+void Student::getGradesOnly(const string& code) const
+{
         for (int i = 0; i < grades.size(); i++) {
-            if (grades[i].first == code)
+            if (grades[i].first == code) {
             cout<<grades[i].second<<"\t\n";
         }
     }

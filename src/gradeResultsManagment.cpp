@@ -9,6 +9,7 @@
 #include "gradeResultsManagment.h"
 #include "Student.h"
 #include "course.h"
+#include "gradeManagementMenu.h"
 #include "studentManagment.h"
 using namespace std;
 void assignGrade (const string& courseCode, const string& studentId, const int grade) // Assigns the grade to a student
@@ -23,68 +24,103 @@ void userAssignGrade () //asks the user for the grade then calls the Assign func
 {
     string courseCode,studentId;
     int grade;
-    do
-    {
         cout << "Enter a Valid Course Code to add its grade : ";
         cin >> courseCode;
-    } while (getCourseIndex(courseCode)<0);
-    do
+    if (getCourseIndex(courseCode)<0)
     {
+        cout << "Invalid Code Input! \n";
+        return;
+    }
         cout << "Enter a Valid Student ID to add his grade : ";
         cin >> studentId;
-    } while (getStudentIndex(studentId)<0);
-    do
+    if (getStudentIndex(studentId)<0)
     {
+        cout << "Invalid ID Input! \n";
+        return;
+    }
         cout << "Enter The Grade (0 -> 100) : ";
         cin >> grade;
-    } while (grade>=100 || grade<=0);
+    if (grade>=100 || grade<=0)
+    {
+        cout << "Invalid Grade Input! \n";
+        return;
+    }
     assignGrade(courseCode,studentId,grade);
+    cout << "Assigned Successfully.\n";
 }
 void userEditGrade () //asks the user for the grade then calls the Edit function to Edit it
 {
     string courseCode,studentId;
     int grade;
-    do
+    cout << "Enter a Valid Course Code to Edit its grade : ";
+    cin >> courseCode;
+    if (getCourseIndex(courseCode)<0)
     {
-        cout << "Enter a Valid Course Code to Edit its grade : ";
-        cin >> courseCode;
-    } while (getCourseIndex(courseCode)<0);
-    do
-    {
+        cout << "Invalid Code Input! \n";
+        return;
+    }
         cout << "Enter a Valid Student ID to Edit his grade : ";
         cin >> studentId;
-    } while (getStudentIndex(studentId)<0);
-    do
+    if (getStudentIndex(studentId)<0)
     {
+        cout << "Invalid ID Input! \n";
+        return;
+    }
         cout << "Enter The Grade (0 -> 100) : ";
         cin >> grade;
-    } while (grade>=100 || grade<=0);
+    if (grade>=100 || grade<=0)
+    {
+        cout << "Invalid Grade Input! \n";
+        return;
+    }
     assignGrade(courseCode,studentId,grade);
 }
 void displayGradeByStudentId ()
 {
     string studentId;
     int studentIndex;
-    do
-    {
         cout << "Enter a Student ID : ";
         cin >> studentId;
         studentIndex = getStudentIndex(studentId);
-    }  while (studentIndex<0);
-    students.at(studentIndex).getGrades();
+    if (studentIndex<0)
+    {
+        cout << "Invalid ID Input! \n";
+        return;
+    }
+    if (!students.at(studentIndex).foundGrades1())
+    {
+        cout << "No Grades Yet.\n";
+    }
+    else
+    {
+        cout << students.at(studentIndex).getFirstName() << " " << students.at(studentIndex).getLastName() << "'s Grades: \n";
+        students.at(studentIndex).getGrades();
+    }
 }
 void displayGradeByCode ()
 {
     string code;
     int codeIndex;
-    do
-    {
         cout << "Enter a Course Code: ";
         cin >> code;
         codeIndex = getCourseIndex(code);
-    }  while (codeIndex<0);
+    if (codeIndex<0)
+    {
+        cout << "Invalid Code Input! \n";
+        return;
+    }
+    cout <<"The Course is " << courses.at(codeIndex).getName() << "\n";
     for (const auto & student : students)
     {
-        student.getGradesOnly(code);
+        if (student.foundGrades2(code))
+        {
+            cout << student.getFirstName() << " " << student.getLastName() << "'s Grade is ";
+            student.getGradesOnly(code);
+        }
+        else
+        {
+            cout << "No Grades found for this Course.\n";
+            break;
+        }
     }
 }
