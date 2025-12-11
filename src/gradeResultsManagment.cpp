@@ -25,17 +25,17 @@ void userAssignGrade () //asks the user for the grade then calls the Assign func
     int grade;
     do
     {
-        cout << "Enter a Valid Course Code to add its grade : \n";
+        cout << "Enter a Valid Course Code to add its grade : ";
         cin >> courseCode;
     } while (getCourseIndex(courseCode)<0);
     do
     {
-        cout << "Enter a Valid Student ID to add his grade : \n";
+        cout << "Enter a Valid Student ID to add his grade : ";
         cin >> studentId;
     } while (getStudentIndex(studentId)<0);
     do
     {
-        cout << "Enter The Grade (0 -> 100) : \n";
+        cout << "Enter The Grade (0 -> 100) : ";
         cin >> grade;
     } while (grade>=100 || grade<=0);
     assignGrade(courseCode,studentId,grade);
@@ -46,17 +46,17 @@ void userEditGrade () //asks the user for the grade then calls the Edit function
     int grade;
     do
     {
-        cout << "Enter a Valid Course Code to Edit its grade : \n";
+        cout << "Enter a Valid Course Code to Edit its grade : ";
         cin >> courseCode;
     } while (getCourseIndex(courseCode)<0);
     do
     {
-        cout << "Enter a Valid Student ID to Edit his grade : \n";
+        cout << "Enter a Valid Student ID to Edit his grade : ";
         cin >> studentId;
     } while (getStudentIndex(studentId)<0);
     do
     {
-        cout << "Enter The Grade (0 -> 100) : \n";
+        cout << "Enter The Grade (0 -> 100) : ";
         cin >> grade;
     } while (grade>=100 || grade<=0);
     assignGrade(courseCode,studentId,grade);
@@ -67,7 +67,7 @@ void displayGradeByStudentId ()
     int studentIndex;
     do
     {
-        cout << "Enter a Student ID : \n";
+        cout << "Enter a Student ID : ";
         cin >> studentId;
         studentIndex = getStudentIndex(studentId);
     }  while (studentIndex<0);
@@ -79,7 +79,7 @@ void displayGradeByCode ()
     int codeIndex;
     do
     {
-        cout << "Enter a Course Code: \n";
+        cout << "Enter a Course Code: ";
         cin >> code;
         codeIndex = getCourseIndex(code);
     }  while (codeIndex<0);
