@@ -12,7 +12,7 @@ void courseManagementMenu() {
         cout << "2. Delete Course\n";
         cout << "3. Edit Course\n";
         cout << "4. Display All Courses\n";
-        cout << "0. Return to Admin Menu\n";
+        cout << "0. Save and return to Admin Menu\n";
         cout << "Enter choice: ";
         cin >> choice;
         cin.ignore();
@@ -40,6 +40,8 @@ void courseManagementMenu() {
                 break;
 
             case 0:
+                saveCourses();
+                cout << "Saved Successfully.\n";
                 cout << "Returning to Admin Menu...\n\n";
                 break;
 

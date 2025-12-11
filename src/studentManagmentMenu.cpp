@@ -13,7 +13,7 @@ void studentManagementMenu() {
         cout << "4. Show Student Information\n";
         cout << "5. Students List\n";
         cout << "6. Enroll Student in Course\n";
-        cout << "0. Save & Exit\n";
+        cout << "0. Save and return to Admin Menu\n";
         cout << "Choose: ";
 
         int c;
@@ -50,6 +50,7 @@ void studentManagementMenu() {
         else if (c == 0){
             saveStudents();
             cout << "Saved Successfully.\n";
+            cout << "Returning to Admin Menu...\n\n";
             break;
         }
         else cout << "Invalid Choice.\n";

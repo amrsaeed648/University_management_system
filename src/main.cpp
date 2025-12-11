@@ -27,6 +27,7 @@ string convertToUpper(string str);
 int main(){
 
     loadStudents();
+    loadCourses();
 
         int choice;
 
@@ -108,10 +109,17 @@ void adminMenu(){
         cout << "1. Student Management\n";
         cout << "2. Course Management\n";
         cout << "3. Grade & Results Management\n";
-        cout << "4. Back to Main Menu\n";
+        cout << "0. Back to Main Menu\n";
         cout << "Choose: ";
         cin >> choice;
         cin.ignore();
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore();
+            cout << "Invalid input! Please enter a number between 0 and 3.\n";
+            continue;
+        }
 
         switch (choice) {
             case 1:
@@ -123,10 +131,11 @@ void adminMenu(){
             case 3:
                 gradeManagementMenu();
                 break;
-            case 4:
+            case 0:
                 return;
             default:
                 cout << "Invalid option!\n";
+                break;
         }
     }
 }
@@ -158,6 +167,7 @@ void studentMenu(const Student& s) {
                 return;
             default:
                 cout << "Invalid choice!\n";
+                break;
         }
     }
 }

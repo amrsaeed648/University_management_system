@@ -9,6 +9,8 @@
 #include <utility>
 #include "course.h"
 #include "student.h"
+#include "studentManagment.h"
+
 using namespace std;
 vector<Course> courses;
 Course::Course( const string& n,
@@ -23,7 +25,7 @@ Course::Course( const string& n,
     string Course::getProfessor() const { return professor; }
     string Course::getDepartment() const { return department; }
     int Course::getYear() const { return year; }
-    vector<string> Course::getEnrolledStudents() const { return enrolledStudents; }
+    vector<string>& Course::getEnrolledStudents()  { return enrolledStudents; }
 
     // Setters
     void Course::setCode(const string& c) { code = c; }
@@ -164,4 +166,58 @@ int getCourseIndex(string code) //gives the Index of the Course
                 return i;
         }
         return -1; // Not found
+    }
+
+void saveCourses() {
+        ofstream fout("courses.txt");
+        fout << courses.size() << endl;
+
+
+        for (auto& c : courses) {
+
+            vector<string> studentsInCourse = c.getEnrolledStudents();
+
+            fout << c.getCode() << " "
+                 << c.getName() << " "
+                 << c.getProfessor() << " "
+                 << c.getDepartment() << " "
+                 << c.getYear() << "\n";
+
+
+
+            fout << studentsInCourse.size() << endl;
+            for (const auto& id : studentsInCourse)
+                fout << id << endl;
+        }
+
+        fout.close();
+    }
+
+void loadCourses() {
+        ifstream fin("courses.txt");
+
+        int count;
+        fin >> count;
+
+        for (int i = 0; i < count; i++) {
+            string code, name, professor, department;
+            int year, studentCount;
+
+            fin >> code >> name >> professor >> department >> year >> studentCount;
+
+            Course temp(name, professor, department, year);
+            temp.setCode(code);
+
+            vector<string>& studentsInCourse = temp.getEnrolledStudents();
+
+            for (int j = 0; j < studentCount; j++) {
+                string studentId;
+                fin >> studentId;
+                studentsInCourse.push_back(studentId);
+            }
+
+            courses.push_back(temp);
+        }
+
+        fin.close();
     }
