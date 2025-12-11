@@ -38,6 +38,7 @@ void deleteCourse(const string& c);
 void editCourse(const string& c);
 void displayCourses();
 int getCourseIndex(string code);
+bool validateCourse(string code);
 void saveCourses();
 void loadCourses();
 
