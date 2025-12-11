@@ -28,11 +28,18 @@ Student::Student () {
 }
 
 Student::Student (string fn, string ln, string d, int yos) {
+        transform(d.begin(), d.end(), d.begin(), ::toupper);
+        bool validDept = (d == "GEN" || d == "CSE" || d == "ECE" || d == "EPE");
+        bool validYear = (yos >= 1 && yos <= 4);
+        
+        if (!validDept && !validYear) throw invalid_argument("Error: Department does not exist.\nError: Incorrect Student level.");
+        else if (!validDept) throw invalid_argument("Error: Department does not exist.");
+        else if (!validYear) throw invalid_argument("Error: Incorrect Student level.");
+        
         GlobalStudentCount++;
         studentCount = GlobalStudentCount;
         firstName = fn;
         lastName = ln;
-        transform(d.begin(), d.end(), d.begin(), ::toupper);
         department = d;
         if (department == "GEN") yearOfStudy = 0;
         else yearOfStudy = yos;
@@ -66,20 +73,28 @@ void Student::emailGeneration () {
 // Setters
 void Student::setFirstName (string s) {firstName = s;}
 void Student::setLastName (string s) {lastName = s;}
-void Student::setID(const string& s) { id = s; }
-void Student::setEmail(const string& s) { email = s; }
+void Student::setID (const string& s) { id = s; }
+void Student::setEmail (const string& s) { email = s; }
 
 void Student::setDepartment (string s) {
         transform(s.begin(), s.end(), s.begin(), ::toupper);
-        department = s;
-        if (department == "GEN") yearOfStudy = 0;
-        idGeneration();
+        bool validDept = (s == "GEN" || s == "CSE" || s == "ECE" || s == "EPE");
+        if (validDept) {
+                department = s;
+                if (department == "GEN") yearOfStudy = 0;
+                idGeneration(); 
+        }
+        else cout<<"Error: Department does not exist.\nPlease Enter Student's Data Correctly.\n";
 }
 
 void Student::setYearOfStudy (int s) {
-        if (department == "GEN") yearOfStudy = 0;
-        else yearOfStudy = s;
-        idGeneration();
+        bool validYear = (s >= 1 && s <= 4);
+        if (validYear) {
+                if (department == "GEN") yearOfStudy = 0;
+                else yearOfStudy = s;
+                idGeneration();
+        }
+        else cout<<"Error: Incorrect Student level.\nPlease Enter Student's Data Correctly.\n";
 }
 
 void Student::setGrade(string s, double n) {
@@ -99,6 +114,7 @@ bool Student::foundGrades1() const
     if (grades.empty()) {return false;}
     return true;
 }
+
 void Student::getGrades() const
 {
     for (const auto & grade : grades)
@@ -106,6 +122,7 @@ void Student::getGrades() const
         cout<<grade.first<<" : "<<grade.second<<"\t\n";
     }
 }
+
 bool Student::foundGrades2(const string& code) const
 {
     for (auto & grade : grades)
@@ -116,6 +133,7 @@ bool Student::foundGrades2(const string& code) const
     }
         return false;
 }
+
 void Student::getGradesOnly(const string& code) const
 {
         for (int i = 0; i < grades.size(); i++) {
@@ -124,6 +142,7 @@ void Student::getGradesOnly(const string& code) const
         }
     }
 }
+
 void Student::getEnrolledCourses() const{
     if (enrolledCourses.empty()) cout<<"Student has not been enrolled to any courses";
     else {
