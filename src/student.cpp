@@ -159,7 +159,9 @@ void Student::getEnrolledCourses() const{
 
 
 void Student::addCourse(const string& courseCode){
-    enrolledCourses.push_back(courseCode);
+        bool validcourse = validateCourse(courseCode);
+        if (validcourse) enrolledCourses.push_back(courseCode);
+        else cout<<"Error: Incorrect Course Code.\nPlease Enter The Course Code Correctly.\n";
 }
  void Student::info() const{
      cout<<"{ "<<id<<" , "<<firstName<<" "<<lastName<<" , "<<email<<" , "<<department<<" , "<<yearOfStudy<<" }\n";
@@ -171,7 +173,7 @@ void Student::addCourse(const string& courseCode){
      cout<<"\nEnter Course Code:\n";
      for (int i = 0; i < n; i++) {
          string x; cin>>x;
-         enrolledCourses.push_back(x);
+         addCourse(x);
      }
  }
 
