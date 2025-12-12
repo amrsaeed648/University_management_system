@@ -35,11 +35,17 @@ void addStudent () {
 
     cout << "Enter Year of Study: ";
     cin >> yos;
-    Student st(fn, ln, dep, yos);
-    students.push_back(st);
-    cout<<"Student Added Successfully.\n";
-    cout<<"Student ID is: "<<st.getID()<<" .\n";
-    cout<<"Student Email is: "<<st.getEmail()<<" .\n";
+    try {
+        Student st(fn, ln, dep, yos);
+        students.push_back(st);
+        cout<<"Student Added Successfully.\n";
+        cout<<"Student ID is: "<<st.getID()<<" .\n";
+        cout<<"Student Email is: "<<st.getEmail()<<" .\n";
+    }
+    catch (const invalid_argument& e) {
+        cout << e.what() << endl;
+    }
+
 }
 
 void updateStudent(string id) {
@@ -120,11 +126,7 @@ void loadStudents()
         int yos;
 
         fin >> fn >> ln >> dep >> yos >> id >> email;
-        Student temp(fn, ln, dep, yos);
-
-        temp.setID(id);
-        temp.setEmail(email);
-
+        Student temp(fn, ln, dep, yos, id, email);
         students.push_back(temp);
     }
 

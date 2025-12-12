@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include <stdexcept>
 #include <vector>
 #include <utility>
 #include <stdexcept>
@@ -32,10 +33,22 @@ Student::Student (string fn, string ln, string d, int yos) {
         transform(d.begin(), d.end(), d.begin(), ::toupper);
         bool validDept = (d == "GEN" || d == "CSE" || d == "ECE" || d == "EPE");
         bool validYear = (yos >= 1 && yos <= 4);
-        
-        if (!validDept && !validYear) throw std::invalid_argument("Error: Department does not exist.\nError: Incorrect Student level.");
-        else if (!validDept) throw std::invalid_argument("Error: Department does not exist.");
-        else if (!validYear) throw std::invalid_argument("Error: Incorrect Student level.");
+
+        // if (!validDept && !validYear) throw std::invalid_argument("Error: Department does not exist.\nError: Incorrect Student level.");
+        // else if (!validDept) throw std::invalid_argument("Error: Department does not exist.");
+        // else if (!validYear) throw std::invalid_argument("Error: Incorrect Student level.");
+
+        if (!validDept || !validYear) {
+            string msg;
+
+            if (!validDept)
+                msg += "Error: Department does not exist.\n";
+
+            if (!validYear)
+                msg += "Error: Incorrect Student level.";
+
+            throw invalid_argument(msg);
+        }
         
         GlobalStudentCount++;
         studentCount = GlobalStudentCount;
@@ -46,6 +59,20 @@ Student::Student (string fn, string ln, string d, int yos) {
         else yearOfStudy = yos;
         idGeneration();
         emailGeneration();
+}
+Student::Student(string fn, string ln, string dep, int yos, string loaded_id, string loaded_email)
+{
+    firstName = fn;
+    lastName = ln;
+    department = dep;
+    yearOfStudy = yos;
+    id = loaded_id;
+    email = loaded_email;
+
+    studentCount = stoi(id.substr(id.length() - 4));
+
+    if (studentCount > GlobalStudentCount)
+        GlobalStudentCount = studentCount;
 }
 
 void Student::idGeneration () // ID = XYNNNN , X = Department No, Y = YearOfStudy, NNNN = Student Number
