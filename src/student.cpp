@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <utility>
+#include <stdexcept>
 #include "student.h"
 #include "course.h"
 using namespace std;
@@ -32,9 +33,9 @@ Student::Student (string fn, string ln, string d, int yos) {
         bool validDept = (d == "GEN" || d == "CSE" || d == "ECE" || d == "EPE");
         bool validYear = (yos >= 1 && yos <= 4);
         
-        if (!validDept && !validYear) throw invalid_argument("Error: Department does not exist.\nError: Incorrect Student level.");
-        else if (!validDept) throw invalid_argument("Error: Department does not exist.");
-        else if (!validYear) throw invalid_argument("Error: Incorrect Student level.");
+        if (!validDept && !validYear) throw std::invalid_argument("Error: Department does not exist.\nError: Incorrect Student level.");
+        else if (!validDept) throw std::invalid_argument("Error: Department does not exist.");
+        else if (!validYear) throw std::invalid_argument("Error: Incorrect Student level.");
         
         GlobalStudentCount++;
         studentCount = GlobalStudentCount;
