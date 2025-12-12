@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <vector>
 #include <utility>
+#include <stdexcept>
 #include "student.h"
 #include "course.h"
 using namespace std;
