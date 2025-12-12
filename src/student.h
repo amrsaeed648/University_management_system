@@ -14,6 +14,7 @@ private:
 public:
     Student ();
     Student (string fn, string ln, string d, int yos);
+    Student (string fn, string ln, string dep, int yos, string id, string email);
     void idGeneration ();
     void emailGeneration ();
     void setFirstName (string s);
