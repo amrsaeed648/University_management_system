@@ -68,13 +68,12 @@ Student::Student(string fn, string ln, string dep, int yos, string loaded_id, st
     yearOfStudy = yos;
     id = loaded_id;
     email = loaded_email;
-
+    
     studentCount = stoi(id.substr(id.length() - 4));
 
     if (studentCount > GlobalStudentCount)
         GlobalStudentCount = studentCount;
 }
-
 void Student::idGeneration () // ID = XYNNNN , X = Department No, Y = YearOfStudy, NNNN = Student Number
 {
         int dn;
@@ -161,7 +160,9 @@ bool Student::foundGrades2(const string& code) const
     }
         return false;
 }
-
+int Student::getGradesSize() const {return grades.size();}
+double Student::getGradesGrade(int n) const {return grades.at(n).second;}
+string Student::getGradesCode(int n) const {return grades.at(n).first;}
 void Student::displayGradesOnly(const string& code) const
 {
         for (int i = 0; i < grades.size(); i++) {

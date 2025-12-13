@@ -32,6 +32,9 @@ public:
     int getYearOfStudy() const;
     bool foundGrades1() const;
     bool foundGrades2(const string& code) const;
+    double getGradesGrade(int n) const;
+    string getGradesCode(int n) const;
+    int getGradesSize() const;
     void displayGrades() const;
     void displayGradesOnly(const string& code) const;
     void getEnrolledCourses() const;

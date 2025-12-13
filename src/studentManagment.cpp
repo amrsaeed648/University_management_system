@@ -119,6 +119,11 @@ void saveStudents() {
              << s.getYearOfStudy() << " "
              << s.getID() << " "
              << s.getEmail() << "\n";
+        fout << s.getGradesSize() << "\n";
+        for (int i=0;i<s.getGradesSize();i++)
+        {
+            fout << s.getGradesCode(i)<< " " << s.getGradesGrade(i) << "\n";
+        }
     }
 
     fout.close();
@@ -139,6 +144,17 @@ void loadStudents()
 
         fin >> fn >> ln >> dep >> yos >> id >> email;
         Student temp(fn, ln, dep, yos, id, email);
+        int gradesCount;
+        fin >> gradesCount;
+
+        for (int j=0; j<gradesCount;j++)
+        {
+            string code;
+            double grade;
+
+            fin >> code >> grade;
+            temp.setGrade(code, grade); // must exist
+        }
         students.push_back(temp);
     }
 
