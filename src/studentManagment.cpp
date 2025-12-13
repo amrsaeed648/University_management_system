@@ -187,6 +187,5 @@ void enrollStudentInCourse()
 
     students[index].addCourse(course);
 
-    cout << "✅Student Enrolled Successfully.\n";
     pauseScreen();
 }
