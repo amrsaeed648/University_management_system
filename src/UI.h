@@ -1,0 +1,7 @@
+#ifndef UNIVERSITY_MANAGEMENT_SYSTEM_UI_H
+#define UNIVERSITY_MANAGEMENT_SYSTEM_UI_H
+
+void clearScreen();
+void pauseScreen();
+
+#endif //UNIVERSITY_MANAGEMENT_SYSTEM_UI_H

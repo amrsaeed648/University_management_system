@@ -6,6 +6,8 @@ void addStudent ();
 void updateStudent(string id);
 void deleteStudent(string id);
 void studentsList();
+void showStudentInfo(string id);
+void enrollStudentInCourse();
 void saveStudents();
 void loadStudents();
 #endif //UNIVERSITY_PROGRAM_STUDENTMANAGMENT_H

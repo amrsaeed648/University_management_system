@@ -14,12 +14,13 @@ private:
 public:
     Student ();
     Student (string fn, string ln, string d, int yos);
+    Student (string fn, string ln, string dep, int yos, string id, string email);
     void idGeneration ();
     void emailGeneration ();
     void setFirstName (string s);
     void setLastName (string s);
-    void setID(const string& newID);
-    void setEmail(const string& newEmail);
+    void setID(const string& ID);
+    void setEmail(const string& Email);
     void setDepartment (string s);
     void setYearOfStudy (int s);
     void setGrade(string s, double x);
@@ -29,10 +30,14 @@ public:
     string getEmail() const;
     string getDepartment() const;
     int getYearOfStudy() const;
-    void getGrades() ;
-    void getEnrolledCourses();
-    void info();
+    bool foundGrades1() const;
+    bool foundGrades2(const string& code) const;
+    void getGrades() const;
+    void getGradesOnly(const string& code) const;
+    void getEnrolledCourses() const;
+    void info() const;
     void enrollCourse ();
+    void addCourse(const string& courseCode);
 };
 extern vector<Student> students;
 #endif //GIT_STUDENT_H

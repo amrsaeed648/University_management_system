@@ -23,7 +23,7 @@ public:
     string getDepartment() const;
     int getYear() const;
 
-    vector<string> getEnrolledStudents() const;
+    vector<string> &getEnrolledStudents();
 
     void setCode(const string& c);
     void setName(const string& n);
@@ -33,5 +33,14 @@ public:
 
    string generateCode (const string& d, int y);
 };
+void addCourse();
+void deleteCourse(const string& c);
+void editCourse(const string& c);
+void displayCourses();
+int getCourseIndex(string code);
+bool validateCourse(string code);
+void saveCourses();
+void loadCourses();
+
 extern vector<Course> courses;
 #endif //GIT_COURSE_H

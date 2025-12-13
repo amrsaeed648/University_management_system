@@ -4,122 +4,205 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include <stdexcept>
 #include <vector>
 #include <utility>
+#include <stdexcept>
 #include "student.h"
+#include "course.h"
 using namespace std;
+
 vector<Student> students;
 int Student::GlobalStudentCount = 0;
-        // constructors
-        Student::Student () {
-            GlobalStudentCount++;
-            studentCount = GlobalStudentCount;
-            firstName = "NULL";
-            lastName = "NULL";
-            id = "NULL";
-            email = "NULL";
-            department = "NULL";
-            yearOfStudy = 0;
-            idGeneration();
-            emailGeneration();
+
+// Constructors
+Student::Student () {
+        GlobalStudentCount++;
+        studentCount = GlobalStudentCount;
+        firstName = "NULL";
+        lastName = "NULL";
+        id = "NULL";
+        email = "NULL";
+        department = "NULL";
+        yearOfStudy = 0;
+        idGeneration();
+        emailGeneration();
+}
+
+Student::Student (string fn, string ln, string d, int yos) {
+        transform(d.begin(), d.end(), d.begin(), ::toupper);
+        bool validDept = (d == "GEN" || d == "CSE" || d == "ECE" || d == "EPE");
+        bool validYear = (yos >= 1 && yos <= 4);
+
+        // if (!validDept && !validYear) throw std::invalid_argument("Error: Department does not exist.\nError: Incorrect Student level.");
+        // else if (!validDept) throw std::invalid_argument("Error: Department does not exist.");
+        // else if (!validYear) throw std::invalid_argument("Error: Incorrect Student level.");
+
+        if (!validDept || !validYear) {
+            string msg;
+
+            if (!validDept)
+                msg += "Error: Department does not exist.\n";
+
+            if (!validYear)
+                msg += "Error: Incorrect Student level.";
+
+            throw invalid_argument(msg);
         }
+        
+        GlobalStudentCount++;
+        studentCount = GlobalStudentCount;
+        firstName = fn;
+        lastName = ln;
+        department = d;
+        if (department == "GEN") yearOfStudy = 0;
+        else yearOfStudy = yos;
+        idGeneration();
+        emailGeneration();
+}
+Student::Student(string fn, string ln, string dep, int yos, string loaded_id, string loaded_email)
+{
+    firstName = fn;
+    lastName = ln;
+    department = dep;
+    yearOfStudy = yos;
+    id = loaded_id;
+    email = loaded_email;
 
-        Student::Student (string fn, string ln, string d, int yos) {
-            GlobalStudentCount++;
-            studentCount = GlobalStudentCount;
-            firstName = fn;
-            lastName = ln;
-            transform(d.begin(), d.end(), d.begin(), ::toupper);
-            department = d;
-            yearOfStudy = yos;
-            idGeneration();
-            emailGeneration();
+    studentCount = stoi(id.substr(id.length() - 4));
+
+    if (studentCount > GlobalStudentCount)
+        GlobalStudentCount = studentCount;
+}
+
+void Student::idGeneration () // ID = XYNNNN , X = Department No, Y = YearOfStudy, NNNN = Student Number
+{
+        int dn;
+        if (department == "GEN") dn = 1;
+        else if (department == "CSE") dn = 2;
+        else if (department == "ECE") dn = 3;
+        else if (department == "EPE") dn = 4;
+        else dn = 0;
+
+        id = to_string(dn) + to_string(yearOfStudy);
+
+        if (studentCount < 9) id += "000" + to_string(studentCount);
+        else if (studentCount < 99) id += "00" + to_string(studentCount);
+        else if (studentCount < 999) id += "0" + to_string(studentCount);
+        else id += to_string(studentCount);
+}
+
+void Student::emailGeneration () {
+        string fullName = firstName + lastName;
+        transform(fullName.begin(), fullName.end(), fullName.begin(), ::tolower);
+        email = fullName + "@uni.edu.eg";
+}
+
+// Setters
+void Student::setFirstName (string s) {firstName = s;}
+void Student::setLastName (string s) {lastName = s;}
+void Student::setID (const string& s) { id = s; }
+void Student::setEmail (const string& s) { email = s; }
+
+void Student::setDepartment (string s) {
+        transform(s.begin(), s.end(), s.begin(), ::toupper);
+        bool validDept = (s == "GEN" || s == "CSE" || s == "ECE" || s == "EPE");
+        if (validDept) {
+                department = s;
+                if (department == "GEN") yearOfStudy = 0;
+                idGeneration(); 
         }
+        else cout<<"Error: Department does not exist.\nPlease Enter Student's Data Correctly.\n";
+}
 
-        void Student::idGeneration () // ID = XYNNN , X = Department No, Y = YearOfStudy, XXX = Student Number
-        {
-            int dn;
-            if (department == "CSE") dn = 1;
-            else if (department == "ECE") dn = 2;
-            else if (department == "EPE") dn = 3;
-            else dn = 0;
-
-            id = to_string(dn) + to_string(yearOfStudy);
-
-            if (studentCount < 9) id += "00" + to_string(studentCount);
-            else if (studentCount < 99) id += "0" + to_string(studentCount);
-            else id += to_string(studentCount);
+void Student::setYearOfStudy (int s) {
+        bool validYear = (s >= 1 && s <= 4);
+        if (validYear) {
+                if (department == "GEN") yearOfStudy = 0;
+                else yearOfStudy = s;
+                idGeneration();
         }
+        else cout<<"Error: Incorrect Student level.\nPlease Enter Student's Data Correctly.\n";
+}
 
-        void Student::emailGeneration () {
-            string fullName = firstName + lastName;
-            transform(fullName.begin(), fullName.end(), fullName.begin(), ::tolower);
-            email = fullName + "@uni.edu.eg";
+void Student::setGrade(string s, double n) {
+    grades.push_back({s,n});
+}
+
+//Getters
+string Student::getFirstName() const { return firstName; }
+string Student::getLastName() const { return lastName; }
+string Student::getID() const { return id; }
+string Student::getEmail() const { return email; }
+string Student::getDepartment() const { return department; }
+int Student::getYearOfStudy() const { return yearOfStudy; }
+
+bool Student::foundGrades1() const
+{
+    if (grades.empty()) {return false;}
+    return true;
+}
+
+void Student::getGrades() const
+{
+    for (const auto & grade : grades)
+    {
+        cout<<grade.first<<" : "<<grade.second<<"\t\n";
+    }
+}
+
+bool Student::foundGrades2(const string& code) const
+{
+    for (auto & grade : grades)
+    {
+        if (grade.first == code) {
+            return true;
         }
+    }
+        return false;
+}
 
-        // setters
-        void Student::setFirstName (string s) {firstName = s;}
-        void Student::setLastName (string s) {lastName = s;}
-
-        void Student::setID(const string& newID)      { id = newID; }
-        void Student::setEmail(const string& newEmail){ email = newEmail; }
-
-        void Student::setDepartment (string s) {
-            transform(s.begin(), s.end(), s.begin(), ::toupper);
-            department = s;
-            idGeneration();
+void Student::getGradesOnly(const string& code) const
+{
+        for (int i = 0; i < grades.size(); i++) {
+            if (grades[i].first == code) {
+            cout<<grades[i].second<<"\t\n";
         }
+    }
+}
 
-        void Student::setYearOfStudy (int s) {
-            yearOfStudy = s;
-            idGeneration();
+void Student::getEnrolledCourses() const{
+    if (enrolledCourses.empty()) cout<<"Student has not been enrolled to any courses";
+    else {
+        cout<<"Enrolled Courses: "<<enrolledCourses[0];
+        for (int i = 1; i < enrolledCourses.size(); i++) {
+            cout<<" , "<<enrolledCourses[i];
         }
-
-        void Student::setGrade(string s, double x) {
-            grades.push_back({s,x});
-        }
-
-        //Getters
-        string Student::getFirstName() const { return firstName; }
-        string Student::getLastName() const { return lastName; }
-        string Student::getID() const { return id; }
-        string Student::getEmail() const { return email; }
-        string Student::getDepartment() const { return department; }
-        int Student::getYearOfStudy() const { return yearOfStudy; }
-
-        void Student::getGrades() {
-            if (grades.empty()) cout<<"No Grades Yet.\n";
-            else {
-                for (int i = 0; i < grades.size(); i++) {
-                    cout<<grades[i].first<<" : "<<grades[i].second<<"\t\n";
-                }
-            }
-        }
-
-        void Student::getEnrolledCourses() {
-            if (enrolledCourses.empty()) cout<<"Student has not been enrolled to any courses";
-            else {
-                cout<<"Enrolled Courses: "<<enrolledCourses[0];
-                for (int i = 1; i < enrolledCourses.size(); i++) {
-                    cout<<" , "<<enrolledCourses[i];
-                }
-                cout<<" .\n";
-            }
-        }
+        cout<<" .\n";
+    }
+}
 
 
 
-        //Functions
-        void Student::info() {
-            cout<<"{ "<<id<<" , "<<firstName<<" "<<lastName<<" , "<<email<<" , "<<department<<" , "<<yearOfStudy<<" }\n";
-        }
 
-        void Student::enrollCourse () /*number of cources wants to enroll*/ {
-            cout<<"Enter How many cources u want to enroll in: ";
-            int n; cin>>n;
-            cout<<"\nEnter Course Code:\n";
-            for (int i = 0; i < n; i++) {
-                string x; cin>>x;
-                enrolledCourses.push_back(x);
-            }
-        }
+
+void Student::addCourse(const string& courseCode){
+        bool validcourse = validateCourse(courseCode);
+        if (validcourse) enrolledCourses.push_back(courseCode);
+        else cout<<"Error: Incorrect Course Code.\nPlease Enter The Course Code Correctly.\n";
+}
+ void Student::info() const{
+     cout<<"{ "<<id<<" , "<<firstName<<" "<<lastName<<" , "<<email<<" , "<<department<<" , "<<yearOfStudy<<" }\n";
+ }
+
+ void Student::enrollCourse () /*number of courses wants to enroll*/ {
+     cout<<"Enter How many courses u want to enroll in: ";
+     int n; cin>>n;
+     cout<<"\nEnter Course Code:\n";
+     for (int i = 0; i < n; i++) {
+         string x; cin>>x;
+         addCourse(x);
+     }
+ }
+
+
