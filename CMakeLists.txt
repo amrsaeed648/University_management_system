@@ -20,4 +20,6 @@ add_executable(University_management_system
         src/courseManagementMenu.cpp
         src/courseManagementMenu.h
         src/gradeManagementMenu.h
-        src/gradeManagementMenu.cpp)
+        src/gradeManagementMenu.cpp
+        src/UI.cpp
+        src/UI.h)

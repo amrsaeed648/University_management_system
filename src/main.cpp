@@ -13,7 +13,7 @@
 #include "courseManagementMenu.h"
 #include "gradeResultsManagment.h"
 #include "gradeManagementMenu.h"
-
+#include "UI.h"
 
 using namespace std;
 
@@ -26,12 +26,13 @@ string convertToUpper(string str);
 
 int main(){
 
-    loadStudents();
+    // loadStudents();
     loadCourses();
 
         int choice;
 
     while (true) {
+        clearScreen();
         cout << "\n======================= University Management System =======================\n";
         cout << "1. Admin\n";
         cout << "2. Student\n";
@@ -42,7 +43,7 @@ int main(){
 
         // LOGIN SYSTEM
         if (choice == 1) {
-
+            clearScreen();
             string username, password;
 
             cout << "\n======================= Admin Login =======================\n";
@@ -58,34 +59,38 @@ int main(){
                 adminMenu();
             } else {
                 cout << "\nInvalid Username or Password!\n";
+                pauseScreen();
             }
         }
 
         else if (choice == 2) {
-        string id, pass;
+            clearScreen();
+            string id, pass;
 
-        cout << "\n======================= Student Login =======================\n";
-        cout << "Enter UserName(ID): ";
-        getline(cin, id);
+            cout << "\n======================= Student Login =======================\n";
+            cout << "Enter UserName(ID): ";
+            getline(cin, id);
 
-        cout << "Enter Password(ID): ";
-        getline(cin, pass);
+            cout << "Enter Password(ID): ";
+            getline(cin, pass);
 
-        bool found = false;
+            bool found = false;
 
-        for (auto& s : students) {
-            if (s.getID() == id && s.getID() == pass) { // password = ID
-                cout << "\nLogin Successful.\n";
-                studentMenu(s);
-                found = true;
-                break;
+            for (auto& s : students) {
+                if (s.getID() == id && s.getID() == pass) { // password = ID
+                    cout << "\nLogin Successful.\n";
+                    pauseScreen();
+                    studentMenu(s);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                cout << "\nInvalid ID or Password!\n";
+                pauseScreen();
             }
         }
-
-        if (!found) {
-            cout << "\nInvalid ID or Password!\n";
-        }
-    }
 
         else if (choice == 0) {
             cout << "Exiting program...\n";
@@ -93,6 +98,7 @@ int main(){
         }
         else {
             cout << "Invalid choice! Try again.\n";
+            pauseScreen();
         }
     }
 
@@ -105,6 +111,7 @@ void adminMenu(){
     int choice;
 
     while (true) {
+        clearScreen();
         cout << "\n======================= University Management System =======================\n";
         cout << "1. Student Management\n";
         cout << "2. Course Management\n";
@@ -118,23 +125,28 @@ void adminMenu(){
             cin.clear();
             cin.ignore();
             cout << "Invalid input! Please enter a number between 0 and 3.\n";
+            pauseScreen();
             continue;
         }
 
         switch (choice) {
             case 1:
+                clearScreen();
                 studentManagementMenu();
                 break;
             case 2:
+                clearScreen();
                 courseManagementMenu();
                 break;
             case 3:
+                clearScreen();
                 gradeManagementMenu();
                 break;
             case 0:
                 return;
             default:
                 cout << "Invalid option!\n";
+                pauseScreen();
                 break;
         }
     }
@@ -144,6 +156,7 @@ void studentMenu(const Student& s) {
     int choice;
 
     while (true) {
+        clearScreen();
         cout << "\n======================= Student Dashboard =======================\n";
         cout << "Welcome, " << s.getFirstName() << " " << s.getLastName() << "\n";
         cout << "1. View Personal Information\n";
@@ -155,18 +168,25 @@ void studentMenu(const Student& s) {
 
         switch (choice) {
             case 1:
+                clearScreen();
                 s.info();
+                pauseScreen();
                 break;
             case 2:
+                clearScreen();
                 s.getEnrolledCourses();
+                pauseScreen();
                 break;
             case 3:
+                clearScreen();
                 displayGradeByStudentId ();
+                pauseScreen();
                 break;
             case 0:
                 return;
             default:
                 cout << "Invalid choice!\n";
+                pauseScreen();
                 break;
         }
     }
@@ -181,3 +201,4 @@ string convertToUpper(string str) {
     }
     return str;
 }
+
