@@ -118,11 +118,11 @@ void saveStudents() {
              << s.getDepartment() << " "
              << s.getYearOfStudy() << " "
              << s.getID() << " "
-             << s.getEmail() << "\n";
+             << s.getEmail() << " ";
         fout << s.getGradesSize() << "\n";
         for (int i=0;i<s.getGradesSize();i++)
         {
-            fout << s.getGradesCode(i)<< " " << s.getGradesGrade(i) << "\n";
+            fout << s.getGradesCode(i)<< " " << s.getGradesGrade(i) << " ";
         }
     }
 
@@ -153,11 +153,10 @@ void loadStudents()
             double grade;
 
             fin >> code >> grade;
-            temp.setGrade(code, grade); // must exist
+            temp.setGrade(code, grade);
         }
         students.push_back(temp);
     }
-
     fin.close();
 };
 

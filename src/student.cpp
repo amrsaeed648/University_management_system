@@ -68,7 +68,7 @@ Student::Student(string fn, string ln, string dep, int yos, string loaded_id, st
     yearOfStudy = yos;
     id = loaded_id;
     email = loaded_email;
-    
+
     studentCount = stoi(id.substr(id.length() - 4));
 
     if (studentCount > GlobalStudentCount)

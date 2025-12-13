@@ -1,5 +1,6 @@
 #include <iostream>
 #include "gradeResultsManagment.h"
+#include "studentManagment.h"
 using namespace std;
 
 void gradeManagementMenu() {
@@ -19,10 +20,12 @@ void gradeManagementMenu() {
         {
             case 1:
                 userAssignGrade();
+                saveStudents();
                 break;
 
             case 2:
                 userEditGrade();
+                saveStudents();
                 break;
 
             case 3:
