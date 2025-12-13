@@ -19,6 +19,28 @@
 #include <windows.h>
 #endif
 
+// ================= COLORS =================
+#define RESET   "\033[0m"
+#define BLACK   "\033[30m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN    "\033[36m"
+#define WHITE   "\033[37m"
+#define BOLD    "\033[1m"
+
+// ================= BACKGROUND COLORS =================
+#define BG_BLACK   "\033[40m"
+#define BG_RED     "\033[41m"
+#define BG_GREEN   "\033[42m"
+#define BG_YELLOW  "\033[43m"
+#define BG_BLUE    "\033[44m"
+#define BG_MAGENTA "\033[45m"
+#define BG_CYAN    "\033[46m"
+#define BG_WHITE   "\033[47m"
+
 using namespace std;
 
 const string Admin_UserName = "ADMIN";
@@ -27,6 +49,7 @@ const string Admin_Password = "0000";
 void adminMenu();
 void studentMenu(const Student& s);
 string convertToUpper(string str);
+void printBanner();
 
 int main(){
 #ifdef _WIN32
@@ -34,60 +57,61 @@ int main(){
     SetConsoleCP(CP_UTF8);
 #endif
 
-    loadStudents();
+    // loadStudents();
     loadCourses();
 
         int choice;
 
     while (true) {
         clearScreen();
-        cout << "\n======================= University Management System =======================\n";
-        cout << "1.🔐 Admin\n";
-        cout << "2.🎓 Student\n";
-        cout << "0.🚪 Exit\n";
-        cout << "Choose: ";
+        printBanner();
+        // cout << "\n======================= University Management System =======================\n";
+        animatedPrint("1. Admin\n");
+        animatedPrint("2. Student\n");
+        animatedPrint("0. Exit\n");
+        animatedPrint("Enter your choice : ");
         cin >> choice;
         cin.ignore();
 
         // LOGIN SYSTEM
         if (choice == 1) {
             clearScreen();
+            printBanner();
             string username, password;
 
-            cout << "\n======================= Admin Login =======================\n";
-            cout << "Enter UserName(Admin):  ";
+            animatedPrint(BOLD "\n======================= Admin Login =======================\n" RESET);
+            animatedPrint("Enter Username(Admin): ");
             getline(cin, username);
             username = convertToUpper(username);
 
-            cout << "Enter Password(Admin):  ";
+            animatedPrint("Enter Password: ");
             getline(cin, password);
 
             if (username == Admin_UserName && password == Admin_Password) {
-                cout << "\n✅Login Successful.\n";
+                animatedPrint(GREEN "\nLogin Successful.\n" RESET);
                 pauseScreen();
                 adminMenu();
             } else {
-                cout << "\nInvalid Username or Password!\n";
+                animatedPrint(RED "\nInvalid Username or Password!\n" RESET);
                 pauseScreen();
             }
         }
 
         else if (choice == 2) {
             clearScreen();
+            printBanner();
             string id, pass;
-
-            cout << "\n======================= Student Login =======================\n";
-            cout << "Enter UserName(ID): ";
+            animatedPrint("\n======================= Student Login =======================\n");
+            animatedPrint("Enter UserName(ID): ");
             getline(cin, id);
-
-            cout << "Enter Password(ID): ";
+            animatedPrint("Enter Password(ID): ");
             getline(cin, pass);
 
             bool found = false;
 
             for (auto& s : students) {
                 if (s.getID() == id && s.getID() == pass) { // password = ID
-                    cout << "\n✅Login Successful.\n";
+                    animatedPrint(GREEN "\nLogin Successful.\n" RESET);
                     pauseScreen();
                     studentMenu(s);
                     found = true;
@@ -96,17 +120,17 @@ int main(){
             }
 
             if (!found) {
-                cout << "\nInvalid ID or Password!\n";
+                animatedPrint(RED "\nInvalid Username or Password!\n" RESET);
                 pauseScreen();
             }
         }
 
         else if (choice == 0) {
-            cout << "Exiting program...\n";
+            animatedPrint("Exiting program...\n");
             break;
         }
         else {
-            cout << "Invalid choice! Try again.\n";
+            animatedPrint(RED "Invalid choice! Try again.\n" RESET);
             pauseScreen();
         }
     }
@@ -121,7 +145,8 @@ void adminMenu(){
 
     while (true) {
         clearScreen();
-        cout << "\n======================= University Management System =======================\n";
+        printBanner();
+        // cout << "\n======================= University Management System =======================\n";
         cout << "1. Student Management\n";
         cout << "2. Course Management\n";
         cout << "3. Grade & Results Management\n";
@@ -141,14 +166,17 @@ void adminMenu(){
         switch (choice) {
             case 1:
                 clearScreen();
+                printBanner();
                 studentManagementMenu();
                 break;
             case 2:
                 clearScreen();
+                printBanner();
                 courseManagementMenu();
                 break;
             case 3:
                 clearScreen();
+                printBanner();
                 gradeManagementMenu();
                 break;
             case 0:
@@ -166,6 +194,7 @@ void studentMenu(const Student& s) {
 
     while (true) {
         clearScreen();
+        printBanner();
         cout << "\n======================= Student Dashboard =======================\n";
         cout << "Welcome, " << s.getFirstName() << " " << s.getLastName() << "\n";
         cout << "1. View Personal Information\n";
@@ -178,16 +207,19 @@ void studentMenu(const Student& s) {
         switch (choice) {
             case 1:
                 clearScreen();
+                printBanner();
                 s.info();
                 pauseScreen();
                 break;
             case 2:
                 clearScreen();
+                printBanner();
                 s.getEnrolledCourses();
                 pauseScreen();
                 break;
             case 3:
                 clearScreen();
+                printBanner();
                 displayGradeByStudentId ();
                 pauseScreen();
                 break;
@@ -210,4 +242,22 @@ string convertToUpper(string str) {
     }
     return str;
 }
+
+void printBanner() {
+    cout << BG_BLACK << WHITE << BOLD << R"(
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+                            ███████╗███████╗██╗  ██╗██╗   ██╗
+                            ██╔════╝██╔════╝██║  ██║██║   ██║
+                            █████╗  █████╗  ███████║██║   ██║
+                            ██╔══╝  ██╔══╝  ██╔══██║██║   ██║
+                            ██║     ███████╗██║  ██║╚██████╔╝
+                            ╚═╝     ╚══════╝╚═╝  ╚═╝ ╚═════╝
+
+                                   MANAGEMENT SYSTEM
+═══════════════════════════════════════════════════════════════════════════════════════════
+
+)" << RESET;
+}
+
 
