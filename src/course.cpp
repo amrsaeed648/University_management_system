@@ -159,7 +159,7 @@ Course::Course( const string& n,
                      cout << "{"<<(courses.at(i)).getName() << ", " << ( courses.at(i) ).getCode() << ", "<<(courses.at(i)).getProfessor()<<"}" <<"\n";}
                      cout<<"\n"<<"\n";
     }
-int getCourseIndex(const string &code) // gives the Index of the Course
+int getCourseIndex(string code) // gives the Index of the Course
 {
         for (int i = 0; i < courses.size(); i++) {
             if ( ( courses.at(i) ).getCode() == code)
@@ -168,7 +168,7 @@ int getCourseIndex(const string &code) // gives the Index of the Course
         return -1; // Not found
 }
 
-bool validateCourse(const string &code) // Course Existence Validation
+bool validateCourse(string code) // Course Existence Validation
 {
         for (int i = 0; i < courses.size(); i++) {
             if ( ( courses.at(i) ).getCode() == code)
@@ -176,16 +176,6 @@ bool validateCourse(const string &code) // Course Existence Validation
         }
         return false; // Not found
 }
-
-string convertToUpper(string str) {
-        for (int i = 0; i < str.length(); i++) {
-            if (str[i] >= 'a' && str[i] <= 'z') {
-                str[i] = str[i] - ('a' - 'A');
-            }
-        }
-        return str;
-    }
-
 
 void saveCourses() {
         ofstream fout("courses.txt");
