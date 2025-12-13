@@ -15,6 +15,10 @@
 #include "gradeManagementMenu.h"
 #include "UI.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 using namespace std;
 
 const string Admin_UserName = "ADMIN";
@@ -25,6 +29,10 @@ void studentMenu(const Student& s);
 string convertToUpper(string str);
 
 int main(){
+#ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+#endif
 
     // loadStudents();
     loadCourses();
@@ -34,9 +42,9 @@ int main(){
     while (true) {
         clearScreen();
         cout << "\n======================= University Management System =======================\n";
-        cout << "1. Admin\n";
-        cout << "2. Student\n";
-        cout << "0. Exit\n";
+        cout << "1.🔐 Admin\n";
+        cout << "2.🎓 Student\n";
+        cout << "0.🚪 Exit\n";
         cout << "Choose: ";
         cin >> choice;
         cin.ignore();
@@ -55,7 +63,8 @@ int main(){
             getline(cin, password);
 
             if (username == Admin_UserName && password == Admin_Password) {
-                cout << "\nLogin Successful.\n";
+                cout << "\n✅Login Successful.\n";
+                pauseScreen();
                 adminMenu();
             } else {
                 cout << "\nInvalid Username or Password!\n";
@@ -78,7 +87,7 @@ int main(){
 
             for (auto& s : students) {
                 if (s.getID() == id && s.getID() == pass) { // password = ID
-                    cout << "\nLogin Successful.\n";
+                    cout << "\n✅Login Successful.\n";
                     pauseScreen();
                     studentMenu(s);
                     found = true;
