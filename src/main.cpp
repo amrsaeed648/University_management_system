@@ -35,7 +35,7 @@ int main(){
         cout << "\n======================= University Management System =======================\n";
         cout << "1. Admin\n";
         cout << "2. Student\n";
-        cout << "3. Exit\n";
+        cout << "0. Exit\n";
         cout << "Choose: ";
         cin >> choice;
         cin.ignore();
@@ -87,7 +87,7 @@ int main(){
         }
     }
 
-        else if (choice == 3) {
+        else if (choice == 0) {
             cout << "Exiting program...\n";
             break;
         }
@@ -149,7 +149,7 @@ void studentMenu(const Student& s) {
         cout << "1. View Personal Information\n";
         cout << "2. View Enrolled Courses\n";
         cout << "3. View Grades\n";
-        cout << "4. Logout\n";
+        cout << "0. Logout\n";
         cout << "Choose: ";
         cin >> choice;
 
@@ -161,9 +161,9 @@ void studentMenu(const Student& s) {
                 s.getEnrolledCourses();
                 break;
             case 3:
-                s.getGrades();
+                displayGradeByStudentId ();
                 break;
-            case 4:
+            case 0:
                 return;
             default:
                 cout << "Invalid choice!\n";
