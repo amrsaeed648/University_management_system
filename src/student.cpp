@@ -188,7 +188,10 @@ void Student::getEnrolledCourses() const{
 
 void Student::addCourse(const string& courseCode){
         bool validcourse = validateCourse(courseCode);
-        if (validcourse) enrolledCourses.push_back(courseCode);
+        if (validcourse) {
+                enrolledCourses.push_back(courseCode);
+                cout << "✅Student Enrolled Successfully.\n";
+        }
         else cout<<"Error: Incorrect Course Code.\nPlease Enter The Course Code Correctly.\n";
 }
  void Student::info() const{
