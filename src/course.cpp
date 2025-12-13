@@ -66,7 +66,7 @@ Course::Course( const string& n,
 
                      cin.ignore(numeric_limits<std::streamsize>::max(), '\n'); // to solve getline problem
                      courses.push_back(Course(n,p,d,y));
-                     cout<<"Course added successfully.\n";
+                     cout<<"✅Course added successfully.\n";
                      string rc = ( courses.at(courseCounter) ).generateCode(d,y);   // rc -> received code
                      ( courses.at(courseCounter) ).setCode(rc);
                      cout<<"Course code is : "<<( courses.at(courseCounter) ).getCode()<<"\n"<<"\n";

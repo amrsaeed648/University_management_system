@@ -1,11 +1,14 @@
 #include <iostream>
 #include "student.h"
 #include "studentManagment.h"
+#include "UI.h"
 using namespace std;
 
+
+
 void studentManagementMenu() {
-    while (true)
-    {
+    while (true) {
+        clearScreen();
         cout << "\n=============== Student Management ===============\n";
         cout << "1. Add Student\n";
         cout << "2. Update Student\n";
@@ -20,39 +23,53 @@ void studentManagementMenu() {
         cin >> c;
 
         if (c == 1){
+            clearScreen();
             addStudent();
+            pauseScreen();
         }
         else if (c == 2){
+            clearScreen();
             string id;
             cout << "Enter Student ID: ";
             cin >> id;
             updateStudent(id);
+            pauseScreen();
         }
         else if (c == 3){
+            clearScreen();
             string id;
             cout << "Enter Student ID: ";
             cin >> id;
             deleteStudent(id);
+            pauseScreen();
         }
         else if (c == 4) {
+            clearScreen();
             string id;
             cout << "Enter Student ID: ";
             cin >> id;
             showStudentInfo(id);
+            pauseScreen();
         }
         else if (c == 5){
+            clearScreen();
             studentsList();
+            pauseScreen();
         }
-        else if (c == 6)
-        {
+        else if (c == 6){
+            clearScreen();
             enrollStudentInCourse();
+            pauseScreen();
         }
         else if (c == 0){
-            saveStudents();
-            cout << "Saved Successfully.\n";
+            clearScreen();
+            // saveStudents();
+            // cout << "Saved Successfully.\n";
             cout << "Returning to Admin Menu...\n\n";
+            pauseScreen();
             break;
         }
-        else cout << "Invalid Choice.\n";
+        else {cout << "Invalid Choice.\n"; pauseScreen();}
+
     }
 }
