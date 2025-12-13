@@ -39,6 +39,7 @@ void editCourse(const string& c);
 void displayCourses();
 int getCourseIndex(string code);
 bool validateCourse(string code);
+string convertToUpper(string str);
 void saveCourses();
 void loadCourses();
 
