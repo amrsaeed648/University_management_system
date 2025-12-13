@@ -9,4 +9,7 @@ add_executable(University_Program
 	course.cpp
 		gradeResultsManagment.cpp
 		studentManagment.cpp
+		UI.cpp
+		studentManagmentMenu.cpp
+		gradeManagementMenu.cpp
 )
