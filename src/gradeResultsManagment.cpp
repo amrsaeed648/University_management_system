@@ -94,7 +94,7 @@ void displayGradeByStudentId ()
     else
     {
         cout << students.at(studentIndex).getFirstName() << " " << students.at(studentIndex).getLastName() << "'s Grades: \n";
-        students.at(studentIndex).getGrades();
+        students.at(studentIndex).displayGrades();
     }
 }
 void displayGradeByCode ()
@@ -115,7 +115,7 @@ void displayGradeByCode ()
         if (student.foundGrades2(code))
         {
             cout << student.getFirstName() << " " << student.getLastName() << "'s Grade is ";
-            student.getGradesOnly(code);
+            student.displayGradesOnly(code);
         }
         else
         {

@@ -143,7 +143,7 @@ bool Student::foundGrades1() const
     return true;
 }
 
-void Student::getGrades() const
+void Student::displayGrades() const
 {
     for (const auto & grade : grades)
     {
@@ -162,7 +162,7 @@ bool Student::foundGrades2(const string& code) const
         return false;
 }
 
-void Student::getGradesOnly(const string& code) const
+void Student::displayGradesOnly(const string& code) const
 {
         for (int i = 0; i < grades.size(); i++) {
             if (grades[i].first == code) {

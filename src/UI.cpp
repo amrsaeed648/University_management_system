@@ -11,6 +11,5 @@ void clearScreen() {
 
 void pauseScreen() {
     cout << "\nPress Enter to continue...";
-    cin.ignore();
     cin.get();
 }
