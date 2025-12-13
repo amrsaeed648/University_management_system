@@ -55,9 +55,9 @@ Course::Course( const string& n,
                      cout<<"Instructor Name : ";
                                             getline(cin,p);   cout<<"\n";
                      do{
-                     cout<<"Enter valid departement (GEN, CSE, ECE, EPE) : ";
-                                            cin>>d;           cout<<"\n";
-                        }while(d!="ECE" and d!="EPE" and d!="CSE" and d!="GEN" );
+                     cout<<"Enter valid department (GEN, CSE, ECE, POW) : ";
+                                            cin>>d;   string temp =convertToUpper(d); d=temp;        cout<<"\n";
+                        }while(d!="ECE" and d!="POW" and d!="CSE" and d!="GEN" );
 
                      do{
                      cout<<"Enter valid academic year (1, 2, 3, 4) : ";
@@ -86,13 +86,13 @@ Course::Course( const string& n,
     }
                     // A do while loop is required in main function
 
-    void editCourse(const string& c) { // idicates course by code and choose what to edit (name ,year, prof, departement)
+    void editCourse(const string& c) { // indicates course by code and choose what to edit (name ,year, prof, department)
 
-                    cout<<"Editing course code : "<<c<<"\n";
+                  //  cout<<"Editing course code : "<<c<<"\n";
        for( auto& e  : courses) { // e -> random name for course member
            if (e.getCode() == c) {
                     cout<<"Please choose an option from the menu to modify the item you want : "<<"\n";
-                    cout<<"1. Course name\n"; cout<<"2. Instructor name\n"; cout<<"3. Departement\n"; cout<<"4. Academic year\n";
+                    cout<<"1. Course name\n"; cout<<"2. Instructor name\n"; cout<<"3. Department\n"; cout<<"4. Academic year\n";
                     int choice; cin>>choice;
               switch (choice) {
                     case 1:{
@@ -120,9 +120,9 @@ Course::Course( const string& n,
                     case 3:{
                          string d;
                          do{
-                                 cout<<"Enter new valid department (GEN, CSE, ECE, EPE) : ";
-                                 cin>>d; convertToUpper(d);
-                         }while(d!="ECE" and d!="EPE" and d!="CSE" and d!="GEN" );
+                                 cout<<"Enter new valid department (GEN, CSE, ECE, POW) : ";
+                                 cin>>d; string temp =convertToUpper(d); d=temp;
+                         }while(d!="ECE" and d!="POW" and d!="CSE" and d!="GEN" );
 
                          cout<<"Old department name is : "<<e.getDepartment()<<"\n";
                          e.setDepartment(d);
@@ -147,14 +147,14 @@ Course::Course( const string& n,
                          cout<<"New course code is : "<<e.getCode()<<"\n";
                     }     break;
 
-                    default: cout<<"Invalid Choice\n"<<"\n";
+                    default: cout<<"Invalid Choice.\n"<<"\n";
               }
            }
        }
     }
 
     void displayCourses() { // display by name and code
-                     cout<<"Entered course codes : \n";
+                     cout<<"Entered courses : \n";
                      for ( int i = 0; i < courses.size(); i++ ) {
                      cout << "{"<<(courses.at(i)).getName() << ", " << ( courses.at(i) ).getCode() << ", "<<(courses.at(i)).getProfessor()<<"}" <<"\n";}
                      cout<<"\n"<<"\n";
@@ -176,6 +176,16 @@ bool validateCourse(const string &code) // Course Existence Validation
         }
         return false; // Not found
 }
+
+string convertToUpper(string str) {
+        for (int i = 0; i < str.length(); i++) {
+            if (str[i] >= 'a' && str[i] <= 'z') {
+                str[i] = str[i] - ('a' - 'A');
+            }
+        }
+        return str;
+    }
+
 
 void saveCourses() {
         ofstream fout("courses.txt");
