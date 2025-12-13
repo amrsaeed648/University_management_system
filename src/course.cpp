@@ -120,13 +120,13 @@ Course::Course( const string& n,
                     case 3:{
                          string d;
                          do{
-                                 cout<<"Enter new valid departement (GEN, CSE, ECE, EPE) : ";
-                                 cin>>d;
+                                 cout<<"Enter new valid department (GEN, CSE, ECE, EPE) : ";
+                                 cin>>d; convertToUpper(d);
                          }while(d!="ECE" and d!="EPE" and d!="CSE" and d!="GEN" );
 
-                         cout<<"Old departement name is : "<<e.getDepartment()<<"\n";
+                         cout<<"Old department name is : "<<e.getDepartment()<<"\n";
                          e.setDepartment(d);
-                         cout<<"New departement name is : "<<e.getDepartment()<<"\n"; //nc -> new code variable
+                         cout<<"New department name is : "<<e.getDepartment()<<"\n"; //nc -> new code variable
                          string nc=e.getCode(); nc.replace(0,3,d); e.setCode(nc); //ex:CSE1001 -> ECE1001
                          cout<<"New course code is : "<<e.getCode()<<"\n";
                          break;
@@ -156,22 +156,22 @@ Course::Course( const string& n,
     void displayCourses() { // display by name and code
                      cout<<"Entered course codes : \n";
                      for ( int i = 0; i < courses.size(); i++ ) {
-                     cout << (courses.at(i)).getName() << " : " << ( courses.at(i) ).getCode() << "\n";}
+                     cout << "{"<<(courses.at(i)).getName() << ", " << ( courses.at(i) ).getCode() << ", "<<(courses.at(i)).getProfessor()<<"}" <<"\n";}
                      cout<<"\n"<<"\n";
     }
-int getCourseIndex(string code) // gives the Index of the Course
+int getCourseIndex(const string &code) // gives the Index of the Course
 {
         for (int i = 0; i < courses.size(); i++) {
-            if (courses[i].getCode() == code)
+            if ( ( courses.at(i) ).getCode() == code)
                 return i;
         }
         return -1; // Not found
 }
 
-bool validateCourse(string code) // Course Existence Validation
+bool validateCourse(const string &code) // Course Existence Validation
 {
         for (int i = 0; i < courses.size(); i++) {
-            if (courses[i].getCode() == code)
+            if ( ( courses.at(i) ).getCode() == code)
                 return true;
         }
         return false; // Not found

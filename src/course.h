@@ -37,8 +37,9 @@ void addCourse();
 void deleteCourse(const string& c);
 void editCourse(const string& c);
 void displayCourses();
-int getCourseIndex(string code);
-bool validateCourse(string code);
+int getCourseIndex(const string &code);
+bool validateCourse(const string &code);
+string convertToUpper(string str);
 void saveCourses();
 void loadCourses();
 
