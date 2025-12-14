@@ -178,7 +178,7 @@ void Student::addCourse(const string& courseCode){
         bool validcourse = validateCourse(courseCode);
         if (validcourse) {
                 enrolledCourses.push_back(courseCode);
-                cout << GREEN << "✅Student Enrolled Successfully.\n" << RESET;
+                cout << GREEN << "Student Enrolled Successfully.\n" << RESET;
         }
         else cout<< RED <<"Error: Incorrect Course Code.\nPlease Enter The Course Code Correctly.\n"<< RESET;
 }

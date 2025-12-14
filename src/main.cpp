@@ -238,7 +238,7 @@ void studentMenu(const Student& s) {
             case 1:
                 clearScreen();
                 printBanner();
-                s.info();
+                showStudentInfo(s.getID());
                 pauseScreen();
                 break;
             case 2:
