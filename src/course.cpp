@@ -10,7 +10,7 @@
 #include "course.h"
 #include "student.h"
 #include "studentManagment.h"
-
+#include "UI.h"
 using namespace std;
 vector<Course> courses;
 Course::Course( const string& n,
@@ -49,115 +49,136 @@ Course::Course( const string& n,
     //  Out Of Class Functions
     void addCourse() {
                      string n,p,d; int y;
-                     cout<<"Please enter course data: (Course Name, Instructor Name, Department, Academic Year)\n";
+                     animatedPrint("Please enter course data: (Course Name, Instructor Name, Department, Academic Year)\n");
                      cout<<"Course Name : ";
                                             getline(cin,n);   cout<<"\n";
-                     cout<<"Instructor Name : ";
+                     animatedPrint("Instructor Name : ");
+
                                             getline(cin,p);   cout<<"\n";
                      do{
-                     cout<<"Enter valid department (GEN, CSE, ECE, POW) : ";
+                     animatedPrint("Enter valid department (GEN, CSE, ECE, POW) : ");
                                             cin>>d;   string temp =convertToUpper(d); d=temp;        cout<<"\n";
                         }while(d!="ECE" and d!="POW" and d!="CSE" and d!="GEN" );
 
                      do{
-                     cout<<"Enter valid academic year (1, 2, 3, 4) : ";
+                     animatedPrint("Enter valid academic year (1, 2, 3, 4) : ");
                                             cin>>y;           cout<<"\n";
                         }while(y<1 || y>4);
 
                      cin.ignore(numeric_limits<std::streamsize>::max(), '\n'); // to solve getline problem
                      courses.push_back(Course(n,p,d,y));
-                     cout<<"✅Course added successfully.\n";
+                     animatedPrint(GREEN"Course added successfully\n" RESET);
                      string rc = ( courses.at(courseCounter) ).generateCode(d,y);   // rc -> received code
                      ( courses.at(courseCounter) ).setCode(rc);
-                     cout<<"Course code is : "<<( courses.at(courseCounter) ).getCode()<<"\n"<<"\n";
+                     animatedPrint("Course code is : "+( courses.at(courseCounter) ).getCode()+"\n"+"\n");
                      courseCounter++;
+                     pauseScreen();
     }
 
     void deleteCourse(const string& c) { // delete by code using iterator and erase function
-                    bool check = false;
                     for (auto it = courses.begin(); it != courses.end(); it++) {
                     if (it->getCode() == c) {
-                    check = true;
                     courses.erase(it);
-                    cout << "Course deleted.\n"<<"\n";
-                    break;}
+                    animatedPrint( GREEN "Course deleted\n""\n" RESET); pauseScreen();
+                    return;
                     }
-                    if (!check) {cout<<"Invalid Course Code\n"<<"\n";}
+                    }
+                     animatedPrint(RED "Invalid Course Code\n""\n" RESET); pauseScreen();
+
+
     }
                     // A do while loop is required in main function
 
     void editCourse(const string& c) { // indicates course by code and choose what to edit (name ,year, prof, department)
-
-                  //  cout<<"Editing course code : "<<c<<"\n";
+            clearScreen();
+            printBanner();
+            animatedPrint("Editing course code : "+c+"\n");
        for( auto& e  : courses) { // e -> random name for course member
            if (e.getCode() == c) {
-                    cout<<"Please choose an option from the menu to modify the item you want : "<<"\n";
-                    cout<<"1. Course name\n"; cout<<"2. Instructor name\n"; cout<<"3. Department\n"; cout<<"4. Academic year\n";
+                    animatedPrint("Please choose an option from the menu to modify the item you want :\n");
+                    animatedPrint("1. Course name\n"); animatedPrint("2. Instructor name\n");
+                    animatedPrint("3. Department\n"); animatedPrint("4. Academic year\n");
                     int choice; cin>>choice;
               switch (choice) {
                     case 1:{
+                         clearScreen();
+                         printBanner();
                          string n;
-                         cout<<"Enter new course name : ";
+                         animatedPrint("Enter new course name : ");
                          cin.ignore(numeric_limits<streamsize>::max(), '\n');
                          getline(cin,n);
-                         cout<<"Old course name is : "<<e.getName()<<"\n";
+                         animatedPrint("Old course name is : "+e.getName()+"\n");
                          e.setName(n);
-                         cout<<"New course name is : "<<e.getName()<<"\n";
-                         cout<<"Course code is : "<<e.getCode()<<"\n";
-                         break;
+                         animatedPrint(GREEN "New course name is : "+e.getName()+"\n" RESET);
+                         animatedPrint("Course code is : "+e.getCode()+"\n");
+                       pauseScreen();
+                         return;
                     }
                     case 2:{
+                        clearScreen();
+                        printBanner();
                          string p;
-                         cout<<"Enter new instructor name : ";
+                         animatedPrint("Enter new instructor name : ");
                          cin.ignore(numeric_limits<streamsize>::max(), '\n');
                          getline(cin,p);
-                         cout<<"Old instructor name is : "<<e.getProfessor()<<"\n";
+                        animatedPrint("Old instructor name is : "+e.getProfessor()+"\n");
                          e.setProfessor(p);
-                         cout<<"New instructor name is : "<<e.getProfessor()<<"\n";
-                         cout<<"Course code is : "<<e.getCode()<<"\n";
-                         break;
+                         animatedPrint(GREEN "New instructor name is : "+e.getProfessor()+"\n" RESET);
+                         animatedPrint("Course code is : "+e.getCode()+"\n");
+                        pauseScreen();
+                         return;
                     }
                     case 3:{
+                        clearScreen();
+                        printBanner();
                          string d;
                          do{
-                                 cout<<"Enter new valid department (GEN, CSE, ECE, POW) : ";
+                                 animatedPrint("Enter new valid department (GEN, CSE, ECE, POW) : ");
                                  cin>>d; string temp =convertToUpper(d); d=temp;
                          }while(d!="ECE" and d!="POW" and d!="CSE" and d!="GEN" );
 
-                         cout<<"Old department name is : "<<e.getDepartment()<<"\n";
+                         animatedPrint("Old department name is : "+e.getDepartment()+"\n");
                          e.setDepartment(d);
-                         cout<<"New department name is : "<<e.getDepartment()<<"\n"; //nc -> new code variable
+                         animatedPrint("New department name is : "+e.getDepartment()+"\n"); //nc -> new code variable
                          string nc=e.getCode(); nc.replace(0,3,d); e.setCode(nc); //ex:CSE1001 -> ECE1001
-                         cout<<"New course code is : "<<e.getCode()<<"\n";
-                         break;
+                         animatedPrint(GREEN "New course code is : "+e.getCode()+"\n" RESET);
+                        pauseScreen();
+                         return;
                     }
                     case 4:{
+                        clearScreen();
+                        printBanner();
                          int y;
                          do{
-                                cout<<"Enter new valid academic year (1, 2, 3, 4) : ";
+                                animatedPrint("Enter new valid academic year (1, 2, 3, 4) : ");
                                 cin>>y;
                          }while(y<1 || y>4);
-                         cout<<"Old academic year is : "<<e.getYear()<<"\n";
+                         animatedPrint("Old academic year is : "+to_string(e.getYear())+"\n");
                          e.setYear(y);
-                         cout<<"New academic year is : "<<e.getYear()<<"\n";
+                         animatedPrint(GREEN "New academic year is : "+to_string(e.getYear())+"\n" RESET );
                          string nc;
                          nc=e.getCode();
                          nc.replace(3, 1, to_string(y));
                          e.setCode(nc); //ex:CSE1001 -> CSE3001
-                         cout<<"New course code is : "<<e.getCode()<<"\n";
-                    }     break;
+                         animatedPrint("New course code is : "+e.getCode()+"\n");
+                        pauseScreen();
+                        return;
+                    }
 
-                    default: cout<<"Invalid Choice.\n"<<"\n";
+                    default: animatedPrint(RED "Invalid choice.\n""\n" RESET); pauseScreen();
               }
+               return;
            }
+
        }
+        animatedPrint(RED "Invalid course code.\n" RESET); pauseScreen();
     }
 
     void displayCourses() { // display by name and code
-                     cout<<"Entered courses : \n";
-                     for ( int i = 0; i < courses.size(); i++ ) {
-                     cout << "{"<<(courses.at(i)).getName() << ", " << ( courses.at(i) ).getCode() << ", "<<(courses.at(i)).getProfessor()<<"}" <<"\n";}
-                     cout<<"\n"<<"\n";
+                     animatedPrint("Entered courses : \n");
+                     for (auto & course : courses) {
+                     animatedPrint( "{"+course.getName() + ", " +course.getCode() + ", "+course.getProfessor()+"}\n");}
+                     cout<<"\n"<<"\n"; pauseScreen();
     }
 int getCourseIndex(string code) // gives the Index of the Course
 {

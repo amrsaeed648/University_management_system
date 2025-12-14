@@ -1,5 +1,6 @@
 #include <iostream>
 #include "course.h"
+#include"UI.h"
 using namespace std;
 
 void courseManagementMenu() {
@@ -7,46 +8,61 @@ void courseManagementMenu() {
     string code;
 
     do {
-        cout << "======================= Course Management =======================\n";
-        cout << "1. Add Course\n";
-        cout << "2. Delete Course\n";
-        cout << "3. Edit Course\n";
-        cout << "4. Display All Courses\n";
-        cout << "0. Save and return to Admin Menu\n";
-        cout << "Enter choice: ";
+        clearScreen();
+        printBanner();
+        animatedPrint("======================= Course Management =======================\n");
+        animatedPrint( "1. Add Course\n");
+        animatedPrint( "2. Delete Course\n");
+        animatedPrint( "3. Edit Course\n");
+        animatedPrint("4. Display All Courses\n");
+        animatedPrint( "0. Save and return to Admin Menu\n");
+        animatedPrint( "Enter choice: ");
         cin >> choice;
         cin.ignore();
         cout << "\n";
 
         switch (choice) {
             case 1:
+                clearScreen();
+                printBanner();
                 addCourse();
+               /*pauseScreen();*/
                 break;
 
             case 2:
-                cout << "Enter Course Code to delete: ";
+                clearScreen();
+                printBanner();
+               animatedPrint("Enter Course Code to delete: ");
                 cin >> code;
                 deleteCourse(code);
+                pauseScreen();
                 break;
 
             case 3:
-                cout << "Enter Course Code to edit: ";
+                clearScreen();
+                printBanner();
+                animatedPrint( "Enter Course Code to edit: ");
                 cin >> code;
                 editCourse(code);
+                pauseScreen();
                 break;
 
             case 4:
+                clearScreen();
+                printBanner();
                 displayCourses();
+               /* pauseScreen();*/
                 break;
 
             case 0:
                 saveCourses();
-                cout << "Saved Successfully.\n";
-                cout << "Returning to Admin Menu...\n\n";
+               animatedPrint( "Saved Successfully.\n");
+               animatedPrint( "Returning to Admin Menu...\n\n");
+                pauseScreen();
                 break;
 
             default:
-                cout << "Invalid choice! Try again.\n\n";
+                animatedPrint( "Invalid choice! Try again.\n\n");
         }
 
     } while (choice != 0);
