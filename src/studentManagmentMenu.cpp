@@ -10,15 +10,15 @@ void studentManagementMenu() {
     while (true) {
         clearScreen();
         printBanner();
-        cout << "\n=============== Student Management ===============\n";
-        cout << "1. Add Student\n";
-        cout << "2. Update Student\n";
-        cout << "3. Delete Student\n";
-        cout << "4. Show Student Information\n";
-        cout << "5. Students List\n";
-        cout << "6. Enroll Student in Course\n";
-        cout << "0. Save and return to Admin Menu\n";
-        cout << "Choose: ";
+        animatedPrint( "\n=============== Student Management ===============\n");
+        animatedPrint( "1. Add Student\n");
+        animatedPrint( "2. Update Student\n");
+        animatedPrint( "3. Delete Student\n");
+        animatedPrint( "4. Show Student Information\n");
+        animatedPrint( "5. Students List\n");
+        animatedPrint( "6. Enroll Student in Course\n");
+        animatedPrint( "0. Save and return to Admin Menu\n");
+        animatedPrint("Choose: ");
 
         int c;
         cin >> c;
@@ -32,7 +32,7 @@ void studentManagementMenu() {
             clearScreen();
             printBanner();
             string id;
-            cout << "Enter Student ID: ";
+            animatedPrint( "Enter Student ID: ");
             cin >> id;
             updateStudent(id);
             pauseScreen();
@@ -41,7 +41,7 @@ void studentManagementMenu() {
             clearScreen();
             printBanner();
             string id;
-            cout << "Enter Student ID: ";
+            animatedPrint( "Enter Student ID: ");
             cin >> id;
             deleteStudent(id);
             pauseScreen();
@@ -50,25 +50,28 @@ void studentManagementMenu() {
             clearScreen();
             printBanner();
             string id;
-            cout << "Enter Student ID: ";
+            animatedPrint( "Enter Student ID: ");
             cin >> id;
             showStudentInfo(id);
             pauseScreen();
         }
         else if (c == 5){
             clearScreen();
+            printBanner();
             studentsList();
             pauseScreen();
         }
         else if (c == 6){
             clearScreen();
+            printBanner();
             enrollStudentInCourse();
             pauseScreen();
         }
         else if (c == 0){
             clearScreen();
-            cout << "All changes already saved to database.\n";
-            cout << "Returning to Admin Menu...\n\n";
+            printBanner();
+            animatedPrint( GREEN"All changes already saved to database.\n" RESET);
+            animatedPrint( "Returning to Admin Menu...\n\n");
             pauseScreen();
             break;
         }

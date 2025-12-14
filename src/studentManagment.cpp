@@ -29,29 +29,30 @@ void addStudent () {
     int yos;
     clearScreen();
     printBanner();
-    cout << "Enter First Name: ";
+    animatedPrint("Enter First Name: ");
     cin >> fn;
 
-    cout << "Enter Last Name: ";
+    animatedPrint( "Enter Last Name: ");
     cin >> ln;
 
-    cout << "Enter Department (GEN/CSE/ECE/POW): ";
+    animatedPrint( "Enter Department (GEN, CSE, ECE, POW): ");
     cin >> dep;
 
-    cout << "Enter Academic Year: ";
+    animatedPrint( "Enter Academic Year (1, 2, 3, 4): ");
     cin >> yos;
+
     try {
         Student st(fn, ln, dep, yos);
         students.push_back(st);
         saveStudentToDB(st);
-        cout<<"Student Added Successfully.\n";
-        cout<<"Student ID is: "<<st.getID()<<" .\n";
-        cout<<"Student Email is: "<<st.getEmail()<<" .\n";
+        animatedPrint(GREEN "Student Added Successfully.\n" RESET);
+        animatedPrint("Student ID is: "+st.getID()+" .\n");
+        animatedPrint("Student Email is: "+st.getEmail()+" .\n");
     }
     catch (const invalid_argument& e) {
         cout << e.what() << endl;
     }
-    pauseScreen();
+
 }
 
 void updateStudent(string id) {
@@ -60,7 +61,7 @@ void updateStudent(string id) {
     int index = getStudentIndex(id);
 
     if (index == -1) {
-        cout << "Student Not Found!\n";
+        animatedPrint( RED"Student Not Found!\n" RESET);
         pauseScreen();
         return;
     }
@@ -69,14 +70,9 @@ void updateStudent(string id) {
 
     while (true) {
         clearScreen();
-        cout << "================= Updating " << st.getFirstName() << " " << st.getLastName() << " =================\n";
-        cout << "1. First Name\n"
-             << "2. Last Name\n"
-             << "3. Department\n"
-             << "4. Year of Study\n"
-             << "0. Exit\n"
-             << "Select: ";
-
+        printBanner();
+        animatedPrint( "================= Updating " + st.getFirstName() + " " + st.getLastName() +" =================\n");
+        animatedPrint("1. First Name\n""2. Last Name\n" "3. Department\n""4. Year of Study\n" "0. Exit\n""Select: ");
         int c;
         cin >> c;
 
@@ -86,41 +82,41 @@ void updateStudent(string id) {
         try {
             switch (c) {
                 case 1:
-                    cout << "New First Name: ";
+                    animatedPrint( "New First Name: ");
                     cin >> input;
                     st.setFirstName(input);
                     break;
 
                 case 2:
-                    cout << "New Last Name: ";
+                    animatedPrint( "New Last Name: ");
                     cin >> input;
                     st.setLastName(input);
                     break;
 
                 case 3:
-                    cout << "New Department: ";
+                    animatedPrint("New Department: ");
                     cin >> input;
                     st.setDepartment(input);
                     break;
 
                 case 4:
-                    cout << "New Year of Study: ";
+                    animatedPrint( "New Year of Study: ");
                     cin >> input;
                     st.setYearOfStudy(stoi(input));
                     break;
 
                 default:
-                    cout << "Invalid choice\n";
+                    animatedPrint( RED "Invalid choice\n" RESET);
                     pauseScreen();
                     continue;
             }
 
             saveStudentToDB(st);
 
-            cout << "Data Updated Successfully\n";
+            animatedPrint(GREEN"Data Updated Successfully\n" RESET);
         }
         catch (const exception& e) {
-            cout << "Error: " << e.what() << endl;
+          cout<< RED<<"Error: " << e.what() << RESET <<"\n";
         }
 
         pauseScreen();
@@ -133,7 +129,7 @@ void deleteStudent(string id) {
     int index = getStudentIndex(id);
 
     if (index == -1) {
-        cout << "Student Not Found!\n";
+        animatedPrint( RED "Student Not Found!\n" RESET);
         pauseScreen();
         return;
     }
@@ -141,14 +137,14 @@ void deleteStudent(string id) {
 
     students.erase(students.begin() + index);
 
-    cout << "Student Deleted Successfully\n";
+    animatedPrint(GREEN "Student Deleted Successfully\n" RESET);
     pauseScreen();
 }
 
 void studentsList() {
     clearScreen();
     printBanner();
-    cout<< BOLD << "\n======================= Student List =======================\n" << RESET;
+    animatedPrint( BOLD  "\n======================= Student List =======================\n" RESET );
     for (int i = 0; i < students.size(); i++) students[i].info();
     pauseScreen();
 }
@@ -162,24 +158,23 @@ void showStudentInfo(string id)
     int index = getStudentIndex(id);
     if (index == -1)
     {
-        cout<< RED <<"❌Student Not Found!\n"<< RESET;
+        animatedPrint( RED "Student Not Found!\n" RESET );
         pauseScreen();
         return;
     }
 
     Student &s = students[index];
 
-    cout << "\n============== STUDENT INFORMATION ==============\n";
-    cout << "First Name   : " << s.getFirstName() << "\n";
-    cout << "Last Name    : " << s.getLastName() << "\n";
-    cout << "ID           : " << s.getID() << "\n";
-    cout << "Email        : " << s.getEmail() << "\n";
-    cout << "Department   : " << s.getDepartment() << "\n";
-    cout << "Academic Year: " << s.getYearOfStudy() << "\n";
-    cout << "=================================================\n";
+    animatedPrint( "\n============== STUDENT INFORMATION ==============\n");
+    animatedPrint( "First Name   : " + s.getFirstName() + "\n");
+    animatedPrint( "Last Name    : " + s.getLastName() + "\n");
+    animatedPrint( "ID           : " + s.getID() + "\n");
+    animatedPrint( "Email        : " + s.getEmail() + "\n");
+    animatedPrint( "Department   : " + s.getDepartment() + "\n");
+    animatedPrint( "Academic Year: " + to_string(s.getYearOfStudy()) + "\n");
+    animatedPrint( "=================================================\n");
     pauseScreen();
 }
-
 void enrollStudentInCourse()
 {
     clearScreen();
@@ -214,3 +209,4 @@ void enrollStudentInCourse()
 
     pauseScreen();
 }
+
