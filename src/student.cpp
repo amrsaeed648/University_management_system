@@ -31,7 +31,7 @@ Student::Student () {
 
 Student::Student (string fn, string ln, string d, int yos) {
         transform(d.begin(), d.end(), d.begin(), ::toupper);
-        bool validDept = (d == "GEN" || d == "CSE" || d == "ECE" || d == "EPE");
+        bool validDept = (d == "GEN" || d == "CSE" || d == "ECE" || d == "POW");
         bool validYear = (yos >= 1 && yos <= 4);
 
         if (!validDept || !validYear) {
@@ -71,7 +71,7 @@ void Student::idGeneration () // ID = XYNNNN , X = Department No, Y = Academic Y
         if (department == "GEN") dn = 1;
         else if (department == "CSE") dn = 2;
         else if (department == "ECE") dn = 3;
-        else if (department == "EPE") dn = 4;
+        else if (department == "POW") dn = 4;
         else dn = 0;
 
         id = to_string(dn) + to_string(yearOfStudy);
@@ -96,7 +96,7 @@ void Student::setEmail (const string& s) { email = s; }
 
 void Student::setDepartment (string s) {
         transform(s.begin(), s.end(), s.begin(), ::toupper);
-        bool validDept = (s == "GEN" || s == "CSE" || s == "ECE" || s == "EPE");
+        bool validDept = (s == "GEN" || s == "CSE" || s == "ECE" || s == "POW");
         if (validDept) {
                 department = s;
                 if (department == "GEN") yearOfStudy = 0;
