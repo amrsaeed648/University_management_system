@@ -2,7 +2,16 @@
 #include <iostream>
 #include <string>
 #include <thread>
+
+#define RESET   "\033[0m"
+#define BOLD    "\033[1m"
+#define WHITE   "\033[37m"
+#define BG_BLACK "\033[40m"
+
+
+
 using namespace std;
+
 
 void clearScreen() {
 #ifdef _WIN32
