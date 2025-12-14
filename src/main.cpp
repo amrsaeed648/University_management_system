@@ -18,7 +18,7 @@
 #include "gradeResultsManagment.h"
 #include "gradeManagementMenu.h"
 #include "UI.h"
-
+#include "database.h"
 #include "sqlite3.h"
 
 #ifdef _WIN32
@@ -62,7 +62,7 @@ int main(){
     system("chcp 65001 > nul");
 #endif
 
-    openStudentDatabase();
+    openDatabase();
     createStudentTable();
     loadStudentsFromDB();
 
@@ -141,7 +141,7 @@ int main(){
         }
     }
 
-    closeStudentDatabase();
+    closeDatabase();
     return 0;
 }
 
