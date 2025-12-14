@@ -84,6 +84,7 @@ int main(){
         animatedPrint("0. Exit\n");
         animatedPrint("Enter your choice : ");
         cin >> choice;
+
         if (cin.fail()) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -91,7 +92,6 @@ int main(){
             pauseScreen();
             continue;
         }
-
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         // LOGIN SYSTEM
@@ -224,6 +224,15 @@ void studentMenu(const Student& s) {
         cout << "0. Logout\n";
         cout << "Choose: ";
         cin >> choice;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            animatedPrint(RED "Invalid input! Please enter a number.\n" RESET);
+            pauseScreen();
+            continue;
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         switch (choice) {
             case 1:
