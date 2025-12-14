@@ -32,7 +32,7 @@ void addStudent () {
     cout << "Enter Last Name: ";
     cin >> ln;
 
-    cout << "Enter Department (GEN/CSE/ECE/EPE): ";
+    cout << "Enter Department (GEN/CSE/ECE/POW): ";
     cin >> dep;
 
     cout << "Enter Academic Year: ";
