@@ -94,7 +94,6 @@ void Student::setFirstName (string s) {firstName = s;}
 void Student::setLastName (string s) {lastName = s;}
 void Student::setID (const string& s) { id = s; }
 void Student::setEmail (const string& s) { email = s; }
-
 void Student::setDepartment (string s) {
         transform(s.begin(), s.end(), s.begin(), ::toupper);
         bool validDept = (s == "GEN" || s == "CSE" || s == "ECE" || s == "POW");

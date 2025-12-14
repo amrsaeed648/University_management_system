@@ -67,9 +67,7 @@ void studentManagementMenu() {
         }
         else if (c == 0){
             clearScreen();
-            printBanner();
-            saveStudents();
-            cout << GREEN << "Saved Successfully.\n" << RESET;
+            cout << "All changes already saved to database.\n";
             cout << "Returning to Admin Menu...\n\n";
             pauseScreen();
             break;

@@ -23,14 +23,10 @@ void gradeManagementMenu() {
         {
             case 1:
                 userAssignGrade();
-                saveStudents();
-                pauseScreen();
                 break;
 
             case 2:
                 userEditGrade();
-                saveStudents();
-                pauseScreen();
                 break;
 
             case 3:
