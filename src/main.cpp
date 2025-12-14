@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <limits>
 #include <string>
 #include <vector>
 #include <utility>
@@ -74,6 +75,8 @@ int main(){
 
     int choice;
 
+
+
     while (true) {
         clearScreen();
         printBanner();
@@ -83,7 +86,15 @@ int main(){
         animatedPrint("0. Exit\n");
         animatedPrint("Enter your choice : ");
         cin >> choice;
-        cin.ignore();
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            animatedPrint(RED "Invalid input! Please enter a number.\n" RESET);
+            pauseScreen();
+            continue;
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         // LOGIN SYSTEM
         if (choice == 1) {
@@ -215,6 +226,15 @@ void studentMenu(const Student& s) {
         cout << "0. Logout\n";
         cout << "Choose: ";
         cin >> choice;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            animatedPrint(RED "Invalid input! Please enter a number.\n" RESET);
+            pauseScreen();
+            continue;
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         switch (choice) {
             case 1:
