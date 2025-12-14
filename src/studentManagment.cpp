@@ -32,10 +32,10 @@ void addStudent () {
     cout << "Enter Last Name: ";
     cin >> ln;
 
-    cout << "Enter Department (GEN/CSE/ECE/EPE): ";
+    cout << "Enter Department (GEN/CSE/ECE/POW): ";
     cin >> dep;
 
-    cout << "Enter Year of Study: ";
+    cout << "Enter Academic Year: ";
     cin >> yos;
     try {
         Student st(fn, ln, dep, yos);
@@ -62,7 +62,7 @@ void updateStudent(string id) {
             // cout<<"\n====================================================================================================================\n";
             cout<<"================= You are Updating "<<st.getFirstName()<<" "<<st.getLastName()<<"'S Data Now. =================\n";
             // cout<<"====================================================================================================================\n";
-            cout<<"1. First Name\n2. Last Name\n3. Department\n4. Year of Study\n0. Exit\nPlease Select from Above: ";
+            cout<<"1. First Name\n2. Last Name\n3. Department\n4. Academic Year\n0. Exit\nPlease Select from Above: ";
             cin>>c; if (c == 1) {
                 cout<<"Enter the New Data: "; cin>>input;
                 st.setFirstName(input);
@@ -179,7 +179,7 @@ void showStudentInfo(string id)
     cout << "🆔 ID           : " << s.getID() << "\n";
     cout << "📧 Email        : " << s.getEmail() << "\n";
     cout << "🏫 Department   : " << s.getDepartment() << "\n";
-    cout << "📆 Year of Study: " << s.getYearOfStudy() << "\n";
+    cout << "📆 Academic Year: " << s.getYearOfStudy() << "\n";
     cout << "=================================================\n";
     pauseScreen();
 }
