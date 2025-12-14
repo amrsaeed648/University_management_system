@@ -12,6 +12,7 @@
 #include "course.h"
 #include "studentManagment.h"
 #include "UI.h"
+#include "database.h"
 
 using namespace std;
 
@@ -206,6 +207,8 @@ void enrollStudentInCourse()
     scg.courseCode = courseCode;
     scg.Grade = 0.0;
     studentCourseGrades.push_back(scg);
+    saveAllGradesToDB();
+
 
     cout << GREEN << "Enrolled Successfully." << RESET;
 

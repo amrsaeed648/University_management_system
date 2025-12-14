@@ -66,9 +66,11 @@ int main(){
 
     createStudentTable();
     createCourseTables();
+    createGradesTable();
 
     loadStudentsFromDB();
     loadCoursesFromDB();
+    loadStudentsFromDB();
 
     int choice;
 

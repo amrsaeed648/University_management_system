@@ -20,6 +20,21 @@ void closeDatabase() {
     if (db) sqlite3_close(db);
 }
 
+void createGradesTable() {
+    const char* gradesTable =
+        "CREATE TABLE IF NOT EXISTS grades ("
+        "course_code TEXT,"
+        "student_id TEXT,"
+        "grade REAL,"
+        "PRIMARY KEY(course_code, student_id));";
+
+    char* errMsg = nullptr;
+    if (sqlite3_exec(db, gradesTable, nullptr, nullptr, &errMsg) != SQLITE_OK) {
+        cout << "Grades table error: " << errMsg << endl;
+        sqlite3_free(errMsg);
+    }
+}
+
 void createStudentTable() {
     const char* sql =
         "CREATE TABLE IF NOT EXISTS students ("
@@ -45,12 +60,6 @@ void createCourseTables() {
         "department TEXT,"
         "year INTEGER);";
 
-    const char* enrollmentTable =
-        "CREATE TABLE IF NOT EXISTS course_students ("
-        "course_code TEXT,"
-        "student_id TEXT,"
-        "PRIMARY KEY (course_code, student_id));";
-
     char* errMsg = nullptr;
 
     if (sqlite3_exec(db, courseTable, nullptr, nullptr, &errMsg) != SQLITE_OK) {
@@ -58,10 +67,6 @@ void createCourseTables() {
         sqlite3_free(errMsg);
     }
 
-    if (sqlite3_exec(db, enrollmentTable, nullptr, nullptr, &errMsg) != SQLITE_OK) {
-        cout << "Enrollment table error: " << errMsg << endl;
-        sqlite3_free(errMsg);
-    }
 }
 
 
@@ -144,16 +149,24 @@ static int loadCourseCallback(void*, int, char** argv, char**) {
 }
 
 void saveAllGradesToDB() {
-    // Clear old entries
-    string del = "DELETE FROM course_students;";
-    sqlite3_exec(db, del.c_str(), nullptr, nullptr, nullptr);
+    // Clear old entries in grades table
+    string del = "DELETE FROM grades;";
+    char* errMsg = nullptr;
+    if (sqlite3_exec(db, del.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+        cout << "Clear grades table failed: " << errMsg << endl;
+        sqlite3_free(errMsg);
+    }
 
-    // Save each grade
+    // Save all entries from the struct vector
     for (const auto& scg : studentCourseGrades) {
         string ins =
-            "INSERT INTO course_students (course_code, student_id, grade) VALUES ('" +
+            "INSERT OR REPLACE INTO grades (course_code, student_id, grade) VALUES ('" +
             scg.courseCode + "','" + scg.studentID + "'," + to_string(scg.Grade) + ");";
-        sqlite3_exec(db, ins.c_str(), nullptr, nullptr, nullptr);
+
+        if (sqlite3_exec(db, ins.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+            cout << "Insert grade failed: " << errMsg << endl;
+            sqlite3_free(errMsg);
+        }
     }
 }
 
@@ -172,7 +185,7 @@ static int loadGradesCallback(void*, int argc, char** argv, char**) {
 void loadAllGradesFromDB() {
     studentCourseGrades.clear();
 
-    const char* sql = "SELECT course_code, student_id, grade FROM course_students;";
+    const char* sql = "SELECT course_code, student_id, grade FROM grades;";
     char* errMsg = nullptr;
     if (sqlite3_exec(db, sql, loadGradesCallback, nullptr, &errMsg) != SQLITE_OK) {
         cout << "Load grades failed: " << errMsg << endl;

@@ -10,6 +10,7 @@ using namespace std;
 void openDatabase();
 void closeDatabase();
 void createStudentTable();
+void createGradesTable();
 void saveStudentToDB(const Student& s);
 void deleteStudentFromDB(const string& id);
 static int loadStudentCallback(void*, int arg1, char** arg2, char**);
