@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include "student.h"
 #include "course.h"
+#include "UI.h"
 using namespace std;
 
 vector<Student> students;
@@ -102,7 +103,7 @@ void Student::setDepartment (string s) {
                 if (department == "GEN") yearOfStudy = 0;
                 idGeneration(); 
         }
-        else cout<<"Error: Department does not exist.\nPlease Enter Student's Data Correctly.\n";
+        else cout<<RED<<"Error: Department does not exist.\nPlease Enter Student's Data Correctly.\n"<<RESET;
 }
 
 void Student::setYearOfStudy (int s) {
@@ -112,7 +113,7 @@ void Student::setYearOfStudy (int s) {
                 else yearOfStudy = s;
                 idGeneration();
         }
-        else cout<<"Error: Incorrect Academic Year.\nPlease Enter Student's Data Correctly.\n";
+        else cout<<RED<<"Error: Incorrect Academic Year.\nPlease Enter Student's Data Correctly.\n"<<RESET;
 }
 
 void Student::setGrade(string s, double n) {
@@ -174,30 +175,27 @@ void Student::getEnrolledCourses() const{
     }
 }
 
-
-
-
-
 void Student::addCourse(const string& courseCode){
         bool validcourse = validateCourse(courseCode);
         if (validcourse) {
                 enrolledCourses.push_back(courseCode);
-                cout << "✅Student Enrolled Successfully.\n";
+                cout << GREEN << "✅Student Enrolled Successfully.\n" << RESET;
         }
-        else cout<<"Error: Incorrect Course Code.\nPlease Enter The Course Code Correctly.\n";
+        else cout<< RED <<"Error: Incorrect Course Code.\nPlease Enter The Course Code Correctly.\n"<< RESET;
 }
- void Student::info() const{
-     cout<<"{ "<<id<<" , "<<firstName<<" "<<lastName<<" , "<<email<<" , "<<department<<" , "<<yearOfStudy<<" }\n";
- }
 
- void Student::enrollCourse () /*number of courses wants to enroll*/ {
-     cout<<"Enter How many courses u want to enroll in: ";
-     int n; cin>>n;
-     cout<<"\nEnter Course Code:\n";
-     for (int i = 0; i < n; i++) {
-         string x; cin>>x;
-         addCourse(x);
-     }
- }
+void Student::info() const{
+    cout<<"{ "<<id<<" , "<<firstName<<" "<<lastName<<" , "<<email<<" , "<<department<<" , "<<yearOfStudy<<" }\n";
+}
+
+void Student::enrollCourse () /*number of courses wants to enroll*/ {
+    cout<<"Enter How many courses u want to enroll in: ";
+    int n; cin>>n;
+    cout<<"\nEnter Course Code:\n";
+    for (int i = 0; i < n; i++) {
+        string x; cin>>x;
+        addCourse(x);
+    }
+}
 
 

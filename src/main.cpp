@@ -1,3 +1,7 @@
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #include <algorithm>
 #include <cmath>
 #include <fstream>
@@ -14,10 +18,6 @@
 #include "gradeResultsManagment.h"
 #include "gradeManagementMenu.h"
 #include "UI.h"
-
-#ifdef _WIN32
-#include <windows.h>
-#endif
 
 using namespace std;
 

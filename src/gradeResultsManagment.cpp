@@ -11,7 +11,9 @@
 #include "course.h"
 #include "gradeManagementMenu.h"
 #include "studentManagment.h"
+#include "UI.h"
 using namespace std;
+
 void assignGrade (const string& courseCode, const string& studentId, const int grade) // Assigns the grade to a student
 {
     int studentIndex = getStudentIndex(studentId);
@@ -20,6 +22,7 @@ void assignGrade (const string& courseCode, const string& studentId, const int g
         students.at(studentIndex).setGrade(courseCode,grade);
     }
 }
+
 void userAssignGrade () //asks the user for the grade then calls the Assign function to assign it
 {
     string courseCode,studentId;
@@ -28,26 +31,27 @@ void userAssignGrade () //asks the user for the grade then calls the Assign func
         cin >> courseCode;
     if (getCourseIndex(courseCode)<0)
     {
-        cout << "Invalid Code Input! \n";
+        cout << RED << "Invalid Code Input! \n" << RESET;
         return;
     }
         cout << "Enter a Valid Student ID to add his grade : ";
         cin >> studentId;
     if (getStudentIndex(studentId)<0)
     {
-        cout << "Invalid ID Input! \n";
+        cout << RED << "Invalid ID Input! \n" << RESET;
         return;
     }
         cout << "Enter The Grade (0 -> 100) : ";
         cin >> grade;
     if (grade>=100 || grade<=0)
     {
-        cout << "Invalid Grade Input! \n";
+        cout << RED << "Invalid Grade Input! \n" << RESET;
         return;
     }
     assignGrade(courseCode,studentId,grade);
-    cout << "Assigned Successfully.\n";
+    cout << GREEN << "Assigned Successfully.\n" << RESET;
 }
+
 void userEditGrade () //asks the user for the grade then calls the Edit function to Edit it
 {
     string courseCode,studentId;
@@ -56,25 +60,27 @@ void userEditGrade () //asks the user for the grade then calls the Edit function
     cin >> courseCode;
     if (getCourseIndex(courseCode)<0)
     {
-        cout << "Invalid Code Input! \n";
+        cout << RED << "Invalid Code Input! \n" << RESET;
         return;
     }
         cout << "Enter a Valid Student ID to Edit his grade : ";
         cin >> studentId;
     if (getStudentIndex(studentId)<0)
     {
-        cout << "Invalid ID Input! \n";
+        cout << RED << "Invalid ID Input! \n" << RESET;
         return;
     }
         cout << "Enter The Grade (0 -> 100) : ";
         cin >> grade;
     if (grade>=100 || grade<=0)
     {
-        cout << "Invalid Grade Input! \n";
+        cout << RED << "Invalid Grade Input! \n" << RESET;
         return;
     }
     assignGrade(courseCode,studentId,grade);
+    cout << GREEN << "Edited Successfully.\n" << RESET;
 }
+
 void displayGradeByStudentId ()
 {
     string studentId;
@@ -84,7 +90,7 @@ void displayGradeByStudentId ()
         studentIndex = getStudentIndex(studentId);
     if (studentIndex<0)
     {
-        cout << "Invalid ID Input! \n";
+        cout << RED << "Invalid ID Input! \n" << RESET;
         return;
     }
     if (!students.at(studentIndex).foundGrades1())
@@ -97,6 +103,7 @@ void displayGradeByStudentId ()
         students.at(studentIndex).displayGrades();
     }
 }
+
 void displayGradeByCode ()
 {
     string code;
@@ -106,7 +113,7 @@ void displayGradeByCode ()
         codeIndex = getCourseIndex(code);
     if (codeIndex<0)
     {
-        cout << "Invalid Code Input! \n";
+        cout << RED << "Invalid Code Input! \n" << RESET;
         return;
     }
     cout <<"The Course is " << courses.at(codeIndex).getName() << "\n";
