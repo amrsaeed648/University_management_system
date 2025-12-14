@@ -55,51 +55,89 @@ void addStudent () {
 void updateStudent(string id) {
     clearScreen();
     int index = getStudentIndex(id);
-    if (index == -1) cout<<"Student Not Found!\n";
-    else {
+
+    if (index == -1) {
+        cout << "❌Student Not Found!\n";
+        pauseScreen();
+        return;
+    }
+
+    Student& st = students[index];
+
+    while (true) {
+        clearScreen();
+        cout << "================= Updating " << st.getFirstName() << " " << st.getLastName() << " =================\n";
+        cout << "1. First Name\n"
+             << "2. Last Name\n"
+             << "3. Department\n"
+             << "4. Year of Study\n"
+             << "0. Exit\n"
+             << "Select: ";
+
+        int c;
+        cin >> c;
+
+        if (c == 0) break;
+
         string input;
-        Student& st = students[index];
-        while (true) {
-            int c;
-            // cout<<"\n====================================================================================================================\n";
-            cout<<"================= You are Updating "<<st.getFirstName()<<" "<<st.getLastName()<<"'S Data Now. =================\n";
-            // cout<<"====================================================================================================================\n";
-            cout<<"1. First Name\n2. Last Name\n3. Department\n4. Year of Study\n0. Exit\nPlease Select from Above: ";
-            cin>>c; if (c == 1) {
-                cout<<"Enter the New Data: "; cin>>input;
-                st.setFirstName(input);
-                cout<<" ✅Data Updated Successfully.";
-                pauseScreen();
+        try {
+            switch (c) {
+                case 1:
+                    cout << "New First Name: ";
+                    cin >> input;
+                    st.setFirstName(input);
+                    break;
+
+                case 2:
+                    cout << "New Last Name: ";
+                    cin >> input;
+                    st.setLastName(input);
+                    break;
+
+                case 3:
+                    cout << "New Department: ";
+                    cin >> input;
+                    st.setDepartment(input);
+                    break;
+
+                case 4:
+                    cout << "New Year of Study: ";
+                    cin >> input;
+                    st.setYearOfStudy(stoi(input));
+                    break;
+
+                default:
+                    cout << "Invalid choice\n";
+                    pauseScreen();
+                    continue;
             }
-            else if (c == 2) {
-                cout<<"Enter the New Data: "; cin>>input;
-                st.setLastName(input);
-                cout<<" ✅Data Updated Successfully.";
-                pauseScreen();
-            }
-            else if (c == 3) {
-                cout<<"Enter the New Data: "; cin>>input;
-                st.setDepartment(input);
-                cout<<" ✅Data Updated Successfully.";
-                pauseScreen();
-            }
-            else if (c == 4) {
-                cout<<"Enter the New Data: "; cin>>input;
-                st.setYearOfStudy(stoi(input));
-                cout<<" ✅Data Updated Successfully.";
-                pauseScreen();
-            }
-            else if (c == 0) break;
-            else {cout<<"❌Invalid Input."; pauseScreen();}
+
+            saveStudentToDB(st);
+
+            cout << "Data Updated Successfully\n";
         }
+        catch (const exception& e) {
+            cout << "Error: " << e.what() << endl;
+        }
+
+        pauseScreen();
     }
 }
 
-void deleteStudent(string id) /* it deletes the student with id */ {
+void deleteStudent(string id) {
     clearScreen();
     int index = getStudentIndex(id);
-    if (index == -1) cout<<"❌Student Not Found!\n";
-    else students.erase(students.begin() + index);
+
+    if (index == -1) {
+        cout << "Student Not Found!\n";
+        pauseScreen();
+        return;
+    }
+    deleteStudentFromDB(id);
+
+    students.erase(students.begin() + index);
+
+    cout << "Student Deleted Successfully\n";
     pauseScreen();
 }
 
