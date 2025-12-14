@@ -40,7 +40,7 @@ void addStudent () {
     try {
         Student st(fn, ln, dep, yos);
         students.push_back(st);
-        cout<<"✅Student Added Successfully.\n";
+        cout<< GREEN <<"✅Student Added Successfully.\n" << RESET;
         cout<<"🆔Student ID is: "<<st.getID()<<" .\n";
         cout<<"📧Student Email is: "<<st.getEmail()<<" .\n";
     }
@@ -53,7 +53,10 @@ void addStudent () {
 void updateStudent(string id) {
     clearScreen();
     int index = getStudentIndex(id);
-    if (index == -1) cout<<"Student Not Found!\n";
+    if (index == -1) {
+        cout<< RED <<"Student Not Found!\n" << RESET;
+        pauseScreen();
+    }
     else {
         string input;
         Student& st = students[index];
@@ -66,29 +69,32 @@ void updateStudent(string id) {
             cin>>c; if (c == 1) {
                 cout<<"Enter the New Data: "; cin>>input;
                 st.setFirstName(input);
-                cout<<" ✅Data Updated Successfully.";
+                cout<< GREEN <<" ✅Data Updated Successfully."<< RESET;
                 pauseScreen();
             }
             else if (c == 2) {
                 cout<<"Enter the New Data: "; cin>>input;
                 st.setLastName(input);
-                cout<<" ✅Data Updated Successfully.";
+                cout<< GREEN <<" ✅Data Updated Successfully."<< RESET;
                 pauseScreen();
             }
             else if (c == 3) {
                 cout<<"Enter the New Data: "; cin>>input;
                 st.setDepartment(input);
-                cout<<" ✅Data Updated Successfully.";
+                cout<< GREEN <<" ✅Data Updated Successfully."<< RESET;
                 pauseScreen();
             }
             else if (c == 4) {
                 cout<<"Enter the New Data: "; cin>>input;
                 st.setYearOfStudy(stoi(input));
-                cout<<" ✅Data Updated Successfully.";
+                cout<< GREEN <<" ✅Data Updated Successfully."<< RESET;
                 pauseScreen();
             }
             else if (c == 0) break;
-            else {cout<<"❌Invalid Input."; pauseScreen();}
+            else {
+                cout<< RED <<"❌Invalid Input."<< RESET; 
+                pauseScreen();
+            }
         }
     }
 }
@@ -96,8 +102,11 @@ void updateStudent(string id) {
 void deleteStudent(string id) /* it deletes the student with id */ {
     clearScreen();
     int index = getStudentIndex(id);
-    if (index == -1) cout<<"❌Student Not Found!\n";
-    else students.erase(students.begin() + index);
+    if (index == -1) cout<< RED <<"❌Student Not Found!\n"<< RESET;
+    else {
+        students.erase(students.begin() + index);
+        cout<< GREEN <<"Student Removed Successfully"<< RESET;
+    }
     pauseScreen();
 }
 
@@ -167,7 +176,8 @@ void showStudentInfo(string id)
     int index = getStudentIndex(id);
     if (index == -1)
     {
-        cout << "❌Student Not Found!\n";
+        cout<< RED <<"❌Student Not Found!\n"<< RESET;
+        pauseScreen();
         return;
     }
 
@@ -194,7 +204,8 @@ void enrollStudentInCourse()
     int index = getStudentIndex(id);
     if (index == -1)
     {
-        cout << "❌Student Not Found!\n";
+        cout<< RED <<"❌Student Not Found!\n"<< RESET;
+        pauseScreen();
         return;
     }
 
@@ -202,6 +213,7 @@ void enrollStudentInCourse()
     cin >> course;
 
     students[index].addCourse(course);
+    cout<< GREEN <<"Enrolled Successfully."<< RESET;
 
     pauseScreen();
 }

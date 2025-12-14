@@ -53,8 +53,7 @@ void printBanner();
 
 int main(){
 #ifdef _WIN32
-    SetConsoleOutputCP(CP_UTF8);
-    SetConsoleCP(CP_UTF8);
+    system("chcp 65001 > nul");
 #endif
 
     loadStudents();
@@ -242,5 +241,7 @@ string convertToUpper(string str) {
     }
     return str;
 }
+
+
 
 
