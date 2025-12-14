@@ -57,7 +57,7 @@ int main(){
     SetConsoleCP(CP_UTF8);
 #endif
 
-    // loadStudents();
+    loadStudents();
     loadCourses();
 
         int choice;

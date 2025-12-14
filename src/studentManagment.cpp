@@ -119,11 +119,12 @@ void saveStudents() {
              << s.getYearOfStudy() << " "
              << s.getID() << " "
              << s.getEmail() << " ";
-        fout << s.getGradesSize() << "\n";
+        fout << s.getGradesSize() << " ";
         for (int i=0;i<s.getGradesSize();i++)
         {
             fout << s.getGradesCode(i)<< " " << s.getGradesGrade(i) << " ";
         }
+        fout << "\n";
     }
 
     fout.close();
