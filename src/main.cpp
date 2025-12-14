@@ -80,7 +80,7 @@ int main(){
     while (true) {
         clearScreen();
         printBanner();
-        // cout << "\n======================= University Management System =======================\n";
+
         animatedPrint("1. Admin\n");
         animatedPrint("2. Student\n");
         animatedPrint("0. Exit\n");
@@ -169,7 +169,7 @@ void adminMenu(){
     while (true) {
         clearScreen();
         printBanner();
-        // cout << "\n======================= University Management System =======================\n";
+
         cout << "1. Student Management\n";
         cout << "2. Course Management\n";
         cout << "3. Grade & Results Management\n";
@@ -240,7 +240,7 @@ void studentMenu(const Student& s) {
             case 1:
                 clearScreen();
                 printBanner();
-                s.info();
+                showStudentInfo(s.getID());
                 pauseScreen();
                 break;
             case 2:
