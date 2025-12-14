@@ -208,7 +208,7 @@ void enrollStudentInCourse()
 
 sqlite3* db = nullptr;
 
-void openDatabase() {
+void openStudentDatabase() {
     int exit = sqlite3_open("students.db", &db);
     if (exit != SQLITE_OK) {
         cout << "Cannot open database\n";
@@ -216,7 +216,7 @@ void openDatabase() {
     }
 }
 
-void closeDatabase() {
+void closeStudentDatabase() {
     if (db) sqlite3_close(db);
 }
 

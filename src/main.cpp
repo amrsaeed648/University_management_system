@@ -62,7 +62,7 @@ int main(){
     system("chcp 65001 > nul");
 #endif
 
-    openDatabase();
+    openStudentDatabase();
     createStudentTable();
     loadStudentsFromDB();
 
@@ -141,7 +141,7 @@ int main(){
         }
     }
 
-    closeDatabase();
+    closeStudentDatabase();
     return 0;
 }
 
