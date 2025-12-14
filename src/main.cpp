@@ -18,7 +18,7 @@
 #include "gradeResultsManagment.h"
 #include "gradeManagementMenu.h"
 #include "UI.h"
-
+#include "database.h"
 #include "sqlite3.h"
 
 #ifdef _WIN32
@@ -63,8 +63,12 @@ int main(){
 #endif
 
     openDatabase();
+
     createStudentTable();
+    createCourseTables();
+
     loadStudentsFromDB();
+    loadCoursesFromDB();
 
     int choice;
 

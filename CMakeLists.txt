@@ -26,4 +26,6 @@ add_executable(University_management_system
         src/UI.cpp
         src/UI.h
         external/sqlite/sqlite3.c
+        src/database.cpp
+        src/database.h
 )

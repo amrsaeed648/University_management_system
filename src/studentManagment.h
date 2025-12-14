@@ -15,8 +15,8 @@ void showStudentInfo(std::string id);
 void enrollStudentInCourse();
 
 // Database (SQLite)
-void openDatabase();
-void closeDatabase();
+void openStudentDatabase();
+void closeStudentDatabase();
 void createStudentTable();
 void saveStudentToDB(const Student& s);
 void deleteStudentFromDB(const std::string& id);
