@@ -8,6 +8,7 @@
 #include <utility>
 #include "gradeResultsManagment.h"
 #include "Student.h"
+#include "sqlite3.h"
 #include "course.h"
 #include "studentManagment.h"
 #include "UI.h"
@@ -40,6 +41,7 @@ void addStudent () {
     try {
         Student st(fn, ln, dep, yos);
         students.push_back(st);
+        saveStudentToDB(st);
         cout<<"✅Student Added Successfully.\n";
         cout<<"🆔Student ID is: "<<st.getID()<<" .\n";
         cout<<"📧Student Email is: "<<st.getEmail()<<" .\n";
@@ -107,59 +109,7 @@ void studentsList() {
     pauseScreen();
 }
 
-void saveStudents() {
-    clearScreen();
-    ofstream fout("students.txt");
 
-    fout << students.size() << "\n";
-    for (auto &s : students) {
-        fout << s.getFirstName() << " "
-             << s.getLastName() << " "
-             << s.getDepartment() << " "
-             << s.getYearOfStudy() << " "
-             << s.getID() << " "
-             << s.getEmail() << " ";
-        fout << s.getGradesSize() << " ";
-        for (int i=0;i<s.getGradesSize();i++)
-        {
-            fout << s.getGradesCode(i)<< " " << s.getGradesGrade(i) << " ";
-        }
-        fout << "\n";
-    }
-
-    fout.close();
-}
-
-// Load students from file
-void loadStudents()
-{
-    ifstream fin("students.txt");
-    if (!fin) return;
-
-    int count;
-    fin >> count;
-
-    for (int i = 0; i < count; i++) {
-        string fn, ln, dep, email, id;
-        int yos;
-
-        fin >> fn >> ln >> dep >> yos >> id >> email;
-        Student temp(fn, ln, dep, yos, id, email);
-        int gradesCount;
-        fin >> gradesCount;
-
-        for (int j=0; j<gradesCount;j++)
-        {
-            string code;
-            double grade;
-
-            fin >> code >> grade;
-            temp.setGrade(code, grade);
-        }
-        students.push_back(temp);
-    }
-    fin.close();
-};
 
 void showStudentInfo(string id)
 {
@@ -188,20 +138,111 @@ void enrollStudentInCourse()
 {
     clearScreen();
     string id, course;
-    cout << "🆔Enter Student ID: ";
+    cout << "Enter Student ID: ";
     cin >> id;
 
     int index = getStudentIndex(id);
     if (index == -1)
     {
-        cout << "❌Student Not Found!\n";
+        cout << "Student Not Found!\n";
         return;
     }
 
-    cout << "📚Enter Course Code: ";
+    cout << "Enter Course Code: ";
     cin >> course;
 
     students[index].addCourse(course);
 
     pauseScreen();
 }
+
+/* ===================== SQLITE ===================== */
+
+
+sqlite3* db = nullptr;
+
+void openDatabase() {
+    int exit = sqlite3_open("students.db", &db);
+    if (exit != SQLITE_OK) {
+        cout << "Cannot open database\n";
+        db = nullptr;
+    }
+}
+
+void closeDatabase() {
+    if (db) sqlite3_close(db);
+}
+
+void createStudentTable() {
+    const char* sql =
+        "CREATE TABLE IF NOT EXISTS students ("
+        "id TEXT PRIMARY KEY,"
+        "first_name TEXT,"
+        "last_name TEXT,"
+        "department TEXT,"
+        "year INTEGER,"
+        "email TEXT);";
+
+    char* errMsg = nullptr;
+    if (sqlite3_exec(db, sql, nullptr, nullptr, &errMsg) != SQLITE_OK) {
+        cout << "Table error: " << errMsg << endl;
+        sqlite3_free(errMsg);
+    }
+}
+
+/* ===================== SAVE / DELETE ===================== */
+
+void saveStudentToDB(const Student& s) {
+    string sql =
+        "INSERT OR REPLACE INTO students VALUES ('" +
+        s.getID() + "','" +
+        s.getFirstName() + "','" +
+        s.getLastName() + "','" +
+        s.getDepartment() + "'," +
+        to_string(s.getYearOfStudy()) + ",'" +
+        s.getEmail() + "');";
+
+    char* errMsg = nullptr;
+    if (sqlite3_exec(db, sql.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+        cout << "Save failed: " << errMsg << endl;
+        sqlite3_free(errMsg);
+    }
+}
+
+void deleteStudentFromDB(const string& id) {
+    string sql = "DELETE FROM students WHERE id='" + id + "';";
+    char* errMsg = nullptr;
+    sqlite3_exec(db, sql.c_str(), nullptr, nullptr, &errMsg);
+}
+
+/* ===================== LOAD ===================== */
+
+static int loadCallback(void*, int arg1, char** arg2, char**) {
+    string id    = arg2[0];
+    string fn    = arg2[1];
+    string ln    = arg2[2];
+    string dep   = arg2[3];
+    int yos      = stoi(arg2[4]);
+    string email = arg2[5];
+
+    Student s(fn, ln, dep, yos);
+    s.setID(id);
+    s.setEmail(email);
+
+    students.push_back(s);
+    return 0;
+}
+
+void loadStudentsFromDB() {
+    students.clear();
+
+    const char* sql =
+        "SELECT id, first_name, last_name, department, year, email FROM students;";
+
+    char* errMsg = nullptr;
+    if (sqlite3_exec(db, sql, loadCallback, nullptr, &errMsg) != SQLITE_OK) {
+        cout << "Load failed: " << errMsg << endl;
+        sqlite3_free(errMsg);
+    }
+}
+

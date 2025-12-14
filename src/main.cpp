@@ -15,6 +15,8 @@
 #include "gradeManagementMenu.h"
 #include "UI.h"
 
+#include "sqlite3.h"
+
 #ifdef _WIN32
 #include <windows.h>
 #endif
@@ -56,10 +58,11 @@ int main(){
     system("chcp 65001 > nul");
 #endif
 
-    loadStudents();
-    loadCourses();
+    openDatabase();
+    createStudentTable();
+    loadStudentsFromDB();
 
-        int choice;
+    int choice;
 
     while (true) {
         clearScreen();
@@ -134,7 +137,7 @@ int main(){
         }
     }
 
-
+    closeDatabase();
     return 0;
 }
 

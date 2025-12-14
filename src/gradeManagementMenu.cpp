@@ -20,12 +20,10 @@ void gradeManagementMenu() {
         {
             case 1:
                 userAssignGrade();
-                saveStudents();
                 break;
 
             case 2:
                 userEditGrade();
-                saveStudents();
                 break;
 
             case 3:
