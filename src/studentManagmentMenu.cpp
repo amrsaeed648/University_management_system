@@ -9,6 +9,7 @@ using namespace std;
 void studentManagementMenu() {
     while (true) {
         clearScreen();
+        printBanner();
         cout << "\n=============== Student Management ===============\n";
         cout << "1. Add Student\n";
         cout << "2. Update Student\n";
@@ -29,6 +30,7 @@ void studentManagementMenu() {
         }
         else if (c == 2){
             clearScreen();
+            printBanner();
             string id;
             cout << "Enter Student ID: ";
             cin >> id;
@@ -37,6 +39,7 @@ void studentManagementMenu() {
         }
         else if (c == 3){
             clearScreen();
+            printBanner();
             string id;
             cout << "Enter Student ID: ";
             cin >> id;
@@ -45,6 +48,7 @@ void studentManagementMenu() {
         }
         else if (c == 4) {
             clearScreen();
+            printBanner();
             string id;
             cout << "Enter Student ID: ";
             cin >> id;
@@ -68,7 +72,7 @@ void studentManagementMenu() {
             pauseScreen();
             break;
         }
-        else {cout << "Invalid Choice.\n"; pauseScreen();}
+        else {cout << RED << "Invalid Choice.\n" << RESET; pauseScreen();}
 
     }
 }

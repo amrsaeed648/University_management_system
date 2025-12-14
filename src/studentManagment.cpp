@@ -27,24 +27,25 @@ void addStudent () {
     string fn, ln, dep;
     int yos;
     clearScreen();
+    printBanner();
     cout << "Enter First Name: ";
     cin >> fn;
 
     cout << "Enter Last Name: ";
     cin >> ln;
 
-    cout << "Enter Department (GEN/CSE/ECE/EPE): ";
+    cout << "Enter Department (GEN/CSE/ECE/POW): ";
     cin >> dep;
 
-    cout << "Enter Year of Study: ";
+    cout << "Enter Academic Year: ";
     cin >> yos;
     try {
         Student st(fn, ln, dep, yos);
         students.push_back(st);
         saveStudentToDB(st);
-        cout<<"✅Student Added Successfully.\n";
-        cout<<"🆔Student ID is: "<<st.getID()<<" .\n";
-        cout<<"📧Student Email is: "<<st.getEmail()<<" .\n";
+        cout<<"Student Added Successfully.\n";
+        cout<<"Student ID is: "<<st.getID()<<" .\n";
+        cout<<"Student Email is: "<<st.getEmail()<<" .\n";
     }
     catch (const invalid_argument& e) {
         cout << e.what() << endl;
@@ -54,10 +55,11 @@ void addStudent () {
 
 void updateStudent(string id) {
     clearScreen();
+    printBanner();
     int index = getStudentIndex(id);
 
     if (index == -1) {
-        cout << "❌Student Not Found!\n";
+        cout << "Student Not Found!\n";
         pauseScreen();
         return;
     }
@@ -126,6 +128,7 @@ void updateStudent(string id) {
 
 void deleteStudent(string id) {
     clearScreen();
+    printBanner();
     int index = getStudentIndex(id);
 
     if (index == -1) {
@@ -143,6 +146,8 @@ void deleteStudent(string id) {
 
 void studentsList() {
     clearScreen();
+    printBanner();
+    cout<< BOLD << "\n======================= Student List =======================\n" << RESET;
     for (int i = 0; i < students.size(); i++) students[i].info();
     pauseScreen();
 }
@@ -152,22 +157,24 @@ void studentsList() {
 void showStudentInfo(string id)
 {
     clearScreen();
+    printBanner();
     int index = getStudentIndex(id);
     if (index == -1)
     {
-        cout << "❌Student Not Found!\n";
+        cout<< RED <<"❌Student Not Found!\n"<< RESET;
+        pauseScreen();
         return;
     }
 
     Student &s = students[index];
 
     cout << "\n============== STUDENT INFORMATION ==============\n";
-    cout << "👤 First Name   : " << s.getFirstName() << "\n";
-    cout << "👤 Last Name    : " << s.getLastName() << "\n";
-    cout << "🆔 ID           : " << s.getID() << "\n";
-    cout << "📧 Email        : " << s.getEmail() << "\n";
-    cout << "🏫 Department   : " << s.getDepartment() << "\n";
-    cout << "📆 Year of Study: " << s.getYearOfStudy() << "\n";
+    cout << "First Name   : " << s.getFirstName() << "\n";
+    cout << "Last Name    : " << s.getLastName() << "\n";
+    cout << "ID           : " << s.getID() << "\n";
+    cout << "Email        : " << s.getEmail() << "\n";
+    cout << "Department   : " << s.getDepartment() << "\n";
+    cout << "Academic Year: " << s.getYearOfStudy() << "\n";
     cout << "=================================================\n";
     pauseScreen();
 }
@@ -175,6 +182,7 @@ void showStudentInfo(string id)
 void enrollStudentInCourse()
 {
     clearScreen();
+    printBanner();
     string id, course;
     cout << "Enter Student ID: ";
     cin >> id;
@@ -190,6 +198,7 @@ void enrollStudentInCourse()
     cin >> course;
 
     students[index].addCourse(course);
+    cout<< GREEN <<"Enrolled Successfully."<< RESET;
 
     pauseScreen();
 }

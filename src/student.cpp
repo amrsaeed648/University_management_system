@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include "student.h"
 #include "course.h"
+#include "UI.h"
 using namespace std;
 
 vector<Student> students;
@@ -31,22 +32,13 @@ Student::Student () {
 
 Student::Student (string fn, string ln, string d, int yos) {
         transform(d.begin(), d.end(), d.begin(), ::toupper);
-        bool validDept = (d == "GEN" || d == "CSE" || d == "ECE" || d == "EPE");
+        bool validDept = (d == "GEN" || d == "CSE" || d == "ECE" || d == "POW");
         bool validYear = (yos >= 1 && yos <= 4);
-
-        // if (!validDept && !validYear) throw std::invalid_argument("Error: Department does not exist.\nError: Incorrect Student level.");
-        // else if (!validDept) throw std::invalid_argument("Error: Department does not exist.");
-        // else if (!validYear) throw std::invalid_argument("Error: Incorrect Student level.");
 
         if (!validDept || !validYear) {
             string msg;
-
-            if (!validDept)
-                msg += "Error: Department does not exist.\n";
-
-            if (!validYear)
-                msg += "Error: Incorrect Student level.";
-
+            if (!validDept) msg += "Error: Department does not exist.\n";
+            if (!validYear) msg += "Error: Incorrect Academic Year.";
             throw invalid_argument(msg);
         }
         
@@ -74,13 +66,13 @@ Student::Student(string fn, string ln, string dep, int yos, string loaded_id, st
     if (studentCount > GlobalStudentCount)
         GlobalStudentCount = studentCount;
 }
-void Student::idGeneration () // ID = XYNNNN , X = Department No, Y = YearOfStudy, NNNN = Student Number
+void Student::idGeneration () // ID = XYNNNN , X = Department No, Y = Academic Year, NNNN = Student Number
 {
         int dn;
         if (department == "GEN") dn = 1;
         else if (department == "CSE") dn = 2;
         else if (department == "ECE") dn = 3;
-        else if (department == "EPE") dn = 4;
+        else if (department == "POW") dn = 4;
         else dn = 0;
 
         id = to_string(dn) + to_string(yearOfStudy);
@@ -104,13 +96,13 @@ void Student::setID (const string& s) { id = s; }
 void Student::setEmail (const string& s) { email = s; }
 void Student::setDepartment (string s) {
         transform(s.begin(), s.end(), s.begin(), ::toupper);
-        bool validDept = (s == "GEN" || s == "CSE" || s == "ECE" || s == "EPE");
+        bool validDept = (s == "GEN" || s == "CSE" || s == "ECE" || s == "POW");
         if (validDept) {
                 department = s;
                 if (department == "GEN") yearOfStudy = 0;
                 idGeneration(); 
         }
-        else cout<<"Error: Department does not exist.\nPlease Enter Student's Data Correctly.\n";
+        else cout<<RED<<"Error: Department does not exist.\nPlease Enter Student's Data Correctly.\n"<<RESET;
 }
 
 void Student::setYearOfStudy (int s) {
@@ -120,7 +112,7 @@ void Student::setYearOfStudy (int s) {
                 else yearOfStudy = s;
                 idGeneration();
         }
-        else cout<<"Error: Incorrect Student level.\nPlease Enter Student's Data Correctly.\n";
+        else cout<<RED<<"Error: Incorrect Academic Year.\nPlease Enter Student's Data Correctly.\n"<<RESET;
 }
 
 void Student::setGrade(string s, double n) {
@@ -182,30 +174,27 @@ void Student::getEnrolledCourses() const{
     }
 }
 
-
-
-
-
 void Student::addCourse(const string& courseCode){
         bool validcourse = validateCourse(courseCode);
         if (validcourse) {
                 enrolledCourses.push_back(courseCode);
-                cout << "✅Student Enrolled Successfully.\n";
+                cout << GREEN << "✅Student Enrolled Successfully.\n" << RESET;
         }
-        else cout<<"Error: Incorrect Course Code.\nPlease Enter The Course Code Correctly.\n";
+        else cout<< RED <<"Error: Incorrect Course Code.\nPlease Enter The Course Code Correctly.\n"<< RESET;
 }
- void Student::info() const{
-     cout<<"{ "<<id<<" , "<<firstName<<" "<<lastName<<" , "<<email<<" , "<<department<<" , "<<yearOfStudy<<" }\n";
- }
 
- void Student::enrollCourse () /*number of courses wants to enroll*/ {
-     cout<<"Enter How many courses u want to enroll in: ";
-     int n; cin>>n;
-     cout<<"\nEnter Course Code:\n";
-     for (int i = 0; i < n; i++) {
-         string x; cin>>x;
-         addCourse(x);
-     }
- }
+void Student::info() const{
+    cout<<"{ "<<id<<" , "<<firstName<<" "<<lastName<<" , "<<email<<" , "<<department<<" , "<<yearOfStudy<<" }\n";
+}
+
+void Student::enrollCourse () /*number of courses wants to enroll*/ {
+    cout<<"Enter How many courses u want to enroll in: ";
+    int n; cin>>n;
+    cout<<"\nEnter Course Code:\n";
+    for (int i = 0; i < n; i++) {
+        string x; cin>>x;
+        addCourse(x);
+    }
+}
 
 
