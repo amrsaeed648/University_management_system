@@ -3,6 +3,7 @@
 #include "student.h"
 #include "course.h"
 #include "studentManagment.h"
+#include "gradeResultsManagment.h"
 #include <iostream>
 using namespace std;
 sqlite3* db = nullptr;
@@ -83,6 +84,7 @@ void saveStudentToDB(const Student& s) {
     }
 }
 void saveCourseToDB(const Course& c) {
+    // Save course info
     string sql =
         "INSERT OR REPLACE INTO courses VALUES ('" +
         c.getCode() + "','" +
@@ -97,20 +99,20 @@ void saveCourseToDB(const Course& c) {
         sqlite3_free(errMsg);
     }
 
-    // Clear old enrollments
-    string del =
-        "DELETE FROM course_students WHERE course_code='" + c.getCode() + "';";
+    // Clear old enrollments/grades for this course
+    string del = "DELETE FROM course_students WHERE course_code='" + c.getCode() + "';";
     sqlite3_exec(db, del.c_str(), nullptr, nullptr, nullptr);
 
-    // Save enrolled students
-    for (const string& id : c.getEnrolledStudents()) {
-        string ins =
-            "INSERT INTO course_students VALUES ('" +
-            c.getCode() + "','" + id + "');";
-        sqlite3_exec(db, ins.c_str(), nullptr, nullptr, nullptr);
+    // Save new enrollments/grades for this course using studentCourseGrades struct
+    for (const auto& scg : studentCourseGrades) {
+        if (scg.courseCode == c.getCode()) {
+            string ins =
+                "INSERT INTO course_students (course_code, student_id, grade) VALUES ('" +
+                scg.courseCode + "','" + scg.studentID + "'," + to_string(scg.Grade) + ");";
+            sqlite3_exec(db, ins.c_str(), nullptr, nullptr, nullptr);
+        }
     }
 }
-
 
 void deleteStudentFromDB(const string& id) {
     string sql = "DELETE FROM students WHERE id='" + id + "';";
@@ -155,18 +157,19 @@ static int loadCourseCallback(void*, int, char** argv, char**) {
     return 0;
 }
 
-static int loadEnrollmentCallback(void*, int, char** argv, char**) {
-    string courseCode = argv[0];
-    string studentID  = argv[1];
+static int loadstudentCourseGradesCallback(void*, int argc, char** argv, char**) {
+    if (argc < 3) return 0; // ensure we have enough columns
 
-    for (Course& c : courses) {
-        if (c.getCode() == courseCode) {
-            c.getEnrolledStudents().push_back(studentID);
-            break;
-        }
-    }
+    studentCourseGrade scg;
+    scg.courseCode = argv[0];
+    scg.studentID  = argv[1];
+    scg.Grade      = stod(argv[2]); // convert string to double
+
+    studentCourseGrades.push_back(scg);
+
     return 0;
 }
+
 
 void loadStudentsFromDB() {
     students.clear();
@@ -197,6 +200,6 @@ void loadCoursesFromDB() {
     const char* enrollSQL =
         "SELECT course_code, student_id FROM course_students;";
 
-    sqlite3_exec(db, enrollSQL, loadEnrollmentCallback, nullptr, nullptr);
+    sqlite3_exec(db, enrollSQL, loadstudentCourseGradesCallback, nullptr, nullptr);
 }
 

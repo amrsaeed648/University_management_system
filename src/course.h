@@ -14,7 +14,6 @@ class Course
 private:
     string code, name, professor, department;
     int year;
-    vector<string> enrolledStudents; // student IDs
 
 public:
     Course(    const string& n = "",
@@ -27,10 +26,6 @@ public:
     string getProfessor() const;
     string getDepartment() const;
     int getYear() const;
-
-    vector<string>& getEnrolledStudents();              // non-const
-    const vector<string>& getEnrolledStudents() const; // const
-
     void setCode(const string& c);
     void setName(const string& n);
     void setProfessor(const string& p);
