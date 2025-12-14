@@ -13,7 +13,7 @@
 #include "studentManagment.h"
 #include "UI.h"
 using namespace std;
-
+vector<studentCourseGrade> studentCourseGrades;
 void assignGrade (const string& courseCode, const string& studentId, const int grade) // Assigns the grade to a student
 {
     int studentIndex = getStudentIndex(studentId);

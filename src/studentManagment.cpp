@@ -12,6 +12,7 @@
 #include "course.h"
 #include "studentManagment.h"
 #include "UI.h"
+#include "database.h"
 
 using namespace std;
 
@@ -183,7 +184,7 @@ void enrollStudentInCourse()
 {
     clearScreen();
     printBanner();
-    string id, course;
+    string id, courseCode;
     cout << "Enter Student ID: ";
     cin >> id;
 
@@ -195,10 +196,21 @@ void enrollStudentInCourse()
     }
 
     cout << "Enter Course Code: ";
-    cin >> course;
+    cin >> courseCode;
 
-    students[index].addCourse(course);
-    cout<< GREEN <<"Enrolled Successfully."<< RESET;
+    // Add course to student's enrolled courses
+    students[index].addCourse(courseCode);
+
+    // Add entry to the global studentCourseGrades vector with default grade 0.0
+    studentCourseGrade scg;
+    scg.studentID = id;
+    scg.courseCode = courseCode;
+    scg.Grade = 0.0;
+    studentCourseGrades.push_back(scg);
+    saveAllGradesToDB();
+
+
+    cout << GREEN << "Enrolled Successfully." << RESET;
 
     pauseScreen();
 }

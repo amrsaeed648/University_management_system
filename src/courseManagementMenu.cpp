@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 #include "course.h"
 #include "database.h"
 #include"UI.h"
@@ -19,7 +20,14 @@ void courseManagementMenu() {
         animatedPrint( "0. Save and return to Admin Menu\n");
         animatedPrint( "Enter choice: ");
         cin >> choice;
-        cin.ignore();
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            animatedPrint(RED "Invalid input! Please enter a number.\n" RESET);
+            pauseScreen();
+            continue;
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "\n";
 
         switch (choice) {

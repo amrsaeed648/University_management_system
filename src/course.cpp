@@ -26,14 +26,6 @@ Course::Course( const string& n,
     string Course::getProfessor() const { return professor; }
     string Course::getDepartment() const { return department; }
     int Course::getYear() const { return year; }
-vector<string>& Course::getEnrolledStudents() {
-        return enrolledStudents;
-    }
-
-const vector<string>& Course::getEnrolledStudents() const {
-        return enrolledStudents;
-    }
-
 
     // Setters
     void Course::setCode(const string& c) { code = c; }
