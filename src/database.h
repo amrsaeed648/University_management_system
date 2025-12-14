@@ -12,6 +12,12 @@ void closeDatabase();
 void createStudentTable();
 void saveStudentToDB(const Student& s);
 void deleteStudentFromDB(const string& id);
-static int loadCallback(void*, int arg1, char** arg2, char**);
+static int loadStudentCallback(void*, int arg1, char** arg2, char**);
 void loadStudentsFromDB();
+void createCourseTables();
+void saveCourseToDB(const Course& c);
+void deleteCourseFromDB(const string& code);
+static int loadCourseCallback(void*, int, char** argv, char**);
+static int loadEnrollmentCallback(void*, int, char** argv, char**);
+void loadCoursesFromDB();
 #endif //UNIVERSITY_MANAGEMENT_SYSTEM_DATABASE_H

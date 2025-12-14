@@ -8,6 +8,7 @@
 #include <vector>
 #include <utility>
 #include "course.h"
+#include "database.h"
 #include "student.h"
 #include "studentManagment.h"
 #include "UI.h"
@@ -25,7 +26,14 @@ Course::Course( const string& n,
     string Course::getProfessor() const { return professor; }
     string Course::getDepartment() const { return department; }
     int Course::getYear() const { return year; }
-    vector<string>& Course::getEnrolledStudents()  { return enrolledStudents; }
+vector<string>& Course::getEnrolledStudents() {
+        return enrolledStudents;
+    }
+
+const vector<string>& Course::getEnrolledStudents() const {
+        return enrolledStudents;
+    }
+
 
     // Setters
     void Course::setCode(const string& c) { code = c; }
@@ -67,9 +75,9 @@ Course::Course( const string& n,
 
                      cin.ignore(numeric_limits<std::streamsize>::max(), '\n'); // to solve getline problem
                      courses.push_back(Course(n,p,d,y));
+                     (courses.back()).setCode((courses.back()).generateCode(d, y));
+                     saveCourseToDB(courses.back());
                      animatedPrint(GREEN"Course added successfully\n" RESET);
-                     string rc = ( courses.at(courseCounter) ).generateCode(d,y);   // rc -> received code
-                     ( courses.at(courseCounter) ).setCode(rc);
                      animatedPrint("Course code is : "+( courses.at(courseCounter) ).getCode()+"\n"+"\n");
                      courseCounter++;
                      pauseScreen();
@@ -197,57 +205,3 @@ bool validateCourse(string code) // Course Existence Validation
         }
         return false; // Not found
 }
-
-void saveCourses() {
-        ofstream fout("courses.txt");
-        fout << courses.size() << endl;
-
-
-        for (auto& c : courses) {
-
-            vector<string> studentsInCourse = c.getEnrolledStudents();
-
-            fout << c.getCode() << " "
-                 << c.getName() << " "
-                 << c.getProfessor() << " "
-                 << c.getDepartment() << " "
-                 << c.getYear() << "\n";
-
-
-
-            fout << studentsInCourse.size() << endl;
-            for (const auto& id : studentsInCourse)
-                fout << id << endl;
-        }
-
-        fout.close();
-    }
-
-void loadCourses() {
-        ifstream fin("courses.txt");
-
-        int count;
-        fin >> count;
-
-        for (int i = 0; i < count; i++) {
-            string code, name, professor, department;
-            int year, studentCount;
-
-            fin >> code >> name >> professor >> department >> year >> studentCount;
-
-            Course temp(name, professor, department, year);
-            temp.setCode(code);
-
-            vector<string>& studentsInCourse = temp.getEnrolledStudents();
-
-            for (int j = 0; j < studentCount; j++) {
-                string studentId;
-                fin >> studentId;
-                studentsInCourse.push_back(studentId);
-            }
-
-            courses.push_back(temp);
-        }
-
-        fin.close();
-    }

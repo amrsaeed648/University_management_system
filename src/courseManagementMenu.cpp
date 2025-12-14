@@ -1,5 +1,6 @@
 #include <iostream>
 #include "course.h"
+#include "database.h"
 #include"UI.h"
 using namespace std;
 
@@ -55,7 +56,6 @@ void courseManagementMenu() {
                 break;
 
             case 0:
-                saveCourses();
                animatedPrint( "Saved Successfully.\n");
                animatedPrint( "Returning to Admin Menu...\n\n");
                 pauseScreen();

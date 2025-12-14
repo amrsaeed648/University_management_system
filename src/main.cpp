@@ -63,8 +63,12 @@ int main(){
 #endif
 
     openDatabase();
+
     createStudentTable();
+    createCourseTables();
+
     loadStudentsFromDB();
+    loadCoursesFromDB();
 
     int choice;
 

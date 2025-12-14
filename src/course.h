@@ -28,7 +28,8 @@ public:
     string getDepartment() const;
     int getYear() const;
 
-    vector<string> &getEnrolledStudents();
+    vector<string>& getEnrolledStudents();              // non-const
+    const vector<string>& getEnrolledStudents() const; // const
 
     void setCode(const string& c);
     void setName(const string& n);
