@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 include_directories(src)
-
+include_directories(external/sqlite)
 add_executable(University_management_system
         src/main.cpp
         src/student.cpp
@@ -23,9 +23,7 @@ add_executable(University_management_system
         src/gradeResultsManagment.h
         src/gradeManagementMenu.cpp
         src/gradeManagementMenu.h
-
         src/UI.cpp
         src/UI.h
-
-        src/sqlite3.c
+        external/sqlite/sqlite3.c
 )
