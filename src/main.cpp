@@ -169,18 +169,18 @@ void adminMenu(){
         clearScreen();
         printBanner();
 
-        cout << "1. Student Management\n";
-        cout << "2. Course Management\n";
-        cout << "3. Grade & Results Management\n";
-        cout << "0. Back to Main Menu\n";
-        cout << "Choose: ";
+         animatedPrint("1. Student Management\n");
+         animatedPrint("2. Course Management\n");
+         animatedPrint( "3. Grade & Results Management\n");
+         animatedPrint("0. Back to Main Menu\n");
+         animatedPrint("Choose: ");
         cin >> choice;
         cin.ignore();
 
         if (cin.fail()) {
             cin.clear();
             cin.ignore();
-            cout << "Invalid input! Please enter a number between 0 and 3.\n";
+            animatedPrint(RED "Invalid input! " RESET " Please enter a number between 0 and 3.\n");
             pauseScreen();
             continue;
         }
@@ -204,7 +204,7 @@ void adminMenu(){
             case 0:
                 return;
             default:
-                cout << "Invalid option!\n";
+                animatedPrint(RED "Invalid option!\n" RESET);
                 pauseScreen();
                 break;
         }
@@ -217,13 +217,13 @@ void studentMenu(const Student& s) {
     while (true) {
         clearScreen();
         printBanner();
-        cout << "\n======================= Student Dashboard =======================\n";
-        cout << "Welcome, " << s.getFirstName() << " " << s.getLastName() << "\n";
-        cout << "1. View Personal Information\n";
-        cout << "2. View Enrolled Courses\n";
-        cout << "3. View Grades\n";
-        cout << "0. Logout\n";
-        cout << "Choose: ";
+        animatedPrint( "\n======================= Student Dashboard =======================\n");
+        animatedPrint( "Welcome, " + s.getFirstName() + " " + s.getLastName() + "\n");
+        animatedPrint("1. View Personal Information\n");
+        animatedPrint( "2. View Enrolled Courses\n");
+        animatedPrint("3. View Grades\n");
+        animatedPrint( "0. Logout\n");
+        animatedPrint( "Choose: ");
         cin >> choice;
 
         if (cin.fail()) {
@@ -257,7 +257,7 @@ void studentMenu(const Student& s) {
             case 0:
                 return;
             default:
-                cout << "Invalid choice!\n";
+                animatedPrint( "Invalid choice!\n");
                 pauseScreen();
                 break;
         }
