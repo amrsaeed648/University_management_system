@@ -45,39 +45,39 @@ void userAssignGrade()
     string courseCode, studentId;
     int grade;
 
-    cout << "Enter Course Code: ";
+    animatedPrint( "Enter Course Code: ");
     cin >> courseCode;
     if (getCourseIndex(courseCode) < 0)
     {
-        cout << RED << "Invalid Course Code!\n" << RESET;
+        animatedPrint(RED "Invalid Course Code!\n"  RESET);
         return;
     }
 
-    cout << "Enter Student ID: ";
+    animatedPrint( "Enter Student ID: ");
     cin >> studentId;
     if (getStudentIndex(studentId) < 0)
     {
-        cout << RED << "Invalid Student ID!\n" << RESET;
+        animatedPrint(RED  "Invalid Student ID!\n"  RESET);
         return;
     }
 
     int gradeIndex = findGradeIndex(courseCode, studentId);
     if (gradeIndex == -1)
     {
-        cout << RED << "Student is NOT enrolled in this course.\n" << RESET;
+        animatedPrint( RED "Student is NOT enrolled in this course.\n" RESET);
         return;
     }
 
-    cout << "Enter Grade (0 -> 100): ";
+    animatedPrint( "Enter Grade (0 -> 100): ");
     cin >> grade;
     if (grade < 0 || grade > 100)
     {
-        cout << RED << "Invalid Grade!\n" << RESET;
+        animatedPrint(RED "Invalid Grade!\n" RESET );
         return;
     }
 
     assignGrade(courseCode, studentId, grade);
-    cout << GREEN << "Grade Assigned Successfully.\n" << RESET;
+    animatedPrint( GREEN  "Grade Assigned Successfully.\n" RESET);
 }
 
 void userEditGrade()
@@ -85,51 +85,51 @@ void userEditGrade()
     string courseCode, studentId;
     int grade;
 
-    cout << "Enter Course Code: ";
+    animatedPrint( "Enter Course Code: ");
     cin >> courseCode;
     if (getCourseIndex(courseCode) < 0)
     {
-        cout << RED << "Invalid Course Code!\n" << RESET;
+        animatedPrint(RED  "Invalid Course Code!\n"  RESET );
         return;
     }
 
-    cout << "Enter Student ID: ";
+    animatedPrint( "Enter Student ID: ");
     cin >> studentId;
     if (getStudentIndex(studentId) < 0)
     {
-        cout << RED << "Invalid Student ID!\n" << RESET;
+        animatedPrint( RED  "Invalid Student ID!\n"  RESET);
         return;
     }
 
     int gradeIndex = findGradeIndex(courseCode, studentId);
     if (gradeIndex == -1)
     {
-        cout << RED << "Student is NOT enrolled in this course.\n" << RESET;
+        animatedPrint( RED  "Student is NOT enrolled in this course.\n"  RESET );
         return;
     }
 
-    cout << "Enter New Grade (0 -> 100): ";
+    animatedPrint("Enter New Grade (0 -> 100): ");
     cin >> grade;
     if (grade < 0 || grade > 100)
     {
-        cout << RED << "Invalid Grade!\n" << RESET;
+        animatedPrint( RED  "Invalid Grade!\n"  RESET);
         return;
     }
 
     assignGrade(courseCode, studentId, grade);
-    cout << GREEN << "Grade Edited Successfully.\n" << RESET;
+   animatedPrint( GREEN  "Grade Edited Successfully.\n"  RESET);
 }
 
 /* ===================== DISPLAY ===================== */
 void displayGradeByStudentId()
 {
     string studentId;
-    cout << "Enter Student ID: ";
+    animatedPrint( "Enter Student ID: ");
     cin >> studentId;
 
     if (getStudentIndex(studentId) < 0)
     {
-        cout << RED << "Invalid Student ID!\n" << RESET;
+        animatedPrint( RED "Invalid Student ID!\n" RESET);
         return;
     }
 
@@ -138,26 +138,26 @@ void displayGradeByStudentId()
     {
         if (scg.studentID == studentId)
         {
-            cout << "Course: " << scg.courseCode
-                 << " | Grade: " << scg.Grade << "\n";
+            animatedPrint( "Course: " + scg.courseCode +
+                  " | Grade: " + to_string(scg.Grade) + "\n");
             found = true;
         }
         pauseScreen();
     }
 
     if (!found)
-        cout << "No grades found for this student.\n";
+        animatedPrint( "No grades found for this student.\n");
 }
 
 void displayGradeByCode()
 {
     string courseCode;
-    cout << "Enter Course Code: ";
+    animatedPrint( "Enter Course Code: ");
     cin >> courseCode;
 
     if (getCourseIndex(courseCode) < 0)
     {
-        cout << RED << "Invalid Course Code!\n" << RESET;
+        animatedPrint( RED  "Invalid Course Code!\n"  RESET);
         return;
     }
 
@@ -166,13 +166,13 @@ void displayGradeByCode()
     {
         if (scg.courseCode == courseCode)
         {
-            cout << "Student ID: " << scg.studentID
-                 << " | Grade: " << scg.Grade << "\n";
+            animatedPrint( "Student ID: " + scg.studentID +
+                 + " | Grade: " + to_string(scg.Grade) + "\n");
             found = true;
         }
     }
     pauseScreen();
 
     if (!found)
-        cout << "No grades found for this course.\n";
+        animatedPrint( RED "No grades found for this course.\n"  RESET);
 }

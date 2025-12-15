@@ -11,13 +11,13 @@ void gradeManagementMenu() {
     {
         clearScreen();
         printBanner();
-        cout << "======================= Grade Management =======================\n";
-        cout << "1. Assign Grade\n";
-        cout << "2. Edit Grade\n";
-        cout << "3. Display Grades by Student ID\n";
-        cout << "4. Display Grades by Course Code\n";
-        cout << "0. Back to Main Menu\n";
-        cout << "Choose: ";
+        animatedPrint( "======================= Grade Management =======================\n");
+        animatedPrint( "1. Assign Grade\n");
+        animatedPrint( "2. Edit Grade\n");
+        animatedPrint( "3. Display Grades by Student ID\n");
+        animatedPrint( "4. Display Grades by Course Code\n");
+        animatedPrint("0. Back to Main Menu\n");
+        animatedPrint( "Choose: ");
         cin >> choice;
         if (cin.fail()) {
             cin.clear();
@@ -31,35 +31,39 @@ void gradeManagementMenu() {
         {
             case 1:
                 clearScreen();
+                printBanner();
                 userAssignGrade();
                 pauseScreen();
                 break;
 
             case 2:
                 clearScreen();
+                printBanner();
                 userEditGrade();
                 pauseScreen();
                 break;
 
             case 3:
                 clearScreen();
+                printBanner();
                 displayGradeByStudentId();
                 pauseScreen();
                 break;
 
             case 4:
                 clearScreen();
+                printBanner();
                 displayGradeByCode();
                 pauseScreen();
                 break;
 
             case 0:
-                cout << "Returning to previous menu...\n";
+                animatedPrint( "Returning to previous menu...\n");
                 pauseScreen();
                 break;
 
             default:
-                cout << RED <<"Invalid choice! Please try again.\n"<< RESET;
+                animatedPrint(RED "Invalid choice! Please try again.\n" RESET);
                 pauseScreen();
         }
 
