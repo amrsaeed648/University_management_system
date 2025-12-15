@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <limits>
 #include <string>
 #include <vector>
 #include <utility>
@@ -71,61 +72,137 @@ void updateStudent(string id) {
     while (true) {
         clearScreen();
         printBanner();
-        animatedPrint( "================= Updating " + st.getFirstName() + " " + st.getLastName() +" =================\n");
-        animatedPrint("1. First Name\n""2. Last Name\n" "3. Department\n""4. Year of Study\n" "0. Exit\n""Select: ");
+
+        animatedPrint("================= Updating " +
+                       st.getFirstName() + " " +
+                       st.getLastName() +
+                       " =================\n");
+
+        animatedPrint(
+            "1. First Name\n"
+            "2. Last Name\n"
+            "3. Department\n"
+            "4. Year of Study\n"
+            "0. Exit\n"
+            "Select: "
+        );
+
         int c;
         cin >> c;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // clear buffer
 
-        if (c == 0) break;
+        if (c == 0)
+            break;
 
         string input;
+
         try {
             switch (c) {
                 case 1:
-                    animatedPrint( "New First Name: ");
-                    cin >> input;
+                    animatedPrint("New First Name: ");
+                    getline(cin, input);
                     st.setFirstName(input);
-                    pauseScreen();
                     break;
 
                 case 2:
-                    animatedPrint( "New Last Name: ");
-                    cin >> input;
+                    animatedPrint("New Last Name: ");
+                    getline(cin, input);
                     st.setLastName(input);
-                    pauseScreen();
                     break;
 
                 case 3:
                     animatedPrint("New Department: ");
-                    cin >> input;
+                    getline(cin, input);
                     st.setDepartment(input);
-                    pauseScreen();
                     break;
 
-                case 4:
-                    animatedPrint( "New Year of Study: ");
-                    cin >> input;
-                    st.setYearOfStudy(stoi(input));
-                    pauseScreen();
+                case 4: {
+                    animatedPrint("New Year of Study: ");
+                    getline(cin, input);
+
+                    int year = stoi(input);
+                    if (year <= 0)
+                        throw invalid_argument("Year must be positive");
+
+                    st.setYearOfStudy(year);
                     break;
+                }
 
                 default:
-                    animatedPrint( RED "Invalid choice\n" RESET);
+                    animatedPrint(RED "Invalid choice\n" RESET);
                     pauseScreen();
                     continue;
             }
 
             saveStudentToDB(st);
-
-            animatedPrint(GREEN"Data Updated Successfully\n" RESET);
+            animatedPrint(GREEN "Data Updated Successfully\n" RESET);
+            pauseScreen();
         }
         catch (const exception& e) {
-          cout<< RED<<"Error: " << e.what() << RESET <<"\n";
+            animatedPrint(RED "Error: " RESET);
+            cout << e.what() << "\n";
+            pauseScreen();
         }
     }
 }
+//     while (true) {
+//         clearScreen();
+//         printBanner();
+//         animatedPrint( "================= Updating " + st.getFirstName() + " " + st.getLastName() +" =================\n");
+//         animatedPrint("1. First Name\n""2. Last Name\n" "3. Department\n""4. Year of Study\n" "0. Exit\n""Select: ");
+//         int c;
+//         cin >> c;
+//
+//         if (c == 0) break;
+//
+//         string input;
+//         try {
+//             switch (c) {
+//                 case 1:
+//                     animatedPrint( "New First Name: ");
+//                     cin >> input;
+//                     st.setFirstName(input);
+//                     pauseScreen();
+//                     break;
+//
+//                 case 2:
+//                     animatedPrint( "New Last Name: ");
+//                     cin >> input;
+//                     st.setLastName(input);
+//                     pauseScreen();
+//                     break;
+//
+//                 case 3:
+//                     animatedPrint("New Department: ");
+//                     cin >> input;
+//                     st.setDepartment(input);
+//                     pauseScreen();
+//                     break;
+//
+//                 case 4:
+//                     animatedPrint( "New Year of Study: ");
+//                     cin >> input;
+//                     st.setYearOfStudy(stoi(input));
+//                     pauseScreen();
+//                     break;
+//
+//                 default:
+//                     animatedPrint( RED "Invalid choice\n" RESET);
+//                     pauseScreen();
+//                     continue;
+//             }
+//
+//             saveStudentToDB(st);
+//
+//             animatedPrint(GREEN"Data Updated Successfully\n" RESET);
+//         }
+//         catch (const exception& e) {
+//           cout<< RED<<"Error: " << e.what() << RESET <<"\n";
+//         }
+//     }
+// }
 
-void deleteStudent(string id) {
+void deleteStudent(string id){
     clearScreen();
     printBanner();
     int index = getStudentIndex(id);
