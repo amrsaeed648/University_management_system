@@ -73,7 +73,6 @@ Course::Course( const string& n,
                      animatedPrint(GREEN"Course added successfully\n" RESET);
                      animatedPrint("Course code is : "+( courses.at(courseCounter) ).getCode()+"\n"+"\n");
                      courseCounter++;
-                     pauseScreen();
     }
 
 void deleteCourse(const string& c) {
@@ -89,7 +88,6 @@ void deleteCourse(const string& c) {
 
         if (!foundCourse) {
             animatedPrint(RED "Invalid Course Code\n""\n" RESET);
-            pauseScreen();
             return;
         }
 
@@ -105,7 +103,6 @@ void deleteCourse(const string& c) {
         saveAllGradesToDB();
         // 3. Feedback
         animatedPrint(GREEN "Course and related grades deleted successfully.\n""\n" RESET);
-        pauseScreen();
     }
                     // A do while loop is required in main function
 
@@ -131,7 +128,6 @@ void deleteCourse(const string& c) {
                          e.setName(n);
                          animatedPrint(GREEN "New course name is : "+e.getName()+"\n" RESET);
                          animatedPrint("Course code is : "+e.getCode()+"\n");
-                       pauseScreen();
                          return;
                     }
                     case 2:{
@@ -145,7 +141,6 @@ void deleteCourse(const string& c) {
                          e.setProfessor(p);
                          animatedPrint(GREEN "New instructor name is : "+e.getProfessor()+"\n" RESET);
                          animatedPrint("Course code is : "+e.getCode()+"\n");
-                        pauseScreen();
                          return;
                     }
                     case 3:{
@@ -162,7 +157,6 @@ void deleteCourse(const string& c) {
                          animatedPrint("New department name is : "+e.getDepartment()+"\n"); //nc -> new code variable
                          string nc=e.getCode(); nc.replace(0,3,d); e.setCode(nc); //ex:CSE1001 -> ECE1001
                          animatedPrint(GREEN "New course code is : "+e.getCode()+"\n" RESET);
-                        pauseScreen();
                          return;
                     }
                     case 4:{
@@ -181,24 +175,23 @@ void deleteCourse(const string& c) {
                          nc.replace(3, 1, to_string(y));
                          e.setCode(nc); //ex:CSE1001 -> CSE3001
                          animatedPrint("New course code is : "+e.getCode()+"\n");
-                        pauseScreen();
                         return;
                     }
 
-                    default: animatedPrint(RED "Invalid choice.\n""\n" RESET); pauseScreen();
+                    default: animatedPrint(RED "Invalid choice.\n""\n" RESET);
               }
                return;
            }
 
        }
-        animatedPrint(RED "Invalid course code.\n" RESET); pauseScreen();
+        animatedPrint(RED "Invalid course code.\n" RESET);
     }
 
     void displayCourses() { // display by name and code
                      animatedPrint("Entered courses : \n");
                      for (auto & course : courses) {
                      animatedPrint( "{"+course.getName() + ", " +course.getCode() + ", "+course.getProfessor()+"}\n");}
-                     cout<<"\n"<<"\n"; pauseScreen();
+                     cout<<"\n"<<"\n";
     }
 int getCourseIndex(string code) // gives the Index of the Course
 {
