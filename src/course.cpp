@@ -79,9 +79,9 @@ Course::Course( const string& n,
 void deleteCourse(const string& c) {
         // 1. Remove the course from the courses vector
         bool foundCourse = false;
-        for (auto it = courses.begin(); it != courses.end(); ++it) {
-            if (it->getCode() == c) {
-                courses.erase(it);
+        for (auto i = courses.begin(); i != courses.end();++i) {
+            if (i->getCode() == c) {
+                courses.erase(i);
                 foundCourse = true;
                 break;
             }
@@ -101,6 +101,7 @@ void deleteCourse(const string& c) {
                 ++it;
             }
         }
+        deleteCourseFromDB(c);
         saveAllGradesToDB();
         // 3. Feedback
         animatedPrint(GREEN "Course and related grades deleted successfully.\n""\n" RESET);

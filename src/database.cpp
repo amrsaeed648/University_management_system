@@ -111,14 +111,15 @@ void deleteStudentFromDB(const string& id) {
     sqlite3_exec(db, sql.c_str(), nullptr, nullptr, &errMsg);
 }
 
-void deleteCourseFromDB(const string& code) {
-    string sql1 = "DELETE FROM courses WHERE code='" + code + "';";
-    string sql2 = "DELETE FROM course_students WHERE course_code='" + code + "';";
-
-    sqlite3_exec(db, sql1.c_str(), nullptr, nullptr, nullptr);
-    sqlite3_exec(db, sql2.c_str(), nullptr, nullptr, nullptr);
+void deleteCourseFromDB(const string& code)
+{
+    char* errMsg = nullptr;
+    string sqlCourse = "DELETE FROM courses WHERE code='" + code + "';";
+    if (sqlite3_exec(db, sqlCourse.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+        cout << "Delete course failed: " << errMsg << endl;
+        sqlite3_free(errMsg);
+    }
 }
-
 /* ===================== LOAD ===================== */
 
 static int loadStudentCallback(void*, int arg1, char** arg2, char**) {
