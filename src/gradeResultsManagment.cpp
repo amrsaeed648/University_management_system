@@ -142,6 +142,7 @@ void displayGradeByStudentId()
                  << " | Grade: " << scg.Grade << "\n";
             found = true;
         }
+        pauseScreen();
     }
 
     if (!found)
@@ -170,6 +171,7 @@ void displayGradeByCode()
             found = true;
         }
     }
+    pauseScreen();
 
     if (!found)
         cout << "No grades found for this course.\n";
