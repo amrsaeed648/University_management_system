@@ -69,7 +69,7 @@ void studentManagementMenu() {
         else if (c == 6){
             clearScreen();
             printBanner();
-            enrollStudentInCourse();
+            displayCoursesByStudentId();
             cin.ignore();
             pauseScreen();
         }
