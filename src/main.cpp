@@ -245,7 +245,7 @@ void studentMenu(const Student& s) {
             case 2:
                 clearScreen();
                 printBanner();
-                s.getEnrolledCourses();
+                displayCoursesByStudentId();
                 pauseScreen();
                 break;
             case 3:
