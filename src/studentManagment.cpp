@@ -122,8 +122,6 @@ void updateStudent(string id) {
         catch (const exception& e) {
           cout<< RED<<"Error: " << e.what() << RESET <<"\n";
         }
-
-        pauseScreen();
     }
 }
 
@@ -154,7 +152,7 @@ void deleteStudent(string id) {
     }
     saveAllGradesToDB();
     animatedPrint(GREEN "Student and related grades deleted successfully\n" RESET);
-    pauseScreen();
+    /*pauseScreen();*/
 }
 
 void studentsList() {
@@ -196,17 +194,17 @@ void enrollStudentInCourse()
     clearScreen();
     printBanner();
     string id, courseCode;
-    cout << "Enter Student ID: ";
+    animatedPrint("Enter Student ID: ");
     cin >> id;
 
     int index = getStudentIndex(id);
     if (index == -1)
     {
-        cout << "Student Not Found!\n";
+        animatedPrint( RED"Student Not Found!\n" RESET);
         pauseScreen();
         return;
     }
-    cout << "Enter Course Code: ";
+    animatedPrint( "Enter Course Code: ");
     cin >> courseCode;
     if (validateCourse(courseCode))
     {
@@ -222,12 +220,11 @@ void enrollStudentInCourse()
         saveAllGradesToDB();
 
 
-        cout << GREEN << "Enrolled Successfully." << RESET;
+        animatedPrint( GREEN  "Enrolled Successfully."  RESET);
     }
     else
     {
         animatedPrint( RED "Course Not Found!\n" RESET );
     }
-        pauseScreen();
 }
 

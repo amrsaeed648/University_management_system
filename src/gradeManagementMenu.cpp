@@ -33,6 +33,7 @@ void gradeManagementMenu() {
                 clearScreen();
                 printBanner();
                 userAssignGrade();
+                cin.ignore();
                 pauseScreen();
                 break;
 
@@ -40,6 +41,7 @@ void gradeManagementMenu() {
                 clearScreen();
                 printBanner();
                 userEditGrade();
+                cin.ignore();
                 pauseScreen();
                 break;
 
@@ -47,6 +49,7 @@ void gradeManagementMenu() {
                 clearScreen();
                 printBanner();
                 displayGradeByStudentId();
+                cin.ignore();
                 pauseScreen();
                 break;
 
@@ -54,6 +57,7 @@ void gradeManagementMenu() {
                 clearScreen();
                 printBanner();
                 displayGradeByCode();
+                cin.ignore();
                 pauseScreen();
                 break;
 
@@ -61,6 +65,7 @@ void gradeManagementMenu() {
                 clearScreen();
                 printBanner();
                 animatedPrint( "Returning to previous menu...\n");
+                cin.ignore();
                 pauseScreen();
                 break;
 
@@ -68,6 +73,7 @@ void gradeManagementMenu() {
                 clearScreen();
                 printBanner();
                 animatedPrint(RED "Invalid choice! Please try again.\n" RESET);
+                cin.ignore();
                 pauseScreen();
         }
 

@@ -26,6 +26,7 @@ void studentManagementMenu() {
         if (c == 1){
             clearScreen();
             addStudent();
+            cin.ignore();
             pauseScreen();
         }
         else if (c == 2){
@@ -35,6 +36,7 @@ void studentManagementMenu() {
             animatedPrint( "Enter Student ID: ");
             cin >> id;
             updateStudent(id);
+            cin.ignore();
             pauseScreen();
         }
         else if (c == 3){
@@ -44,6 +46,7 @@ void studentManagementMenu() {
             animatedPrint( "Enter Student ID: ");
             cin >> id;
             deleteStudent(id);
+            cin.ignore();
             pauseScreen();
         }
         else if (c == 4) {
@@ -53,18 +56,21 @@ void studentManagementMenu() {
             animatedPrint( "Enter Student ID: ");
             cin >> id;
             showStudentInfo(id);
+            cin.ignore();
             pauseScreen();
         }
         else if (c == 5){
             clearScreen();
             printBanner();
             studentsList();
+            cin.ignore();
             pauseScreen();
         }
         else if (c == 6){
             clearScreen();
             printBanner();
             enrollStudentInCourse();
+            cin.ignore();
             pauseScreen();
         }
         else if (c == 0){
@@ -72,6 +78,7 @@ void studentManagementMenu() {
             printBanner();
             animatedPrint( GREEN"All changes already saved to database.\n" RESET);
             animatedPrint( "Returning to Admin Menu...\n\n");
+            cin.ignore();
             pauseScreen();
             break;
         }
