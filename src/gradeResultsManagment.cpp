@@ -122,6 +122,33 @@ void userEditGrade()
 }
 
 /* ===================== DISPLAY ===================== */
+void displayCoursesByStudentId()
+{
+
+    string studentId;
+    cout << "Enter Student ID: ";
+    cin >> studentId;
+
+    if (getStudentIndex(studentId) < 0)
+    {
+        cout << RED << "Invalid Student ID!\n" << RESET;
+        return;
+    }
+
+    bool found = false;
+    for (const auto& scg : studentCourseGrades)
+    {
+        if (scg.studentID == studentId)
+        {
+            cout << "Course: " << scg.courseCode << "\n";
+            found = true;
+        }
+        pauseScreen();
+    }
+    if (!found)
+        cout << "No enrolled courses found for this student.\n";
+}
+
 void displayGradeByStudentId()
 {
 
