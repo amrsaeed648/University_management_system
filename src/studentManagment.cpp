@@ -52,7 +52,7 @@ void addStudent () {
     catch (const invalid_argument& e) {
         cout << e.what() << endl;
     }
-
+      printBanner();
 }
 
 void updateStudent(string id) {
@@ -85,24 +85,28 @@ void updateStudent(string id) {
                     animatedPrint( "New First Name: ");
                     cin >> input;
                     st.setFirstName(input);
+                    pauseScreen();
                     break;
 
                 case 2:
                     animatedPrint( "New Last Name: ");
                     cin >> input;
                     st.setLastName(input);
+                    pauseScreen();
                     break;
 
                 case 3:
                     animatedPrint("New Department: ");
                     cin >> input;
                     st.setDepartment(input);
+                    pauseScreen();
                     break;
 
                 case 4:
                     animatedPrint( "New Year of Study: ");
                     cin >> input;
                     st.setYearOfStudy(stoi(input));
+                    pauseScreen();
                     break;
 
                 default:
@@ -158,7 +162,7 @@ void studentsList() {
     printBanner();
     animatedPrint( BOLD  "\n======================= Student List =======================\n" RESET );
     for (int i = 0; i < students.size(); i++) students[i].info();
-    pauseScreen();
+    /*pauseScreen();*/
 }
 
 
@@ -185,7 +189,7 @@ void showStudentInfo(string id)
     animatedPrint( "Department   : " + s.getDepartment() + "\n");
     animatedPrint( "Academic Year: " + to_string(s.getYearOfStudy()) + "\n");
     animatedPrint( "=================================================\n");
-    pauseScreen();
+    /*pauseScreen();*/
 }
 void enrollStudentInCourse()
 {

@@ -64,7 +64,7 @@ void userAssignGrade()
     int gradeIndex = findGradeIndex(courseCode, studentId);
     if (gradeIndex == -1)
     {
-        animatedPrint( RED "Student is NOT enrolled in this course.\n" RESET);
+        animatedPrint( RED "Student is NOT enrolled in this course.\n" RESET) ; pauseScreen();
         return;
     }
 
@@ -72,12 +72,12 @@ void userAssignGrade()
     cin >> grade;
     if (grade < 0 || grade > 100)
     {
-        animatedPrint(RED "Invalid Grade!\n" RESET );
+        animatedPrint(RED "Invalid Grade!\n" RESET ); pauseScreen();
         return;
     }
 
     assignGrade(courseCode, studentId, grade);
-    animatedPrint( GREEN  "Grade Assigned Successfully.\n" RESET);
+    animatedPrint( GREEN  "Grade Assigned Successfully.\n" RESET); pauseScreen();
 }
 
 void userEditGrade()
@@ -147,7 +147,7 @@ void displayGradeByStudentId()
         /*pauseScreen();*/
     }
     if (!found)
-        animatedPrint( "No grades found for this student.\n");
+        animatedPrint( "No grades found for this student.\n"); pauseScreen();
 }
 
 void displayGradeByCode()
