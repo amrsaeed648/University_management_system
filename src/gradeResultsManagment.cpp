@@ -144,7 +144,6 @@ void displayGradeByStudentId()
         }
         pauseScreen();
     }
-
     if (!found)
         cout << "No grades found for this student.\n";
 }

@@ -12,6 +12,7 @@
 #include "student.h"
 #include "studentManagment.h"
 #include "UI.h"
+#include "gradeResultsManagment.h"
 using namespace std;
 vector<Course> courses;
 Course::Course( const string& n,
@@ -75,17 +76,35 @@ Course::Course( const string& n,
                      pauseScreen();
     }
 
-    void deleteCourse(const string& c) { // delete by code using iterator and erase function
-                    for (auto it = courses.begin(); it != courses.end(); it++) {
-                    if (it->getCode() == c) {
-                    courses.erase(it);
-                    animatedPrint( GREEN "Course deleted\n""\n" RESET); pauseScreen();
-                    return;
-                    }
-                    }
-                     animatedPrint(RED "Invalid Course Code\n""\n" RESET); pauseScreen();
+void deleteCourse(const string& c) {
+        // 1. Remove the course from the courses vector
+        bool foundCourse = false;
+        for (auto it = courses.begin(); it != courses.end(); ++it) {
+            if (it->getCode() == c) {
+                courses.erase(it);
+                foundCourse = true;
+                break;
+            }
+        }
 
+        if (!foundCourse) {
+            animatedPrint(RED "Invalid Course Code\n""\n" RESET);
+            pauseScreen();
+            return;
+        }
 
+        // 2. Remove all grades related to this course from studentCourseGrades
+        for (auto it = studentCourseGrades.begin(); it != studentCourseGrades.end();) {
+            if (it->courseCode == c) {
+                it = studentCourseGrades.erase(it); // erase returns next iterator
+            } else {
+                ++it;
+            }
+        }
+        saveAllGradesToDB();
+        // 3. Feedback
+        animatedPrint(GREEN "Course and related grades deleted successfully.\n""\n" RESET);
+        pauseScreen();
     }
                     // A do while loop is required in main function
 

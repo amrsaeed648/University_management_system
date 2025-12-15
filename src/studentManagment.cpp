@@ -129,15 +129,27 @@ void deleteStudent(string id) {
     int index = getStudentIndex(id);
 
     if (index == -1) {
-        animatedPrint( RED "Student Not Found!\n" RESET);
+        animatedPrint(RED "Student Not Found!\n" RESET);
         pauseScreen();
         return;
     }
+
+    // Remove from database
     deleteStudentFromDB(id);
 
+    // Remove student from students vector
     students.erase(students.begin() + index);
 
-    animatedPrint(GREEN "Student Deleted Successfully\n" RESET);
+    // Remove all grades related to this student
+    for (auto it = studentCourseGrades.begin(); it != studentCourseGrades.end(); ) {
+        if (it->studentID == id) {
+            it = studentCourseGrades.erase(it); // erase returns the next iterator
+        } else {
+            ++it;
+        }
+    }
+    saveAllGradesToDB();
+    animatedPrint(GREEN "Student and related grades deleted successfully\n" RESET);
     pauseScreen();
 }
 
@@ -187,26 +199,31 @@ void enrollStudentInCourse()
     if (index == -1)
     {
         cout << "Student Not Found!\n";
+        pauseScreen();
         return;
     }
-
     cout << "Enter Course Code: ";
     cin >> courseCode;
+    if (validateCourse(courseCode))
+    {
+        // Add course to student's enrolled courses
+        students[index].addCourse(courseCode);
 
-    // Add course to student's enrolled courses
-    students[index].addCourse(courseCode);
-
-    // Add entry to the global studentCourseGrades vector with default grade 0.0
-    studentCourseGrade scg;
-    scg.studentID = id;
-    scg.courseCode = courseCode;
-    scg.Grade = 0.0;
-    studentCourseGrades.push_back(scg);
-    saveAllGradesToDB();
+        // Add entry to the global studentCourseGrades vector with default grade 0.0
+        studentCourseGrade scg;
+        scg.studentID = id;
+        scg.courseCode = courseCode;
+        scg.Grade = 0.0;
+        studentCourseGrades.push_back(scg);
+        saveAllGradesToDB();
 
 
-    cout << GREEN << "Enrolled Successfully." << RESET;
-
-    pauseScreen();
+        cout << GREEN << "Enrolled Successfully." << RESET;
+    }
+    else
+    {
+        animatedPrint( RED "Course Not Found!\n" RESET );
+    }
+        pauseScreen();
 }
 
