@@ -35,7 +35,6 @@ void courseManagementMenu() {
                 clearScreen();
                 printBanner();
                 addCourse();
-               /*pauseScreen();*/
                 break;
 
             case 2:
@@ -60,7 +59,6 @@ void courseManagementMenu() {
                 clearScreen();
                 printBanner();
                 displayCourses();
-               /* pauseScreen();*/
                 break;
 
             case 0:
