@@ -55,6 +55,7 @@ void courseManagementMenu() {
                 animatedPrint( "Enter Course Code to edit: ");
                 cin >> code;
                 editCourse(code);
+                saveAllCoursesToDB();
                 cin.ignore();
                 pauseScreen();
                 break;

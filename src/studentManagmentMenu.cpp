@@ -1,6 +1,7 @@
 #include <iostream>
 #include "student.h"
 #include "studentManagment.h"
+#include "gradeResultsManagment.h"
 #include "UI.h"
 using namespace std;
 
@@ -12,11 +13,10 @@ void studentManagementMenu() {
         printBanner();
         animatedPrint( "\n=============== Student Management ===============\n");
         animatedPrint( "1. Add Student\n");
-        animatedPrint( "2. Update Student\n");
-        animatedPrint( "3. Delete Student\n");
-        animatedPrint( "4. Show Student Information\n");
-        animatedPrint( "5. Students List\n");
-        animatedPrint( "6. Enroll Student in Course\n");
+        animatedPrint( "2. Delete Student\n");
+        animatedPrint( "3. Show Student Information\n");
+        animatedPrint( "4. Students List\n");
+        animatedPrint( "5. Enroll Student in Course\n");
         animatedPrint( "0. Save and return to Admin Menu\n");
         animatedPrint("Choose: ");
 
@@ -29,17 +29,8 @@ void studentManagementMenu() {
             cin.ignore();
             pauseScreen();
         }
+
         else if (c == 2){
-            clearScreen();
-            printBanner();
-            string id;
-            animatedPrint( "Enter Student ID: ");
-            cin >> id;
-            updateStudent(id);
-            cin.ignore();
-            pauseScreen();
-        }
-        else if (c == 3){
             clearScreen();
             printBanner();
             string id;
@@ -49,7 +40,7 @@ void studentManagementMenu() {
             cin.ignore();
             pauseScreen();
         }
-        else if (c == 4) {
+        else if (c == 3) {
             clearScreen();
             printBanner();
             string id;
@@ -59,14 +50,14 @@ void studentManagementMenu() {
             cin.ignore();
             pauseScreen();
         }
-        else if (c == 5){
+        else if (c == 4){
             clearScreen();
             printBanner();
             studentsList();
             cin.ignore();
             pauseScreen();
         }
-        else if (c == 6){
+        else if (c == 5){
             clearScreen();
             printBanner();
             enrollStudentInCourse();

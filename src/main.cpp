@@ -220,8 +220,7 @@ void studentMenu(const Student& s) {
         animatedPrint( "\n======================= Student Dashboard =======================\n");
         animatedPrint( "Welcome, " + s.getFirstName() + " " + s.getLastName() + "\n");
         animatedPrint("1. View Personal Information\n");
-        animatedPrint( "2. View Enrolled Courses\n");
-        animatedPrint("3. View Grades\n");
+        animatedPrint("2. View Grades\n");
         animatedPrint( "0. Logout\n");
         animatedPrint( "Choose: ");
         cin >> choice;
@@ -242,13 +241,8 @@ void studentMenu(const Student& s) {
                 showStudentInfo(s.getID());
                 pauseScreen();
                 break;
+
             case 2:
-                clearScreen();
-                printBanner();
-                displayCoursesByStudentId();
-                pauseScreen();
-                break;
-            case 3:
                 clearScreen();
                 printBanner();
                 displayGradeByStudentId ();
