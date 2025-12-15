@@ -71,7 +71,7 @@ int main(){
 
     loadStudentsFromDB();
     loadCoursesFromDB();
-    loadStudentsFromDB();
+    loadAllGradesFromDB();
 
     int choice;
 

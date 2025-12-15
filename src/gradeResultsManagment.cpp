@@ -1,133 +1,176 @@
-#include <algorithm>
-#include <cmath>
-#include <fstream>
-#include <iomanip>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <utility>
 #include "gradeResultsManagment.h"
-#include "Student.h"
-#include "course.h"
-#include "gradeManagementMenu.h"
 #include "studentManagment.h"
+#include "course.h"
 #include "UI.h"
+#include "student.h"
+#include "database.h"
+
 using namespace std;
+
+// Vector holding all grades in memory
 vector<studentCourseGrade> studentCourseGrades;
-void assignGrade (const string& courseCode, const string& studentId, const int grade) // Assigns the grade to a student
+
+/* ===================== INTERNAL HELPERS ===================== */
+static int findGradeIndex(const string& courseCode, const string& studentId)
 {
-    int studentIndex = getStudentIndex(studentId);
-    if (studentIndex!= (-1) && getCourseIndex(courseCode) != (-1) && grade>=0 && grade<=100)
+    for (int i=0;i<studentCourseGrades.size();i++)
     {
-        students.at(studentIndex).setGrade(courseCode,grade);
+        if (studentCourseGrades[i].courseCode == courseCode &&
+            studentCourseGrades[i].studentID == studentId)
+        {
+            return i;
+        }
     }
+    return -1;
 }
 
-void userAssignGrade () //asks the user for the grade then calls the Assign function to assign it
+/* ===================== CORE LOGIC ===================== */
+void assignGrade(const string& courseCode, const string& studentId, const int grade)
 {
-    string courseCode,studentId;
-    int grade;
-        cout << "Enter a Valid Course Code to add its grade : ";
-        cin >> courseCode;
-    if (getCourseIndex(courseCode)<0)
-    {
-        cout << RED << "Invalid Code Input! \n" << RESET;
-        return;
-    }
-        cout << "Enter a Valid Student ID to add his grade : ";
-        cin >> studentId;
-    if (getStudentIndex(studentId)<0)
-    {
-        cout << RED << "Invalid ID Input! \n" << RESET;
-        return;
-    }
-        cout << "Enter The Grade (0 -> 100) : ";
-        cin >> grade;
-    if (grade>=100 || grade<=0)
-    {
-        cout << RED << "Invalid Grade Input! \n" << RESET;
-        return;
-    }
-    assignGrade(courseCode,studentId,grade);
-    cout << GREEN << "Assigned Successfully.\n" << RESET;
+    int i = findGradeIndex(courseCode, studentId);
+    if (i == -1) return;
+
+    studentCourseGrades[i].Grade = grade;
+
+    // Immediately save to database
+    saveAllGradesToDB();
 }
 
-void userEditGrade () //asks the user for the grade then calls the Edit function to Edit it
+/* ===================== USER FUNCTIONS ===================== */
+void userAssignGrade()
 {
-    string courseCode,studentId;
+    string courseCode, studentId;
     int grade;
-    cout << "Enter a Valid Course Code to Edit its grade : ";
+
+    cout << "Enter Course Code: ";
     cin >> courseCode;
-    if (getCourseIndex(courseCode)<0)
+    if (getCourseIndex(courseCode) < 0)
     {
-        cout << RED << "Invalid Code Input! \n" << RESET;
+        cout << RED << "Invalid Course Code!\n" << RESET;
         return;
     }
-        cout << "Enter a Valid Student ID to Edit his grade : ";
-        cin >> studentId;
-    if (getStudentIndex(studentId)<0)
+
+    cout << "Enter Student ID: ";
+    cin >> studentId;
+    if (getStudentIndex(studentId) < 0)
     {
-        cout << RED << "Invalid ID Input! \n" << RESET;
+        cout << RED << "Invalid Student ID!\n" << RESET;
         return;
     }
-        cout << "Enter The Grade (0 -> 100) : ";
-        cin >> grade;
-    if (grade>=100 || grade<=0)
+
+    int gradeIndex = findGradeIndex(courseCode, studentId);
+    if (gradeIndex == -1)
     {
-        cout << RED << "Invalid Grade Input! \n" << RESET;
+        cout << RED << "Student is NOT enrolled in this course.\n" << RESET;
         return;
     }
-    assignGrade(courseCode,studentId,grade);
-    cout << GREEN << "Edited Successfully.\n" << RESET;
+
+    cout << "Enter Grade (0 -> 100): ";
+    cin >> grade;
+    if (grade < 0 || grade > 100)
+    {
+        cout << RED << "Invalid Grade!\n" << RESET;
+        return;
+    }
+
+    assignGrade(courseCode, studentId, grade);
+    cout << GREEN << "Grade Assigned Successfully.\n" << RESET;
 }
 
-void displayGradeByStudentId ()
+void userEditGrade()
+{
+    string courseCode, studentId;
+    int grade;
+
+    cout << "Enter Course Code: ";
+    cin >> courseCode;
+    if (getCourseIndex(courseCode) < 0)
+    {
+        cout << RED << "Invalid Course Code!\n" << RESET;
+        return;
+    }
+
+    cout << "Enter Student ID: ";
+    cin >> studentId;
+    if (getStudentIndex(studentId) < 0)
+    {
+        cout << RED << "Invalid Student ID!\n" << RESET;
+        return;
+    }
+
+    int gradeIndex = findGradeIndex(courseCode, studentId);
+    if (gradeIndex == -1)
+    {
+        cout << RED << "Student is NOT enrolled in this course.\n" << RESET;
+        return;
+    }
+
+    cout << "Enter New Grade (0 -> 100): ";
+    cin >> grade;
+    if (grade < 0 || grade > 100)
+    {
+        cout << RED << "Invalid Grade!\n" << RESET;
+        return;
+    }
+
+    assignGrade(courseCode, studentId, grade);
+    cout << GREEN << "Grade Edited Successfully.\n" << RESET;
+}
+
+/* ===================== DISPLAY ===================== */
+void displayGradeByStudentId()
 {
     string studentId;
-    int studentIndex;
-        cout << "Enter a Student ID : ";
-        cin >> studentId;
-        studentIndex = getStudentIndex(studentId);
-    if (studentIndex<0)
+    cout << "Enter Student ID: ";
+    cin >> studentId;
+
+    if (getStudentIndex(studentId) < 0)
     {
-        cout << RED << "Invalid ID Input! \n" << RESET;
+        cout << RED << "Invalid Student ID!\n" << RESET;
         return;
     }
-    if (!students.at(studentIndex).foundGrades1())
+
+    bool found = false;
+    for (const auto& scg : studentCourseGrades)
     {
-        cout << "No Grades Yet.\n";
+        if (scg.studentID == studentId)
+        {
+            cout << "Course: " << scg.courseCode
+                 << " | Grade: " << scg.Grade << "\n";
+            found = true;
+        }
     }
-    else
-    {
-        cout << students.at(studentIndex).getFirstName() << " " << students.at(studentIndex).getLastName() << "'s Grades: \n";
-        students.at(studentIndex).displayGrades();
-    }
+
+    if (!found)
+        cout << "No grades found for this student.\n";
 }
 
-void displayGradeByCode ()
+void displayGradeByCode()
 {
-    string code;
-    int codeIndex;
-        cout << "Enter a Course Code: ";
-        cin >> code;
-        codeIndex = getCourseIndex(code);
-    if (codeIndex<0)
+    string courseCode;
+    cout << "Enter Course Code: ";
+    cin >> courseCode;
+
+    if (getCourseIndex(courseCode) < 0)
     {
-        cout << RED << "Invalid Code Input! \n" << RESET;
+        cout << RED << "Invalid Course Code!\n" << RESET;
         return;
     }
-    cout <<"The Course is " << courses.at(codeIndex).getName() << "\n";
-    for (const auto & student : students)
+
+    bool found = false;
+    for (const auto& scg : studentCourseGrades)
     {
-        if (student.foundGrades2(code))
+        if (scg.courseCode == courseCode)
         {
-            cout << student.getFirstName() << " " << student.getLastName() << "'s Grade is ";
-            student.displayGradesOnly(code);
-        }
-        else
-        {
-            cout << "No Grades found for this Course.\n";
-            break;
+            cout << "Student ID: " << scg.studentID
+                 << " | Grade: " << scg.Grade << "\n";
+            found = true;
         }
     }
+
+    if (!found)
+        cout << "No grades found for this course.\n";
 }
