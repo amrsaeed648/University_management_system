@@ -58,11 +58,13 @@ void gradeManagementMenu() {
                 break;
 
             case 0:
+                printBanner();
                 animatedPrint( "Returning to previous menu...\n");
                 pauseScreen();
                 break;
 
             default:
+                printBanner();
                 animatedPrint(RED "Invalid choice! Please try again.\n" RESET);
                 pauseScreen();
         }

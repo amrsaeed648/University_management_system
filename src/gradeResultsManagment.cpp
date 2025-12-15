@@ -82,6 +82,7 @@ void userAssignGrade()
 
 void userEditGrade()
 {
+
     string courseCode, studentId;
     int grade;
 
@@ -123,6 +124,7 @@ void userEditGrade()
 /* ===================== DISPLAY ===================== */
 void displayGradeByStudentId()
 {
+
     string studentId;
     animatedPrint( "Enter Student ID: ");
     cin >> studentId;
@@ -144,13 +146,13 @@ void displayGradeByStudentId()
         }
         pauseScreen();
     }
-
     if (!found)
         animatedPrint( "No grades found for this student.\n");
 }
 
 void displayGradeByCode()
 {
+
     string courseCode;
     animatedPrint( "Enter Course Code: ");
     cin >> courseCode;
