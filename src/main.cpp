@@ -257,7 +257,7 @@ void studentMenu(const Student& s) {
             case 0:
                 return;
             default:
-                animatedPrint( "Invalid choice!\n");
+                animatedPrint( RED "Invalid choice!\n" RESET);
                 pauseScreen();
                 break;
         }

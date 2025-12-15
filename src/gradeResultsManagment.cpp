@@ -144,7 +144,7 @@ void displayGradeByStudentId()
                   " | Grade: " + to_string(scg.Grade) + "\n");
             found = true;
         }
-        pauseScreen();
+        /*pauseScreen();*/
     }
     if (!found)
         animatedPrint( "No grades found for this student.\n");
@@ -173,7 +173,7 @@ void displayGradeByCode()
             found = true;
         }
     }
-    pauseScreen();
+    /*pauseScreen();*/
 
     if (!found)
         animatedPrint( RED "No grades found for this course.\n"  RESET);
