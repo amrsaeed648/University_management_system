@@ -19,6 +19,8 @@ void createCourseTables();
 void saveCourseToDB(const Course& c);
 void deleteCourseFromDB(const string& code);
 void saveAllGradesToDB();
+void saveAllStudentsToDB();
+void saveAllCoursesToDB();
 static int loadGradesCallback(void*, int argc, char** argv, char**);
 void loadAllGradesFromDB();
 static int loadCourseCallback(void*, int, char** argv, char**);

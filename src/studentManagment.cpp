@@ -133,8 +133,7 @@ void updateStudent(string id) {
                     pauseScreen();
                     continue;
             }
-
-            saveStudentToDB(st);
+            saveAllStudentsToDB();
             animatedPrint(GREEN "Data Updated Successfully\n" RESET);
             pauseScreen();
         }
