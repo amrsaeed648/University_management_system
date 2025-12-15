@@ -14,5 +14,6 @@ void userAssignGrade ();
 void userEditGrade ();
 void displayGradeByStudentId ();
 void displayGradeByCode ();
+void displayCoursesByStudentId();
 
 #endif //UNIVERSITY_PROGRAM_GRADE_RESULTS_FUN_H
