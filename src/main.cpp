@@ -76,7 +76,6 @@ int main(){
     int choice;
 
 
-
     while (true) {
         clearScreen();
         printBanner();

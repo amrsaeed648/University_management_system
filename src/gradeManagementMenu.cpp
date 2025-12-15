@@ -30,19 +30,25 @@ void gradeManagementMenu() {
         switch (choice)
         {
             case 1:
+                clearScreen();
                 userAssignGrade();
+                pauseScreen();
                 break;
 
             case 2:
+                clearScreen();
                 userEditGrade();
+                pauseScreen();
                 break;
 
             case 3:
+                clearScreen();
                 displayGradeByStudentId();
                 pauseScreen();
                 break;
 
             case 4:
+                clearScreen();
                 displayGradeByCode();
                 pauseScreen();
                 break;
