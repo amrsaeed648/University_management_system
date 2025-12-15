@@ -44,7 +44,7 @@ void courseManagementMenu() {
                animatedPrint("Enter Course Code to delete: ");
                 cin >> code;
                 deleteCourse(code);
-                pauseScreen();
+                /*pauseScreen();*/
                 break;
 
             case 3:
@@ -53,7 +53,7 @@ void courseManagementMenu() {
                 animatedPrint( "Enter Course Code to edit: ");
                 cin >> code;
                 editCourse(code);
-                pauseScreen();
+                /*pauseScreen();*/
                 break;
 
             case 4:
@@ -71,6 +71,7 @@ void courseManagementMenu() {
 
             default:
                 animatedPrint( "Invalid choice! Try again.\n\n");
+                pauseScreen();
         }
 
     } while (choice != 0);
