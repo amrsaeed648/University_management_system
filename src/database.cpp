@@ -111,14 +111,15 @@ void deleteStudentFromDB(const string& id) {
     sqlite3_exec(db, sql.c_str(), nullptr, nullptr, &errMsg);
 }
 
-void deleteCourseFromDB(const string& code) {
-    string sql1 = "DELETE FROM courses WHERE code='" + code + "';";
-    string sql2 = "DELETE FROM course_students WHERE course_code='" + code + "';";
-
-    sqlite3_exec(db, sql1.c_str(), nullptr, nullptr, nullptr);
-    sqlite3_exec(db, sql2.c_str(), nullptr, nullptr, nullptr);
+void deleteCourseFromDB(const string& code)
+{
+    char* errMsg = nullptr;
+    string sqlCourse = "DELETE FROM courses WHERE code='" + code + "';";
+    if (sqlite3_exec(db, sqlCourse.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+        cout << "Delete course failed: " << errMsg << endl;
+        sqlite3_free(errMsg);
+    }
 }
-
 /* ===================== LOAD ===================== */
 
 static int loadStudentCallback(void*, int arg1, char** arg2, char**) {
@@ -146,6 +147,42 @@ static int loadCourseCallback(void*, int, char** argv, char**) {
 
     courses.push_back(c);
     return 0;
+}
+void saveAllStudentsToDB() {
+    for (const auto& s : students) {
+        string sql =
+            "INSERT OR REPLACE INTO students VALUES ('" +
+            s.getID() + "','" +
+            s.getFirstName() + "','" +
+            s.getLastName() + "','" +
+            s.getDepartment() + "'," +
+            to_string(s.getYearOfStudy()) + ",'" +
+            s.getEmail() + "');";
+
+        char* errMsg = nullptr;
+        if (sqlite3_exec(db, sql.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+            cout << "Save student failed: " << errMsg << endl;
+            sqlite3_free(errMsg);
+        }
+    }
+}
+
+void saveAllCoursesToDB() {
+    for (const auto& c : courses) {
+        string sql =
+            "INSERT OR REPLACE INTO courses VALUES ('" +
+            c.getCode() + "','" +
+            c.getName() + "','" +
+            c.getProfessor() + "','" +
+            c.getDepartment() + "'," +
+            to_string(c.getYear()) + ");";
+
+        char* errMsg = nullptr;
+        if (sqlite3_exec(db, sql.c_str(), nullptr, nullptr, &errMsg) != SQLITE_OK) {
+            cout << "Save course failed: " << errMsg << endl;
+            sqlite3_free(errMsg);
+        }
+    }
 }
 
 void saveAllGradesToDB() {

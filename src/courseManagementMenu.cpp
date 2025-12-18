@@ -35,7 +35,8 @@ void courseManagementMenu() {
                 clearScreen();
                 printBanner();
                 addCourse();
-               /*pauseScreen();*/
+                cin.ignore();
+                pauseScreen();
                 break;
 
             case 2:
@@ -44,6 +45,7 @@ void courseManagementMenu() {
                animatedPrint("Enter Course Code to delete: ");
                 cin >> code;
                 deleteCourse(code);
+                cin.ignore();
                 pauseScreen();
                 break;
 
@@ -53,6 +55,8 @@ void courseManagementMenu() {
                 animatedPrint( "Enter Course Code to edit: ");
                 cin >> code;
                 editCourse(code);
+                saveAllCoursesToDB();
+                cin.ignore();
                 pauseScreen();
                 break;
 
@@ -60,17 +64,21 @@ void courseManagementMenu() {
                 clearScreen();
                 printBanner();
                 displayCourses();
-               /* pauseScreen();*/
+                cin.ignore();
+                pauseScreen();
                 break;
 
             case 0:
                animatedPrint( "Saved Successfully.\n");
                animatedPrint( "Returning to Admin Menu...\n\n");
+                cin.ignore();
                 pauseScreen();
                 break;
 
             default:
                 animatedPrint( "Invalid choice! Try again.\n\n");
+                cin.ignore();
+                pauseScreen();
         }
 
     } while (choice != 0);

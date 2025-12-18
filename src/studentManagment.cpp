@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <limits>
 #include <string>
 #include <vector>
 #include <utility>
@@ -52,93 +53,37 @@ void addStudent () {
     catch (const invalid_argument& e) {
         cout << e.what() << endl;
     }
-
 }
 
-void updateStudent(string id) {
+
+void deleteStudent(string id){
     clearScreen();
     printBanner();
     int index = getStudentIndex(id);
 
     if (index == -1) {
-        animatedPrint( RED"Student Not Found!\n" RESET);
+        animatedPrint(RED "Student Not Found!\n" RESET);
         pauseScreen();
         return;
     }
 
-    Student& st = students[index];
-
-    while (true) {
-        clearScreen();
-        printBanner();
-        animatedPrint( "================= Updating " + st.getFirstName() + " " + st.getLastName() +" =================\n");
-        animatedPrint("1. First Name\n""2. Last Name\n" "3. Department\n""4. Year of Study\n" "0. Exit\n""Select: ");
-        int c;
-        cin >> c;
-
-        if (c == 0) break;
-
-        string input;
-        try {
-            switch (c) {
-                case 1:
-                    animatedPrint( "New First Name: ");
-                    cin >> input;
-                    st.setFirstName(input);
-                    break;
-
-                case 2:
-                    animatedPrint( "New Last Name: ");
-                    cin >> input;
-                    st.setLastName(input);
-                    break;
-
-                case 3:
-                    animatedPrint("New Department: ");
-                    cin >> input;
-                    st.setDepartment(input);
-                    break;
-
-                case 4:
-                    animatedPrint( "New Year of Study: ");
-                    cin >> input;
-                    st.setYearOfStudy(stoi(input));
-                    break;
-
-                default:
-                    animatedPrint( RED "Invalid choice\n" RESET);
-                    pauseScreen();
-                    continue;
-            }
-
-            saveStudentToDB(st);
-
-            animatedPrint(GREEN"Data Updated Successfully\n" RESET);
-        }
-        catch (const exception& e) {
-          cout<< RED<<"Error: " << e.what() << RESET <<"\n";
-        }
-
-        pauseScreen();
-    }
-}
-
-void deleteStudent(string id) {
-    clearScreen();
-    printBanner();
-    int index = getStudentIndex(id);
-
-    if (index == -1) {
-        animatedPrint( RED "Student Not Found!\n" RESET);
-        pauseScreen();
-        return;
-    }
+    // Remove from database
     deleteStudentFromDB(id);
 
+    // Remove student from students vector
     students.erase(students.begin() + index);
 
-    animatedPrint(GREEN "Student Deleted Successfully\n" RESET);
-    pauseScreen();
+    // Remove all grades related to this student
+    for (auto it = studentCourseGrades.begin(); it != studentCourseGrades.end(); ) {
+        if (it->studentID == id) {
+            it = studentCourseGrades.erase(it); // erase returns the next iterator
+        } else {
+            ++it;
+        }
+    }
+    saveAllGradesToDB();
+    animatedPrint(GREEN "Student and related grades deleted successfully\n" RESET);
+    /*pauseScreen();*/
 }
 
 void studentsList() {
@@ -146,7 +91,7 @@ void studentsList() {
     printBanner();
     animatedPrint( BOLD  "\n======================= Student List =======================\n" RESET );
     for (int i = 0; i < students.size(); i++) students[i].info();
-    pauseScreen();
+    /*pauseScreen();*/
 }
 
 
@@ -173,40 +118,44 @@ void showStudentInfo(string id)
     animatedPrint( "Department   : " + s.getDepartment() + "\n");
     animatedPrint( "Academic Year: " + to_string(s.getYearOfStudy()) + "\n");
     animatedPrint( "=================================================\n");
-    pauseScreen();
+    /*pauseScreen();*/
 }
 void enrollStudentInCourse()
 {
     clearScreen();
     printBanner();
     string id, courseCode;
-    cout << "Enter Student ID: ";
+    animatedPrint("Enter Student ID: ");
     cin >> id;
 
     int index = getStudentIndex(id);
     if (index == -1)
     {
-        cout << "Student Not Found!\n";
+        animatedPrint( RED"Student Not Found!\n" RESET);
+        pauseScreen();
         return;
     }
-
-    cout << "Enter Course Code: ";
+    animatedPrint( "Enter Course Code: ");
     cin >> courseCode;
+    if (validateCourse(courseCode))
+    {
+        // Add course to student's enrolled courses
+        students[index].addCourse(courseCode);
 
-    // Add course to student's enrolled courses
-    students[index].addCourse(courseCode);
-
-    // Add entry to the global studentCourseGrades vector with default grade 0.0
-    studentCourseGrade scg;
-    scg.studentID = id;
-    scg.courseCode = courseCode;
-    scg.Grade = 0.0;
-    studentCourseGrades.push_back(scg);
-    saveAllGradesToDB();
+        // Add entry to the global studentCourseGrades vector with default grade 0.0
+        studentCourseGrade scg;
+        scg.studentID = id;
+        scg.courseCode = courseCode;
+        scg.Grade = 0.0;
+        studentCourseGrades.push_back(scg);
+        saveAllGradesToDB();
 
 
-    cout << GREEN << "Enrolled Successfully." << RESET;
-
-    pauseScreen();
+        animatedPrint( GREEN  "Enrolled Successfully."  RESET);
+    }
+    else
+    {
+        animatedPrint( RED "Course Not Found!\n" RESET );
+    }
 }
 

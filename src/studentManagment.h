@@ -8,7 +8,6 @@ class Student;
 // Student management
 int getStudentIndex(std::string id);
 void addStudent();
-void updateStudent(std::string id);
 void deleteStudent(std::string id);
 void studentsList();
 void showStudentInfo(std::string id);
